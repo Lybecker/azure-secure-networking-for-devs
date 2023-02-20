@@ -41,8 +41,8 @@ Write-Output "  - Signed in user: ${UserDisplayName}`n    - User principal name:
 
 $ProjectName = "puffycloud"
 $Location = "westeurope"
-$ResourceGroupName = "rg-${ProjectName}-network-${Location}-${Environment}"
-$VnetResourceGroupName = $ResourceGroupName
+$ResourceGroupName = "rg-${ProjectName}-${Environment}"
+$VnetResourceGroupName = "rg-${ProjectName}-network-${Location}-${Environment}"
 $VnetName = "vnet-${ProjectName}-${Location}-${Environment}"
 $JumpboxName = "jumpbox-${ProjectName}-${Environment}"
 $JumpboxSubnetName = "snet-${ProjectName}-jumpbox-${Environment}"
