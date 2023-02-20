@@ -35,9 +35,9 @@ $UserPrincipalName = $SignedInUserInformation.userPrincipalName
 $SubscriptionId = $AccountInformation.id
 $SubscriptionName = $AccountInformation.name
 
-Write-Output "`nUsing the following identity and subscription to provision private networking infrastructure:"
-Write-Output "  - Signed in user: ${UserDisplayName}`n    - User principal name: ${UserPrincipalName}`n    - Object ID: ${UserObjectId}"
+Write-Output "`nUsing the following subscription and identity to provision private networking infrastructure:"
 Write-Output "  - Subscription: ${SubscriptionName} (${SubscriptionId})"
+Write-Output "  - Signed in user: ${UserDisplayName}`n    - User principal name: ${UserPrincipalName}`n    - Object ID: ${UserObjectId}"
 
 $ProjectName = "puffycloud"
 $Locations = "westeurope", "swedencentral" # The first one is where the bulk of the shared resources will go
