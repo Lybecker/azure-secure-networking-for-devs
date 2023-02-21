@@ -11,6 +11,7 @@ if (-not ($FilePath -Match ".ps1")) {
 
 $OutFilePath = $FilePath.Replace("ps1", "sh")
 Set-Content $OutFilePath "#!/bin/bash"
+Add-Content $OutFilePath "set -e"
 $ProcessingParameter = 0
 $MandatoryParameters = @()
 
