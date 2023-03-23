@@ -57,6 +57,13 @@ foreach ($Line in Get-Content $FilePath) {
     $Line = $Line.Replace('`', '\')
     $Line = $Line.Replace("Write-Output", "echo -e")
 
+    # TODO:
+    # - if statements
+    # - string.ToLower() => echo "$string" | tr '[:upper:]' '[:lower:]'
+    # - Invoke-Expression => ???
+    # - foreach
+    # - string.Replace() => ???
+
     Write-Output $Line
     Add-Content $OutFilePath $Line
 }
