@@ -120,6 +120,36 @@ az network private-endpoint dns-zone-group add `
     --name "default" `
     --no-wait true
 
+Write-Output "`nAdding private endpoint of EU storage account to DNS zone group..."
+
+az network private-endpoint dns-zone-group add `
+    --endpoint-name "pep-${StorageAccountNameEu}" `
+    --private-dns-zone "privatelink.blob.core.windows.net" `
+    --resource-group $ResourceGroupName `
+    --zone-name "privatelink.blob.core.windows.net".Replace(".", "-") `
+    --name "default" `
+    --no-wait true
+
+Write-Output "`nAdding private endpoint of US storage account to DNS zone group..."
+
+az network private-endpoint dns-zone-group add `
+    --endpoint-name "pep-${StorageAccountNameUs}" `
+    --private-dns-zone "privatelink.blob.core.windows.net" `
+    --resource-group $ResourceGroupName `
+    --zone-name "privatelink.blob.core.windows.net".Replace(".", "-") `
+    --name "default" `
+    --no-wait true
+
+Write-Output "`nAdding private endpoint of shared storage account to DNS zone group..."
+
+az network private-endpoint dns-zone-group add `
+    --endpoint-name "pep-${StorageAccountNameShared}" `
+    --private-dns-zone "privatelink.blob.core.windows.net" `
+    --resource-group $ResourceGroupName `
+    --zone-name "privatelink.blob.core.windows.net".Replace(".", "-") `
+    --name "default" `
+    --no-wait true
+
 Write-Output "`nDisabling public access to EU app service..."
 # https://learn.microsoft.com/cli/azure/resource?view=azure-cli-latest#az-resource-update
 
