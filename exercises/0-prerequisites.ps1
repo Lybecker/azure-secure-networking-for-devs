@@ -25,18 +25,21 @@ az storage account create `
     --name "st${TeamName}${Environment}eu" `
     --resource-group $ResourceGroupName `
     --location $PrimaryLocation `
+    --kind StorageV2 `
     --sku Standard_LRS
 
 az storage account create `
     --name "st${TeamName}${Environment}us" `
     --resource-group $ResourceGroupName `
     --location $SecondaryLocation `
+    --kind StorageV2 `
     --sku Standard_LRS
 
 az storage account create `
     --name "stshared${TeamName}${Environment}" `
     --resource-group $ResourceGroupName `
     --location $SharedLocation `
+    --kind StorageV2 `
     --sku Standard_LRS
 
 #Write-Output "`nCreating VM..."
