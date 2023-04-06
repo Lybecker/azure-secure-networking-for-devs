@@ -10,6 +10,9 @@ $ResourceGroupName = "rg-${TeamName}-${Environment}"
 $VnetNameEu = "vnet-${TeamName}-${Environment}-${PrimaryLocation}"
 $VnetNameUs = "vnet-${TeamName}-${Environment}-${SecondaryLocation}"
 $VnetNameShared = "vnet-${TeamName}-${Environment}-${SharedLocation}"
+$SubnetNameEu = "snet-shared-${TeamName}-${Environment}-${PrimaryLocation}"
+$SubnetNameUs = "snet-shared-${TeamName}-${Environment}-${SecondaryLocation}"
+
 $AppServiceNamePrefix = "app-${TeamName}-${Environment}"
 $AppServiceNameEu = "${AppServiceNamePrefix}-eu"
 $AppServiceNameUs = "${AppServiceNamePrefix}-us"
@@ -165,4 +168,42 @@ az resource update `
     --resource-group $ResourceGroupName `
     --name $AppServiceNameUs `
     --resource-type "Microsoft.Web/sites" `
+    --set properties.publicNetworkAccess=Disabled
+
+Write-Output "`nDisabling public access to EU storage account..."
+
+az resource update `
+    --resource-group $ResourceGroupName `
+    --name $StorageAccountNameEu `
+    --resource-type "Microsoft.Storage/storageAccounts" `
+    --set properties.publicNetworkAccess=Disabled
+
+$SubnetResourceId = (az network vnet subnet show --resource-group $ResourceGroupName --vnet-name $VnetNameEu --name $SubnetNameEu | ConvertFrom-Json).id
+
+az storage account network-rule add `
+    --resource-group $ResourceGroupName `
+    --account-name $StorageAccountNameEu `
+    --subnet $SubnetResourceId
+
+Write-Output "`nDisabling public access to US storage account..."
+
+az resource update `
+    --resource-group $ResourceGroupName `
+    --name $StorageAccountNameUs `
+    --resource-type "Microsoft.Storage/storageAccounts" `
+    --set properties.publicNetworkAccess=Enabled
+
+$SubnetResourceId = (az network vnet subnet show --resource-group $ResourceGroupName --vnet-name $VnetNameUs --name $SubnetNameUs | ConvertFrom-Json).id
+
+az storage account network-rule add `
+    --resource-group $ResourceGroupName `
+    --account-name $StorageAccountNameUs `
+    --subnet $SubnetResourceId
+
+Write-Output "`nDisabling public access to shared storage account..."
+
+az resource update `
+    --resource-group $ResourceGroupName `
+    --name $StorageAccountNameShared `
+    --resource-type "Microsoft.Storage/storageAccounts" `
     --set properties.publicNetworkAccess=Disabled

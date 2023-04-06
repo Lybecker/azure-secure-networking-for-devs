@@ -15,3 +15,5 @@ param(
 .\2-1-subnet.ps1 $TeamName $SecondaryLocation "apps" "10.0.8.128/25" "--delegations Microsoft.Web/serverFarms"
 
 .\2-2-private-dns-zones.ps1 $TeamName
+
+.\2-3-private-endpoints.ps1 $TeamName $PrimaryLocation $SecondaryLocation $SharedLocation
