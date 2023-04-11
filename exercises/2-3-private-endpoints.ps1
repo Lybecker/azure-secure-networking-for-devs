@@ -7,11 +7,13 @@ param(
 
 $Environment = "dev"
 $ResourceGroupName = "rg-${TeamName}-${Environment}"
+
 $VnetNameEu = "vnet-${TeamName}-${Environment}-${PrimaryLocation}"
 $VnetNameUs = "vnet-${TeamName}-${Environment}-${SecondaryLocation}"
 $VnetNameShared = "vnet-${TeamName}-${Environment}-${SharedLocation}"
 $SubnetNameEu = "snet-shared-${TeamName}-${Environment}-${PrimaryLocation}"
 $SubnetNameUs = "snet-shared-${TeamName}-${Environment}-${SecondaryLocation}"
+$SubnetNameShared = "snet-shared-${TeamName}-${Environment}-${SharedLocation}"
 
 $AppServiceNamePrefix = "app-${TeamName}-${Environment}"
 $AppServiceNameEu = "${AppServiceNamePrefix}-eu"
@@ -39,7 +41,7 @@ az network private-endpoint create `
     --name "pep-${AppServiceNamePrefix}-eu" `
     --private-connection-resource-id $AppServiceResourceIdEu `
     --resource-group $ResourceGroupName `
-    --subnet "snet-shared-${TeamName}-${Environment}-${PrimaryLocation}" `
+    --subnet $SubnetNameEu `
     --group-id "sites" `
     --location $PrimaryLocation `
     --nic-name "nic-${AppServiceNamePrefix}-eu" `
@@ -53,7 +55,7 @@ az network private-endpoint create `
     --name "pep-${AppServiceNamePrefix}-us" `
     --private-connection-resource-id $AppServiceResourceIdUs `
     --resource-group $ResourceGroupName `
-    --subnet "snet-shared-${TeamName}-${Environment}-${SecondaryLocation}" `
+    --subnet $SubnetNameUs `
     --group-id "sites" `
     --location $SecondaryLocation `
     --nic-name "nic-${AppServiceNamePrefix}-us" `
@@ -67,7 +69,7 @@ az network private-endpoint create `
     --name "pep-${StorageAccountNameEu}" `
     --private-connection-resource-id $StorageAccountResourceIdEu `
     --resource-group $ResourceGroupName `
-    --subnet "snet-shared-${TeamName}-${Environment}-${PrimaryLocation}" `
+    --subnet $SubnetNameEu `
     --group-id "blob" `
     --location $PrimaryLocation `
     --nic-name "nic-${StorageAccountNameEu}" `
@@ -81,7 +83,7 @@ az network private-endpoint create `
     --name "pep-${StorageAccountNameUs}" `
     --private-connection-resource-id $StorageAccountResourceIdUs `
     --resource-group $ResourceGroupName `
-    --subnet "snet-shared-${TeamName}-${Environment}-${SecondaryLocation}" `
+    --subnet $SubnetNameUs `
     --group-id "blob" `
     --location $SecondaryLocation `
     --nic-name "nic-${StorageAccountNameUs}" `
@@ -95,7 +97,7 @@ az network private-endpoint create `
     --name "pep-${StorageAccountNameShared}" `
     --private-connection-resource-id $StorageAccountResourceIdShared `
     --resource-group $ResourceGroupName `
-    --subnet "snet-shared-${TeamName}-${Environment}-${SharedLocation}" `
+    --subnet $SubnetNameShared `
     --group-id "blob" `
     --location $SharedLocation `
     --nic-name "nic-${StorageAccountNameShared}" `
@@ -170,40 +172,8 @@ az resource update `
     --resource-type "Microsoft.Web/sites" `
     --set properties.publicNetworkAccess=Disabled
 
-Write-Output "`nDisabling public access to EU storage account..."
+Write-Output "`nDisabling public access to storage accounts..."
 
-az resource update `
-    --resource-group $ResourceGroupName `
-    --name $StorageAccountNameEu `
-    --resource-type "Microsoft.Storage/storageAccounts" `
-    --set properties.publicNetworkAccess=Disabled
-
-$SubnetResourceId = (az network vnet subnet show --resource-group $ResourceGroupName --vnet-name $VnetNameEu --name $SubnetNameEu | ConvertFrom-Json).id
-
-az storage account network-rule add `
-    --resource-group $ResourceGroupName `
-    --account-name $StorageAccountNameEu `
-    --subnet $SubnetResourceId
-
-Write-Output "`nDisabling public access to US storage account..."
-
-az resource update `
-    --resource-group $ResourceGroupName `
-    --name $StorageAccountNameUs `
-    --resource-type "Microsoft.Storage/storageAccounts" `
-    --set properties.publicNetworkAccess=Enabled
-
-$SubnetResourceId = (az network vnet subnet show --resource-group $ResourceGroupName --vnet-name $VnetNameUs --name $SubnetNameUs | ConvertFrom-Json).id
-
-az storage account network-rule add `
-    --resource-group $ResourceGroupName `
-    --account-name $StorageAccountNameUs `
-    --subnet $SubnetResourceId
-
-Write-Output "`nDisabling public access to shared storage account..."
-
-az resource update `
-    --resource-group $ResourceGroupName `
-    --name $StorageAccountNameShared `
-    --resource-type "Microsoft.Storage/storageAccounts" `
-    --set properties.publicNetworkAccess=Disabled
+.\2-3-1-storage-account-private-network.ps1 -ResourceGroupName $ResourceGroupName -StorageAccountName $StorageAccountNameEu -VnetName $VnetNameEu -SubnetName $SubnetNameEu
+.\2-3-1-storage-account-private-network.ps1 -ResourceGroupName $ResourceGroupName -StorageAccountName $StorageAccountNameUs -VnetName $VnetNameUs -SubnetName $SubnetNameUs
+.\2-3-1-storage-account-private-network.ps1 -ResourceGroupName $ResourceGroupName -StorageAccountName $StorageAccountNameShared -VnetName $VnetNameShared -SubnetName $SubnetNameShared
