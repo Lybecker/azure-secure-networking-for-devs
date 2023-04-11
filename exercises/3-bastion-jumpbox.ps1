@@ -1,27 +1,33 @@
 param(
     [Parameter(Mandatory=$True)][string]$TeamName,
-    [string]$Location = "westeurope"
+    [string]$Location = "northeurope"
 )
 
 $Environment = "dev"
 $ResourceGroupName = "rg-${TeamName}-${Environment}"
-$VnetName = "vnet-${TeamName}-${Location}-${Environment}"
-$JumpboxNsgName = "nsg-${TeamName}-jumpbox-${Environment}"
-$JumpboxNicName = "nic-${TeamName}-jumpbox-${Environment}"
+$VnetName = "vnet-${TeamName}-${Environment}-${Location}"
+$JumpboxNsgName = "nsg-jumpbox-${TeamName}-${Environment}"
+$JumpboxNicName = "nic-jumpbox-${TeamName}-${Environment}"
 $JumpboxVmName = "vm${TeamName}"
 $JumpboxVmImage = "MicrosoftWindowsDesktop:Windows-11:win11-22h2-pro:22621.1265.230207" # URN format for '--image': "Publisher:Offer:Sku:Version"
-$JumpboxSubnetName = "snet-${TeamName}-shared-${Environment}"
+$JumpboxSubnetName = "snet-shared-${TeamName}-${Environment}-${Location}"
 $JumpboxAdminUsername = "jumpboxuser"
 $JumpboxAdminPassword = "JumpboxPassword123!"
-$BastionPublicIpAddressName = "pip-${TeamName}-bastion-${Environment}"
+$BastionPublicIpAddressName = "pip-bastion-${TeamName}-${Environment}"
 $BastionName = "bas-${TeamName}-${Environment}"
 
 Write-Output "`nCreating network security group (NSG) for jumpbox..."
+# https://learn.microsoft.com/cli/azure/network/nsg?view=azure-cli-latest#az-network-nsg-create
 
-az network nsg create --name $JumpboxNsgName --resource-group $ResourceGroupName
+az network nsg create `
+    --name $JumpboxNsgName `
+    --resource-group $ResourceGroupName `
+    --location $Location `
+    --no-wait false
 
 Write-Output "`nCreating rule to deny all inbound traffic for NSG..."
 # Update Azure CLI (az upgrade) in case running into this bug: https://github.com/Azure/azure-cli/issues/24939
+# https://learn.microsoft.com/cli/azure/network/nsg/rule?view=azure-cli-latest#az-network-nsg-rule-create
 
 az network nsg rule create `
     --name "DenyAllInbound" `
@@ -31,9 +37,14 @@ az network nsg rule create `
     --access "Deny" `
     --description "Denies all inbound traffic" `
     --direction "Inbound" `
-    --protocol "*"
+    --protocol "*" `
+    --no-wait false
+
+#Write-Output "`nPausing the script to give time for the previous operation(s) to take an effect, please wait..."
+#Start-Sleep -Seconds 15
 
 Write-Output "`nCreating network interface (NIC) for jumpbox..."
+# https://learn.microsoft.com/cli/azure/network/nic?view=azure-cli-latest#az-network-nic-create
 
 az network nic create `
     --name $JumpboxNicName `
@@ -44,16 +55,19 @@ az network nic create `
     --network-security-group $JumpboxNsgName
 
 Write-Output "`nCreating jumpbox VM..."
+# https://learn.microsoft.com/cli/azure/vm?view=azure-cli-latest#az-vm-create
 
 az vm create `
     --name $JumpboxVmName `
     --resource-group $ResourceGroupName `
+    --location $Location `
     --image $JumpboxVmImage `
     --admin-username $JumpboxAdminUsername `
     --admin-password $JumpboxAdminPassword `
     --nics $JumpboxNicName
 
 Write-Output "`nCreating public IP address for Azure Bastion..."
+# https://learn.microsoft.com/cli/azure/network/public-ip?view=azure-cli-latest#az-network-public-ip-create
 
 az network public-ip create `
     --name $BastionPublicIpAddressName `
@@ -62,6 +76,7 @@ az network public-ip create `
     --sku Standard
 
 Write-Output "`nCreating Azure Bastion resource..."
+# https://learn.microsoft.com/cli/azure/network/bastion?view=azure-cli-latest#az-network-bastion-create
 
 az network bastion create `
     --name $BastionName `

@@ -45,7 +45,7 @@ az network private-endpoint create `
     --group-id "sites" `
     --location $PrimaryLocation `
     --nic-name "nic-${AppServiceNamePrefix}-eu" `
-    --no-wait true `
+    --no-wait false `
     --vnet-name $VnetNameEu
 
 Write-Output "`nCreating private endpoint for US app service..."
@@ -59,7 +59,7 @@ az network private-endpoint create `
     --group-id "sites" `
     --location $SecondaryLocation `
     --nic-name "nic-${AppServiceNamePrefix}-us" `
-    --no-wait true `
+    --no-wait false `
     --vnet-name $VnetNameUs
 
 Write-Output "`nCreating private endpoint for EU storage account..."
@@ -73,7 +73,7 @@ az network private-endpoint create `
     --group-id "blob" `
     --location $PrimaryLocation `
     --nic-name "nic-${StorageAccountNameEu}" `
-    --no-wait true `
+    --no-wait false `
     --vnet-name $VnetNameEu
 
 Write-Output "`nCreating private endpoint for US storage account..."
@@ -87,7 +87,7 @@ az network private-endpoint create `
     --group-id "blob" `
     --location $SecondaryLocation `
     --nic-name "nic-${StorageAccountNameUs}" `
-    --no-wait true `
+    --no-wait false `
     --vnet-name $VnetNameUs
 
 Write-Output "`nCreating private endpoint for shared storage account..."
@@ -101,8 +101,11 @@ az network private-endpoint create `
     --group-id "blob" `
     --location $SharedLocation `
     --nic-name "nic-${StorageAccountNameShared}" `
-    --no-wait true `
+    --no-wait false `
     --vnet-name $VnetNameShared
+
+Write-Output "`nPausing the script to give time for the private endpoints to reach 'Succeeded' state, please wait..."
+Start-Sleep -Seconds 30
 
 Write-Output "`nAdding private endpoint of EU app service to DNS zone group..."
 # https://learn.microsoft.com/en-us/cli/azure/network/private-endpoint/dns-zone-group?view=azure-cli-latest#az-network-private-endpoint-dns-zone-group-add
@@ -113,7 +116,7 @@ az network private-endpoint dns-zone-group add `
     --resource-group $ResourceGroupName `
     --zone-name "privatelink.azurewebsites.net".Replace(".", "-") `
     --name "default" `
-    --no-wait true
+    --no-wait false
 
 Write-Output "`nAdding private endpoint of US app service to DNS zone group..."
 
@@ -123,7 +126,7 @@ az network private-endpoint dns-zone-group add `
     --resource-group $ResourceGroupName `
     --zone-name "privatelink.azurewebsites.net".Replace(".", "-") `
     --name "default" `
-    --no-wait true
+    --no-wait false
 
 Write-Output "`nAdding private endpoint of EU storage account to DNS zone group..."
 
@@ -133,7 +136,7 @@ az network private-endpoint dns-zone-group add `
     --resource-group $ResourceGroupName `
     --zone-name "privatelink.blob.core.windows.net".Replace(".", "-") `
     --name "default" `
-    --no-wait true
+    --no-wait false
 
 Write-Output "`nAdding private endpoint of US storage account to DNS zone group..."
 
@@ -143,7 +146,7 @@ az network private-endpoint dns-zone-group add `
     --resource-group $ResourceGroupName `
     --zone-name "privatelink.blob.core.windows.net".Replace(".", "-") `
     --name "default" `
-    --no-wait true
+    --no-wait false
 
 Write-Output "`nAdding private endpoint of shared storage account to DNS zone group..."
 
@@ -153,7 +156,7 @@ az network private-endpoint dns-zone-group add `
     --resource-group $ResourceGroupName `
     --zone-name "privatelink.blob.core.windows.net".Replace(".", "-") `
     --name "default" `
-    --no-wait true
+    --no-wait false
 
 Write-Output "`nDisabling public access to EU app service..."
 # https://learn.microsoft.com/cli/azure/resource?view=azure-cli-latest#az-resource-update
