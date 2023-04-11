@@ -105,7 +105,7 @@ az network private-endpoint create `
     --vnet-name $VnetNameShared
 
 Write-Output "`nPausing the script to give time for the private endpoints to reach 'Succeeded' state, please wait..."
-Start-Sleep -Seconds 30
+Start-Sleep -Seconds 60
 
 Write-Output "`nAdding private endpoint of EU app service to DNS zone group..."
 # https://learn.microsoft.com/en-us/cli/azure/network/private-endpoint/dns-zone-group?view=azure-cli-latest#az-network-private-endpoint-dns-zone-group-add
