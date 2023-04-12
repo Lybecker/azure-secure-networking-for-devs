@@ -12,6 +12,8 @@ $VnetName = "vnet-${TeamName}-${Environment}-${Location}"
 
 if ($SubnetId.ToLower() -Match "bastion") {
     $SubnetName = "AzureBastionSubnet"
+} elseif ($SubnetId.ToLower() -Match "firewall") {
+    $SubnetName = "AzureFirewallSubnet"
 } else {
     $SubnetName = "snet-${SubnetId}-${TeamName}-${Environment}-${Location}"
 }
