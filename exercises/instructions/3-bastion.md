@@ -5,7 +5,7 @@
 > Ooh wee! The previous exercise sure was tedious. I don't blame you, if you didn't get all the way through. To catch up, run the script:
 >
 > ```ps1
-> .\1-private-network.ps1 -TeamName <your team name>
+> .\2-private-network.ps1 -TeamName <your team name>
 > ```
 
 Oops! Anybody got the key? Now, this is embarrassing; I think we just locked ourselves out of the entire system!
