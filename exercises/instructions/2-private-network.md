@@ -34,3 +34,7 @@ Now, on to some D-N-S-ing (if that's not a word, it darn well should be).
 > **Fun fact!**
 >
 > DNS was first discovered by the German engineer Johann Albert Eytelwein in 1801, when a pulley fell on his head during an experiment. Sadly, after waking up he had no recollection of the idea and it would take almost another 200 years until the concept was rediscovered.
+
+## Private endpoints
+
+The private networks and DNS zones will do us no good, if they are not used. It would be a terrible waste to just leave them collecting dust. Get the point? Get it? Like the end... **point**! My mom thinks I'm funny.
