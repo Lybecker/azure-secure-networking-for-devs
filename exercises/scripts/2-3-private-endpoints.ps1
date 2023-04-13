@@ -44,7 +44,7 @@ az network private-endpoint create `
     --subnet $SubnetNameEu `
     --group-id "sites" `
     --location $PrimaryLocation `
-    --nic-name "nic-${AppServiceNamePrefix}-eu" `
+    --nic-name "nic-pep-${AppServiceNamePrefix}-eu" `
     --no-wait false `
     --vnet-name $VnetNameEu
 
@@ -58,7 +58,7 @@ az network private-endpoint create `
     --subnet $SubnetNameUs `
     --group-id "sites" `
     --location $SecondaryLocation `
-    --nic-name "nic-${AppServiceNamePrefix}-us" `
+    --nic-name "nic-pep-${AppServiceNamePrefix}-us" `
     --no-wait false `
     --vnet-name $VnetNameUs
 
@@ -72,7 +72,7 @@ az network private-endpoint create `
     --subnet $SubnetNameEu `
     --group-id "blob" `
     --location $PrimaryLocation `
-    --nic-name "nic-${StorageAccountNameEu}" `
+    --nic-name "nic-pep-${StorageAccountNameEu}" `
     --no-wait false `
     --vnet-name $VnetNameEu
 
@@ -86,7 +86,7 @@ az network private-endpoint create `
     --subnet $SubnetNameUs `
     --group-id "blob" `
     --location $SecondaryLocation `
-    --nic-name "nic-${StorageAccountNameUs}" `
+    --nic-name "nic-pep-${StorageAccountNameUs}" `
     --no-wait false `
     --vnet-name $VnetNameUs
 
@@ -100,7 +100,7 @@ az network private-endpoint create `
     --subnet $SubnetNameShared `
     --group-id "blob" `
     --location $SharedLocation `
-    --nic-name "nic-${StorageAccountNameShared}" `
+    --nic-name "nic-pep-${StorageAccountNameShared}" `
     --no-wait false `
     --vnet-name $VnetNameShared
 

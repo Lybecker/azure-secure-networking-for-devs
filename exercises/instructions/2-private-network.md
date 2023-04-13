@@ -17,19 +17,20 @@ Our virtual networks sure feel empty and sad. Let's cheer them up by giving them
     1. `snet-shared-{team name}-dev-northeurope`, span of 64 IP addresses should be plenty for our needs
         * Add service endpoints for Key Vaults and storage
 1. In the both two other virtual networks, create:
-    1. `snet-shared-{team name}-dev-{location}` with the range of 128
+    1. `snet-shared-{team name}-dev-{location}` with the range of 128 addresses
         * Add service endpoints for Key Vaults and storage
-    1. `snet-apps-{team name}-dev-{location}` with the range of 128
+    1. `snet-apps-{team name}-dev-{location}` with the range of 128 addresses
         * Delegate this subnet for `Microsoft.Web/serverFarms`
 
 ## Private DNS zones
+
 Now, on to some D-N-S-ing (if that's not a word, it darn well should be).
 
-1. Create the three private DNS zones for:
-    1. Web apps
+1. Create three [private DNS zones](https://learn.microsoft.com/azure/dns/private-dns-privatednszone) for:
+    1. Web apps ("`privatelink.azurewebsites.net`")
     1. Blob storages
     1. Key Vaults
-1. Link the created DNS zones to all three virtual networks with virtual network links
+1. Link the created DNS zones to all three virtual networks with [virtual network links](https://learn.microsoft.com/azure/dns/private-dns-virtual-network-links)
 
 > **Fun fact!**
 >
@@ -38,3 +39,15 @@ Now, on to some D-N-S-ing (if that's not a word, it darn well should be).
 ## Private endpoints
 
 The private networks and DNS zones will do us no good, if they are not used. It would be a terrible waste to just leave them collecting dust. Get the point? Get it? Like the end... **point**! My mom thinks I'm funny.
+
+For all 3 storage accounts and 2 web app services:
+
+1. Create [private endpoints](https://learn.microsoft.com/azure/private-link/private-endpoint-overview)
+
+    > Use the following resource name pattern:
+    >
+    > * Private endpoint name: `pep-{resource name}` e.g., for the shared storage account `pep-stshared{team name}dev`
+    > * Network interface name: `nic-pep-{resource name}`
+
+1. Add [private DNS zone groups](https://learn.microsoft.com/azure/private-link/private-endpoint-dns#private-dns-zone-group) for the endpoints
+1. Link the private endpoints to appropriate virtual networks and subnets
