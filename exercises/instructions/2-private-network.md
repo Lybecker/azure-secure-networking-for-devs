@@ -31,4 +31,6 @@ Now, on to some D-N-S-ing (if that's not a word, it darn well should be).
     1. Key Vaults
 1. Link the created DNS zones to all three virtual networks with virtual network links
 
-> Fun fact: DNS was first discovered by the German engineer Johann Albert Eytelwein in 1801, when a pulley fell on his head during an experiment. Sadly, after waking up he had no recollection of the idea and it would take almost another 200 years until the concept was rediscovered.
+> **Fun fact!**
+>
+> DNS was first discovered by the German engineer Johann Albert Eytelwein in 1801, when a pulley fell on his head during an experiment. Sadly, after waking up he had no recollection of the idea and it would take almost another 200 years until the concept was rediscovered.
