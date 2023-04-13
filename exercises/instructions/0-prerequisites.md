@@ -38,4 +38,6 @@ If all goes well, you should have the following resources deployed into the newl
 | Web app service | `app-{team name}-dev-eu` | West Europe |
 | Web app service | `app-{team name}-dev-us` | East US |
 
-The web app will also have the code deployed.
+The web apps will also have the code deployed.
+
+*TODO: Navigate to web app to test code deployment.*
