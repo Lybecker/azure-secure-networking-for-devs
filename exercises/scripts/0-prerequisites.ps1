@@ -91,11 +91,22 @@ az webapp config appsettings set `
     --resource-group $ResourceGroupName `
     --settings SCM_DO_BUILD_DURING_DEPLOYMENT=true
 
-
 az webapp config appsettings set `
     --name "${AppServiceNamePrefix}-us" `
     --resource-group $ResourceGroupName `
     --settings SCM_DO_BUILD_DURING_DEPLOYMENT=true
+
+Write-Output "`nConfiguring other app settings..."
+
+az webapp config appsettings set `
+    --name "${AppServiceNamePrefix}-eu" `
+    --resource-group $ResourceGroupName `
+    --settings TEAM_NAME=$TeamName
+
+az webapp config appsettings set `
+    --name "${AppServiceNamePrefix}-us" `
+    --resource-group $ResourceGroupName `
+    --settings TEAM_NAME=$TeamName
 
 Write-Output "`nDeploying web app code package..."
 # https://learn.microsoft.com/cli/azure/webapp?view=azure-cli-latest#az-webapp-deploy
