@@ -9,10 +9,11 @@ To test the app locally:
     pip install -r requirements.txt
     ```
 
-1. Set team name environment variable:
+1. Set environment variables:
 
     ```bash
     export TEAM_NAME="<your team name>"
+    export LOCATION="eu"  # Or "us"
     ```
 
 1. Run the app:
