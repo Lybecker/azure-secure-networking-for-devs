@@ -11,10 +11,16 @@ $ResourceGroupName = "rg-${TeamName}-${Environment}"
 #$VmImage = "MicrosoftWindowsDesktop:Windows-11:win11-22h2-pro:22621.1265.230207" # URN format for '--image': "Publisher:Offer:Sku:Version"
 #$VmAdminUsername = $TeamName
 #$VmAdminPassword = "${TeamName}Password123!"
+$StorageAccountNames = @("st${TeamName}${Environment}eu", "st${TeamName}${Environment}us", "stshared${TeamName}${Environment}")
 $AppServicePlanNamePrefix = "plan-${TeamName}-${Environment}"
 $AppServiceNamePrefix = "app-${TeamName}-${Environment}"
+$AppServiceNames = @("${AppServiceNamePrefix}-eu", "${AppServiceNamePrefix}-us")
 
-Write-Output "`nCreating resource group..."
+$AzureSubscriptionId = (az account show | ConvertFrom-Json).id
+
+Write-Output "`nAzure subscription ID: ${AzureSubscriptionId}"
+
+Write-Output "`nCreating resource group ${ResourceGroupName}..."
 
 az group create --name $ResourceGroupName --location $PrimaryLocation
 
@@ -62,7 +68,7 @@ az appservice plan create `
     --is-linux
 
 az appservice plan create `
---name "${AppServicePlanNamePrefix}-us" `
+    --name "${AppServicePlanNamePrefix}-us" `
     --resource-group $ResourceGroupName `
     --location $SecondaryLocation `
     --sku B1 `
@@ -107,6 +113,27 @@ az webapp config appsettings set `
     --name "${AppServiceNamePrefix}-us" `
     --resource-group $ResourceGroupName `
     --settings TEAM_NAME=$TeamName
+
+foreach ($AppServiceName in $AppServiceNames) {
+    Write-Output "`nAssigning identity for app service ${AppServiceName}..."
+    # https://learn.microsoft.com/cli/azure/webapp/identity?view=azure-cli-latest#az-webapp-identity-assign
+
+    $AppServicePrincipalId = (az webapp identity assign --resource-group $ResourceGroupName --name $AppServiceName | ConvertFrom-Json).principalId
+    Write-Output "Principal ID of app service ${AppServiceName}: ${AppServicePrincipalId}"
+
+    Write-Output "`nPausing the script to give time for the previous operation(s) to take an effect, please wait..."
+    Start-Sleep -Seconds 15
+
+    foreach ($StorageAccountName in $StorageAccountNames) {
+        Write-Output "`nAdding Storage Blob Data Contributor role for app service ${AppServiceName} in storage account ${StorageAccountName}..."
+        # https://learn.microsoft.com/cli/azure/role/assignment?view=azure-cli-latest#az-role-assignment-create
+
+        az role assignment create `
+            --assignee-object-id $AppServicePrincipalId `
+            --role "Storage Blob Data Contributor" `
+            --scope "/subscriptions/${AzureSubscriptionId}/resourceGroups/${ResourceGroupName}/providers/Microsoft.Storage/storageAccounts/${StorageAccountName}"
+    }
+}
 
 Write-Output "`nDeploying web app code package..."
 # https://learn.microsoft.com/cli/azure/webapp?view=azure-cli-latest#az-webapp-deploy

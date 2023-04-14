@@ -26,7 +26,17 @@ Let's provision our first resources in Azure!
 
     > Team name should be given as lower case alphanumeric characters with the maximum length of 10.
 
-If all goes well, you should have the following resources deployed into the newly created resource group "`rg-{team name}-dev`":
+    If all goes well, you should now have the [resources](#resources) deployed.
+
+1. Test the web apps and generate blobs:
+    1. In your browser, navigate to the web app in West Europe: `https://app-<your team name>-dev-eu.azurewebsites.net/`
+    1. Generate blobs: `https://app-<your team name>-dev-eu.azurewebsites.net/create_blobs`
+    1. List blobs: `https://app-<your team name>-dev-eu.azurewebsites.net/list_blobs`
+    1. Repeat for the steps for the app service in East US
+
+## Resources
+
+Resources created resource group "`rg-{team name}-dev`":
 
 | Resource type | Resource name | Default location |
 | ------------- | ------------- | ---------------- |
@@ -37,10 +47,6 @@ If all goes well, you should have the following resources deployed into the newl
 | App service plan (Linux) | `plan-{team name}-dev-us` | East US |
 | Web app service | `app-{team name}-dev-eu` | West Europe |
 | Web app service | `app-{team name}-dev-us` | East US |
-
-The web apps will also have the code deployed.
-
-*TODO: Navigate to web app to test code deployment.*
 
 ## Naming is hard
 

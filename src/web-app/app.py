@@ -5,7 +5,7 @@ from blob_storage_client import BlobStorageClient
 app = Flask(__name__)
 team_name = os.getenv('TEAM_NAME')
 environment = "dev"
-storage_account_names = [f"st{team_name}{environment}eu", f"st{team_name}{environment}eu", f"stshared{team_name}{environment}",]
+storage_account_names = [f"st{team_name}{environment}eu", f"st{team_name}{environment}us", f"stshared{team_name}{environment}",]
 
 @app.route('/health')
 def health():
