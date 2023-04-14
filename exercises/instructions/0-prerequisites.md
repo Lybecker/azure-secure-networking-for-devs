@@ -26,7 +26,7 @@ Let's provision our first resources in Azure!
 
     > Team name should be given as lower case alphanumeric characters with the maximum length of 10.
 
-    If all goes well, you should now have the [resources](#resources) deployed.
+    If all goes well, you should now have the [resources](#resources) deployed including the code for the web apps.
 
 1. Test the web apps and generate blobs:
     1. In your browser, navigate to the web app in West Europe: `https://app-<your team name>-dev-eu.azurewebsites.net/`
