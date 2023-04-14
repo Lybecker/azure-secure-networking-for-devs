@@ -89,30 +89,18 @@ az webapp create `
     --plan "${AppServicePlanNamePrefix}-us" `
     --runtime PYTHON:3.9
 
-Write-Output "`nEnabling web app build automation..."
+Write-Output "`nEnabling web app build automation and configuring app settings..."
 # https://learn.microsoft.com/cli/azure/webapp/config/appsettings?view=azure-cli-latest#az-webapp-config-appsettings-set
 
 az webapp config appsettings set `
     --name "${AppServiceNamePrefix}-eu" `
     --resource-group $ResourceGroupName `
-    --settings SCM_DO_BUILD_DURING_DEPLOYMENT=true
+    --settings SCM_DO_BUILD_DURING_DEPLOYMENT=true TEAM_NAME=$TeamName LOCATION=eu
 
 az webapp config appsettings set `
     --name "${AppServiceNamePrefix}-us" `
     --resource-group $ResourceGroupName `
-    --settings SCM_DO_BUILD_DURING_DEPLOYMENT=true
-
-Write-Output "`nConfiguring other app settings..."
-
-az webapp config appsettings set `
-    --name "${AppServiceNamePrefix}-eu" `
-    --resource-group $ResourceGroupName `
-    --settings TEAM_NAME=$TeamName
-
-az webapp config appsettings set `
-    --name "${AppServiceNamePrefix}-us" `
-    --resource-group $ResourceGroupName `
-    --settings TEAM_NAME=$TeamName
+    --settings SCM_DO_BUILD_DURING_DEPLOYMENT=true TEAM_NAME=$TeamName LOCATION=us
 
 foreach ($AppServiceName in $AppServiceNames) {
     Write-Output "`nAssigning identity for app service ${AppServiceName}..."
@@ -125,6 +113,11 @@ foreach ($AppServiceName in $AppServiceNames) {
     Start-Sleep -Seconds 15
 
     foreach ($StorageAccountName in $StorageAccountNames) {
+        if (($AppServiceName.EndsWith("eu") -and $StorageAccountName.EndsWith("us")) -or ($AppServiceName.EndsWith("us") -and $StorageAccountName.EndsWith("eu"))) {
+            Write-Output "`nSkipping role assignment for app service ${AppServiceName} in storage account ${StorageAccountName}"
+            continue
+        }
+
         Write-Output "`nAdding Storage Blob Data Contributor role for app service ${AppServiceName} in storage account ${StorageAccountName}..."
         # https://learn.microsoft.com/cli/azure/role/assignment?view=azure-cli-latest#az-role-assignment-create
 
