@@ -36,7 +36,7 @@ Let's provision our first resources in Azure!
 
 ## Resources
 
-Resources created resource group "`rg-{team name}-dev`":
+Resources created in resource group "`rg-{team name}-dev`":
 
 | Resource type | Resource name | Default location |
 | ------------- | ------------- | ---------------- |
