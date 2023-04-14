@@ -32,7 +32,7 @@ Let's provision our first resources in Azure!
     1. In your browser, navigate to the web app in West Europe: `https://app-<your team name>-dev-eu.azurewebsites.net/`
     1. Generate blobs: `https://app-<your team name>-dev-eu.azurewebsites.net/create_blobs`
     1. List blobs: `https://app-<your team name>-dev-eu.azurewebsites.net/list_blobs`
-    1. Repeat for the steps for the app service in East US
+    1. Repeat the steps for the app service in East US
 
 ## Resources
 
