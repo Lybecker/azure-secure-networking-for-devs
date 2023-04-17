@@ -13,7 +13,7 @@ class BlobStorageClient:
         blob_service_client = self._get_blob_service_client()
 
         try:
-            blob_service_client.create_container(container_name)
+            blob_service_client.create_container(container_name, timeout=5)
         except ResourceExistsError:
             print(f"Container {container_name} already exists in storage account {self._storage_account_name}")
 
@@ -23,7 +23,7 @@ class BlobStorageClient:
 
         with open(file=file_path, mode="rb") as data:
             try:
-                blob_client.upload_blob(data)
+                blob_client.upload_blob(data, timeout=5)
             except ResourceExistsError:
                 print(f"Blob already exists in container {container_name} in storage account {self._storage_account_name}")
 
@@ -31,7 +31,7 @@ class BlobStorageClient:
     def get_blobs_list(self, container_name: str):
         blob_service_client = self._get_blob_service_client()
         container_client = blob_service_client.get_container_client(container_name)
-        return container_client.list_blobs()
+        return container_client.list_blobs(timeout=5)
 
     def _get_blob_service_client(self):
         default_credential = DefaultAzureCredential()
