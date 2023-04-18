@@ -11,8 +11,8 @@ $StorageSuffix = "core.windows.net"
 
 $PrivateDnsZoneNames = @(
     "privatelink.azurewebsites.net",
-    "privatelink.blob.${StorageSuffix}",
-    "privatelink.vaultcore.azure.net"
+    "privatelink.blob.${StorageSuffix}" #,
+    #"privatelink.vaultcore.azure.net"
 )
 
 $VnetNames = @(
