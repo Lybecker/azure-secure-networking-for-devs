@@ -15,10 +15,10 @@ Our virtual networks sure feel empty and sad. Let's cheer them up by giving them
 1. In the "shared" virtual network - the one in North Europe - create the following two subnets:
     1. Subnet for Azure Bastion - the name and size need to be specific and you must figure out what they are
     1. `snet-shared-{team name}-dev-northeurope`, span of 64 IP addresses should be plenty for our needs
-        * Add service endpoint for storage
+        <!-- * Add service endpoint for storage -->
 1. In the both two other virtual networks, create:
     1. `snet-shared-{team name}-dev-{location}` with the range of 128 addresses
-        * Add service endpoint for storage
+        <!-- * Add service endpoint for storage -->
     1. `snet-apps-{team name}-dev-{location}` with the range of 128 addresses
         * Delegate this subnet for `Microsoft.Web/serverFarms`
 
@@ -55,7 +55,8 @@ For all 3 storage accounts and 2 web app services:
 
 Disable access to app services and storage accounts:
 
-1. The access to the storage accounts should be only allowed from the virtual network they are in
+<!-- 1. The access to the storage accounts should be only allowed from the virtual network they are in -->
+1. The public access to all three storage accounts should be disabled
 1. The app services should have access restrictions and private endpoints **on**
 
 Enable the virtual network (VNET) integration for the outbound traffic for both EU and US web apps.

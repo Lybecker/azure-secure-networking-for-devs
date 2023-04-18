@@ -177,6 +177,4 @@ az resource update `
 
 Write-Output "`nDisabling public access to storage accounts..."
 
-.\2-3-1-storage-account-private-network.ps1 -ResourceGroupName $ResourceGroupName -StorageAccountName $StorageAccountNameEu -VnetName $VnetNameEu -SubnetName $SubnetNameEu
-.\2-3-1-storage-account-private-network.ps1 -ResourceGroupName $ResourceGroupName -StorageAccountName $StorageAccountNameUs -VnetName $VnetNameUs -SubnetName $SubnetNameUs
-.\2-3-1-storage-account-private-network.ps1 -ResourceGroupName $ResourceGroupName -StorageAccountName $StorageAccountNameShared -VnetName $VnetNameShared -SubnetName $SubnetNameShared
+.\2-3-2-storage-accounts-disable-public-access.ps1 -TeamName $TeamName
