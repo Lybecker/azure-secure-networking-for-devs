@@ -51,6 +51,11 @@ For all 3 storage accounts and 2 web app services:
 1. Add [private DNS zone groups](https://learn.microsoft.com/azure/private-link/private-endpoint-dns#private-dns-zone-group) for the endpoints
 1. Link the private endpoints to appropriate virtual networks and subnets
 
-## Disable access
+## Disable access and web app VNET integration
 
-Disable access to app services and storage accounts. The app services should have access restrictions and private endpoints **on**. The access to the storage accounts should be only allowed from the virtual network they are in.
+Disable access to app services and storage accounts:
+
+1. The access to the storage accounts should be only allowed from the virtual network they are in
+1. The app services should have access restrictions and private endpoints **on**
+
+Enable the virtual network (VNET) integration for the outbound traffic for both EU and US web apps.

@@ -17,3 +17,5 @@ param(
 .\2-2-private-dns-zones.ps1 $TeamName
 
 .\2-3-private-endpoints.ps1 $TeamName $PrimaryLocation $SecondaryLocation $SharedLocation
+
+.\2-4-web-app-vnet-integration.ps1 $TeamName $PrimaryLocation $SecondaryLocation $SharedLocation
