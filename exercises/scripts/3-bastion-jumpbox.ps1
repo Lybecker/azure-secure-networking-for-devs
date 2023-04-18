@@ -40,9 +40,6 @@ az network nsg rule create `
     --protocol "*" `
     --no-wait false
 
-#Write-Output "`nPausing the script to give time for the previous operation(s) to take an effect, please wait..."
-#Start-Sleep -Seconds 15
-
 Write-Output "`nCreating network interface (NIC) for jumpbox..."
 # https://learn.microsoft.com/cli/azure/network/nic?view=azure-cli-latest#az-network-nic-create
 
