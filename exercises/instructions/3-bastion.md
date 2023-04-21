@@ -24,6 +24,7 @@ Not to worry: Remember that one subnet called "AzureBastionSubnet" we created ea
 1. Create a Windows desktop virtual machine and connect it to the network interface we created
     * Name: `vm{team name}`
     * Location: North Europe
+    * Public inbound ports: None
 
 ## Bastion
 
