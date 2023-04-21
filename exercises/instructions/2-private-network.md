@@ -22,6 +22,8 @@ Our virtual networks sure feel empty and sad. Let's cheer them up by giving them
     1. `snet-apps-{team name}-dev-{location}` with the range of 128 addresses
         * Delegate this subnet for `Microsoft.Web/serverFarms`
 
+> The `shared` subnet is for any kind of Azure resources. The `apps` part subnet is delegate to Azure web apps, meaning you cannot use it for anything else.
+
 ## Private DNS zones
 
 Now, on to some D-N-S-ing (if that's not a word, it darn well should be).
@@ -50,6 +52,8 @@ For all 3 storage accounts and 2 web app services:
 
 1. Add [private DNS zone groups](https://learn.microsoft.com/azure/private-link/private-endpoint-dns#private-dns-zone-group) for the endpoints
 1. Link the private endpoints to appropriate virtual networks and subnets
+
+> Azure Web Apps are a little bit special. The have Private Endpoints and VNET integration. Don't worry, you will figure it out.
 
 ## Disable access and enable web app VNET integration
 

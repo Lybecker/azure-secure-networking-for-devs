@@ -8,7 +8,7 @@
 > .\2-private-network.ps1 -TeamName <your team name>
 > ```
 
-Oops! Anybody got the key? Now, this is embarrassing; I think we just locked ourselves out of the entire system!
+Oops! Anybody got the key? Now, this is embarrassing; I think we just locked ourselves out of the entire system! Try it out by access the web apps or storage accounts.
 
 Not to worry: Remember that one subnet called "AzureBastionSubnet" we created earlier? It's there for a reason. But first...
 
@@ -17,7 +17,7 @@ Not to worry: Remember that one subnet called "AzureBastionSubnet" we created ea
 1. Create [network security group (NSG)](https://learn.microsoft.com/azure/virtual-network/network-security-groups-overview)
     * Name: `nsg-jumpbox-{team name}-dev`
     * Location: North Europe
-1. Add rule to the NSG to deny all inbound traffic
+1. Add rule to the NSG to deny all inbound traffic.
 1. Create a Windows desktop virtual machine with no public IP or public inbound ports. Assign the network security group to the virtual machine.
     * Name: `vm{team name}`
     * Location: North Europe
