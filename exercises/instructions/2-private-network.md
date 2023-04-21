@@ -26,7 +26,7 @@ Our virtual networks sure feel empty and sad. Let's cheer them up by giving them
 
 Now, on to some D-N-S-ing (if that's not a word, it darn well should be).
 
-1. Create three [private DNS zones](https://learn.microsoft.com/azure/dns/private-dns-privatednszone) for:
+1. Create two [private DNS zones](https://learn.microsoft.com/azure/dns/private-dns-privatednszone) for:
     1. Web apps ("`privatelink.azurewebsites.net`")
     1. Blob storages
 1. Link the created DNS zones to all three virtual networks with [virtual network links](https://learn.microsoft.com/azure/dns/private-dns-virtual-network-links)
