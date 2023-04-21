@@ -35,4 +35,6 @@ The solution:
     * Name: `bas-{team name}-dev`
     * Location: North Europe
 
-Login to the virtual machine using Azure Bastion and install Solitaire. This exercise can only be completed by winning the game. Extra points for pro mode i.e., allowing only one time to go through the deck.
+Login to the virtual machine using Azure Bastion and verify that your Private DNS Zone work, by running in a command prompt `nslookup app-<your team name>-dev-eu.azurewebsites.net`. You should see an IP from the private IP address space.
+
+This exercise can only be completed by installing Solitaire and winning the game. Extra points for pro mode i.e., allowing only one time to go through the deck.
