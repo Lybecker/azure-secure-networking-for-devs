@@ -18,13 +18,9 @@ Not to worry: Remember that one subnet called "AzureBastionSubnet" we created ea
     * Name: `nsg-jumpbox-{team name}-dev`
     * Location: North Europe
 1. Add rule to the NSG to deny all inbound traffic
-1. Create a [network interface](https://learn.microsoft.com/azure/virtual-network/virtual-network-network-interface?tabs=azure-portal) resource and make sure it's associated with the NSG
-    * Name: `nic-jumpbox-{team name}-dev`
-    * Location: North Europe
-1. Create a Windows desktop virtual machine and connect it to the network interface we created
+1. Create a Windows desktop virtual machine with no public IP or public inbound ports. Assign the network security group to the virtual machine.
     * Name: `vm{team name}`
     * Location: North Europe
-    * Public inbound ports: None
 
 ## Bastion
 
