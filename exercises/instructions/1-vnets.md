@@ -6,8 +6,8 @@ Each one should span 1024 IP addresses with first virtual network starting from 
 
 The recommended order and names below:
 
-1. `vnet-{team name}-dev-northeurope` in North Europe (starting from 10.0.0.0)
-1. `vnet-{team name}-dev-westeurope` in West Europe
-1. `vnet-{team name}-dev-eastus` in East US
+1. `vnet-{team name}-dev-{shared location}` in the shared location (region) (starting from 10.0.0.0) e.g., `vnet-theducks-dev-swedencentral`
+1. `vnet-{team name}-dev-{EU location}` in EU
+1. `vnet-{team name}-dev-{US location}` in US
 
 If you have time left over, debate the existentialism of virtual networks. Are they real? Am I?

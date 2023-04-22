@@ -2,7 +2,7 @@ param(
     [Parameter(Mandatory=$True)][string]$TeamName,
     [string]$PrimaryLocation = "westeurope",
     [string]$SecondaryLocation = "eastus",
-    [string]$SharedLocation = "northeurope"
+    [string]$SharedLocation = "swedencentral"
 )
 
 .\1-1-vnet.ps1 $TeamName $SharedLocation "10.0.0"

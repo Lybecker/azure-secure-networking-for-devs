@@ -25,6 +25,16 @@ Let's provision our first resources in Azure!
     ```
 
     > Team name should be given as lower case alphanumeric characters with the maximum length of 10.
+    >
+    > There are three locations (regions) we will be using during the exercises as described in the table below:
+    >
+    > | Regions | Parameter/variable in scripts | Default location |
+    > | ------- | -------------------- | ---------------- |
+    > | EU | `PrimaryLocation` | West Europe (`westeurope`) |
+    > | US | `SecondaryLocation` | East US (`eastus`) |
+    > | Shared | `SharedLocation` | Sweden central (`swedencentral`)
+    >
+    > If you want to change the default location, provide the value as a parameter, when running the scripts.
 
     If all goes well, you should now have the [resources](#resources) deployed including the code for the web apps.
 

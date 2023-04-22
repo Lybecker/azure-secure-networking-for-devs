@@ -2,7 +2,7 @@ param(
     [Parameter(Mandatory=$True)][string]$TeamName,
     [string]$PrimaryLocation = "westeurope",
     [string]$SecondaryLocation = "eastus",
-    [string]$SharedLocation = "northeurope"
+    [string]$SharedLocation = "swedencentral"
 )
 
 .\0-prerequisites.ps1 -TeamName $TeamName -PrimaryLocation $PrimaryLocation -SecondaryLocation $SecondaryLocation -SharedLocation $SharedLocation

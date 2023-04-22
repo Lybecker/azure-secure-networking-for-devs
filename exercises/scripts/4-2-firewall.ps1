@@ -1,6 +1,6 @@
 param(
     [Parameter(Mandatory=$True)][string]$TeamName,
-    [string]$Location = "northeurope"
+    [string]$Location = "swedencentral"
 )
 
 $Environment = "dev"

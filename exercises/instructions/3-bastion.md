@@ -10,7 +10,7 @@
 
 Oops! Anybody got the key? Now, this is embarrassing; I think we just locked ourselves out of the entire system! Try it out by access the web apps or storage accounts.
 
-Not to worry: Remember that one subnet called "AzureBastionSubnet" we created earlier? It's there for a reason. But first...
+Let's fix that!
 
 ## Virtual machine
 
@@ -28,6 +28,7 @@ So, umm... we created a virtual machine we can't access. What was the point of t
 
 The solution:
 
+1. Create a subnet for Azure Bastion in the VNET in the shared location - the name and size need to be specific and you must figure out what they are
 1. Create a public IP address
     * Name: `pip-bastion-{team name}-dev` (see what we're getting at?)
     * Location: North Europe

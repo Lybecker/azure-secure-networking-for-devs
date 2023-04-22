@@ -2,7 +2,7 @@ param(
     [Parameter(Mandatory=$True)][string]$TeamName,
     [string]$PrimaryLocation = "westeurope",
     [string]$SecondaryLocation = "eastus",
-    [string]$SharedLocation = "northeurope"
+    [string]$SharedLocation = "swedencentral"
 )
 
 $Environment = "dev"

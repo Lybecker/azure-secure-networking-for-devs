@@ -1,6 +1,6 @@
 param(
     [Parameter(Mandatory=$True)][string]$TeamName,
-    [string]$Location = "northeurope"
+    [string]$Location = "swedencentral"
 )
 
 $Environment = "dev"
@@ -15,6 +15,8 @@ $JumpboxAdminUsername = "jumpboxuser"
 $JumpboxAdminPassword = "JumpboxPassword123!"
 $BastionPublicIpAddressName = "pip-bastion-${TeamName}-${Environment}"
 $BastionName = "bas-${TeamName}-${Environment}"
+
+.\2-1-subnet.ps1 $TeamName $Location "bastion" "10.0.0.64/26"
 
 Write-Output "`nCreating network security group (NSG) for jumpbox..."
 # https://learn.microsoft.com/cli/azure/network/nsg?view=azure-cli-latest#az-network-nsg-create
