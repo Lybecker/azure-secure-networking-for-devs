@@ -56,6 +56,7 @@ foreach ($Line in Get-Content $FilePath) {
     $Line = $Line.Replace(" = ", "=")
     $Line = $Line.Replace('`', '\')
     $Line = $Line.Replace("Write-Output", "echo -e")
+    $Line = $Line.Replace("Start-Sleep -Seconds", "sleep")
 
     # TODO:
     # - if statements
@@ -63,6 +64,7 @@ foreach ($Line in Get-Content $FilePath) {
     # - Invoke-Expression => ???
     # - foreach
     # - string.Replace() => ???
+    # - string ends with
 
     Write-Output $Line
     Add-Content $OutFilePath $Line

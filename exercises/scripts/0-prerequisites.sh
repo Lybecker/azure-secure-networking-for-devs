@@ -116,7 +116,7 @@ for AppServiceName in $AppServiceNames; do
     echo -e "Principal ID of app service ${AppServiceName}: ${AppServicePrincipalId}"
 
     echo -e "\nPausing the script to give time for the previous operation(s) to take an effect, please wait..."
-    Start-Sleep -Seconds 15
+    sleep 15
 
     for StorageAccountName in $StorageAccountNames; do
         if [[ "$AppServiceName" == *eu ] && [ "$StorageAccountName" == *us ]] || [[ "$AppServiceName" == *us ] && [ "$StorageAccountName" == *eu ]]; then
