@@ -34,7 +34,7 @@ Let's provision our first resources in Azure!
     > | US | `SecondaryLocation` | East US (`eastus`) |
     > | Shared | `SharedLocation` | Sweden central (`swedencentral`)
     >
-    > If you want to change the default location, provide the value as a parameter, when running the scripts.
+    > If you want to change any of the default locations, provide the values as parameters, when running the scripts.
 
     If all goes well, you should now have the [resources](#resources) deployed including the code for the web apps.
 
@@ -52,7 +52,7 @@ Resources created in resource group "`rg-{team name}-dev`":
 | ------------- | ------------- | ---------------- |
 | Storage account | `st{team name}deveu` | West Europe |
 | Storage account | `st{team name}devus` | East US |
-| Storage account | `stshared{team name}dev` | North Europe |
+| Storage account | `stshared{team name}dev` | Sweden central |
 | App service plan (Linux) | `plan-{team name}-dev-eu` | West Europe |
 | App service plan (Linux) | `plan-{team name}-dev-us` | East US |
 | Web app service | `app-{team name}-dev-eu` | West Europe |
