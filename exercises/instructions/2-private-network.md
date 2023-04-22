@@ -20,7 +20,7 @@ Our virtual networks sure feel empty and sad. Let's cheer them up by giving them
     1. `snet-apps-{team name}-dev-{location}` with the range of 128 addresses
         * Delegate this subnet for `Microsoft.Web/serverFarms`
 
-> The `shared` subnet is for any kind of Azure resources. The `apps` part subnet is delegate to Azure web apps, meaning you cannot use it for anything else.
+> The `shared` subnet is for any kind of Azure resources. The `apps` subnet is delegated to Azure web apps, meaning you cannot use it for anything else.
 
 ## Private DNS zones
 
