@@ -108,7 +108,7 @@ az webapp config appsettings set \
     --resource-group $ResourceGroupName \
     --settings SCM_DO_BUILD_DURING_DEPLOYMENT=true TEAM_NAME=$TeamName LOCATION=us
 
-for AppServiceName in $AppServiceNames; do
+for AppServiceName in ${AppServiceNames[@]}; do
     echo -e "\nAssigning identity for app service ${AppServiceName}..."
     # https://learn.microsoft.com/cli/azure/webapp/identity?view=azure-cli-latest#az-webapp-identity-assign
 
@@ -118,7 +118,7 @@ for AppServiceName in $AppServiceNames; do
     echo -e "\nPausing the script to give time for the previous operation(s) to take an effect, please wait..."
     sleep 15
 
-    for StorageAccountName in $StorageAccountNames; do
+    for StorageAccountName in ${StorageAccountNames[@]}; do
         if [[ "$AppServiceName" == *eu ] && [ "$StorageAccountName" == *us ]] || [[ "$AppServiceName" == *us ] && [ "$StorageAccountName" == *eu ]]; then
             echo -e "\nSkipping role assignment for app service ${AppServiceName} in storage account ${StorageAccountName}"
             continue
