@@ -13,16 +13,13 @@ fi
 
 Environment="dev"
 ResourceGroupName="rg-${TeamName}-${Environment}"
-#$VmName="vm${TeamName}"
-#$VmImage="MicrosoftWindowsDesktop:Windows-11:win11-22h2-pro:22621.1265.230207" # URN format for '--image': "Publisher:Offer:Sku:Version"
-#$VmAdminUsername=$TeamName
-#$VmAdminPassword="${TeamName}Password123!"
-StorageAccountNames=@("st${TeamName}${Environment}eu", "st${TeamName}${Environment}us", "stshared${TeamName}${Environment}")
+StorageAccountNames=("st${TeamName}${Environment}eu" "st${TeamName}${Environment}us" "stshared${TeamName}${Environment}")
 AppServicePlanNamePrefix="plan-${TeamName}-${Environment}"
 AppServiceNamePrefix="app-${TeamName}-${Environment}"
 AppServiceNames=("${AppServiceNamePrefix}-eu" "${AppServiceNamePrefix}-us")
 
-AzureSubscriptionId=(az account show | ConvertFrom-Json).id
+AzureAccountInformation=$(az account show)
+AzureSubscriptionId=$(echo "$AzureAccountInformation" | jq -r '.id')
 
 echo -e "\nAzure subscription ID: ${AzureSubscriptionId}"
 
@@ -53,15 +50,6 @@ az storage account create \
     --location $SharedLocation \
     --kind StorageV2 \
     --sku Standard_LRS
-
-#echo -e "\nCreating VM..."
-
-#az vm create \
-#    --name $VmName \
-#    --resource-group $ResourceGroupName \
-#    --image $VmImage \
-#    --admin-username $VmAdminUsername \
-#    --admin-password $VmAdminPassword
 
 echo -e "\nCreating app service plans..."
 # https://learn.microsoft.com/cli/azure/appservice/plan?view=azure-cli-latest#az-appservice-plan-create
@@ -112,14 +100,15 @@ for AppServiceName in ${AppServiceNames[@]}; do
     echo -e "\nAssigning identity for app service ${AppServiceName}..."
     # https://learn.microsoft.com/cli/azure/webapp/identity?view=azure-cli-latest#az-webapp-identity-assign
 
-    $AppServicePrincipalId=(az webapp identity assign --resource-group $ResourceGroupName --name $AppServiceName | ConvertFrom-Json).principalId
+    IdentityOutput=$(az webapp identity assign --resource-group $ResourceGroupName --name $AppServiceName)
+    AppServicePrincipalId=$(echo "$IdentityOutput" | jq -r '.principalId')
     echo -e "Principal ID of app service ${AppServiceName}: ${AppServicePrincipalId}"
 
     echo -e "\nPausing the script to give time for the previous operation(s) to take an effect, please wait..."
     sleep 15
 
     for StorageAccountName in ${StorageAccountNames[@]}; do
-        if [[ "$AppServiceName" == *eu ] && [ "$StorageAccountName" == *us ]] || [[ "$AppServiceName" == *us ] && [ "$StorageAccountName" == *eu ]]; then
+        if ([[ "$AppServiceName" == *eu ]] && [[ "$StorageAccountName" == *us ]]) || ([[ "$AppServiceName" == *us ]] && [[ "$StorageAccountName" == *eu ]]); then
             echo -e "\nSkipping role assignment for app service ${AppServiceName} in storage account ${StorageAccountName}"
             continue
         fi
@@ -127,10 +116,12 @@ for AppServiceName in ${AppServiceNames[@]}; do
         echo -e "\nAdding Storage Blob Data Contributor role for app service ${AppServiceName} in storage account ${StorageAccountName}..."
         # https://learn.microsoft.com/cli/azure/role/assignment?view=azure-cli-latest#az-role-assignment-create
 
-        az role assignment create \
-            --assignee-object-id $AppServicePrincipalId \
+        Scope="/subscriptions/${AzureSubscriptionId}/resourceGroups/${ResourceGroupName}/providers/Microsoft.Storage/storageAccounts/${StorageAccountName}"
+
+        MSYS_NO_PATHCONV=1 az role assignment create \
+            --assignee-object-id "$AppServicePrincipalId" \
             --role "Storage Blob Data Contributor" \
-            --scope "/subscriptions/${AzureSubscriptionId}/resourceGroups/${ResourceGroupName}/providers/Microsoft.Storage/storageAccounts/${StorageAccountName}"
+            --scope "$Scope"
     done
 done
 

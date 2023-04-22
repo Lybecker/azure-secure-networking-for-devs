@@ -20,10 +20,20 @@ Let's provision our first resources in Azure!
 
 1. Run the script to provision resources
 
+    PowerShell:
+
     ```ps1
     .\0-prerequisites.ps1 -TeamName <your team name>
     ```
 
+    Bash:
+
+    ```bash
+    ./0-prerequisites.sh <your team name>
+    ```
+
+    > Make sure your working directory is `scripts` when running the script. This is because the web app code package to deploy is referenced using a relative path.
+    >
     > Team name should be given as lower case alphanumeric characters with the maximum length of 10.
     >
     > There are three locations (regions) we will be using during the exercises as described in the table below:
