@@ -6,7 +6,7 @@ Each one should span 1024 IP addresses with first virtual network starting from 
 
 The recommended order and names below:
 
-1. `vnet-{team name}-dev-{shared location}` in the shared location (region) (starting from 10.0.0.0) e.g., `vnet-theducks-dev-swedencentral`
+1. `vnet-{team name}-dev-{shared location}` in the shared location (region) (starting from 10.0.0.0) e.g., `vnet-crzycatseyes-dev-swedencentral`
 1. `vnet-{team name}-dev-{EU location}` in EU
 1. `vnet-{team name}-dev-{US location}` in US
 
