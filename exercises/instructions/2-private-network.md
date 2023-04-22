@@ -51,7 +51,7 @@ For all 3 storage accounts and 2 web app services:
 1. Add [private DNS zone groups](https://learn.microsoft.com/azure/private-link/private-endpoint-dns#private-dns-zone-group) for the endpoints
 1. Link the private endpoints to appropriate virtual networks and subnets
 
-> Azure Web Apps are a little bit special. The have Private Endpoints and VNET integration. Don't worry, you will figure it out.
+> Azure web apps are a little bit special. They have private endpoints and VNET integration. Don't worry, you will figure it out!
 
 ## Disable access and enable web app VNET integration
 

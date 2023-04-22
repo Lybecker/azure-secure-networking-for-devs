@@ -14,13 +14,13 @@ Virtual networks, like galaxies. Systems of cells interlinked within cells inter
 
 ## Virtual network peering
 
-Right... It's kinda important for our case that the virtual networks are connected. In order to do that we need to [peer](https://learn.microsoft.com/azure/virtual-network/virtual-network-peering-overview) them using a [hub and spoke (hub-spoke)](https://learn.microsoft.com/azure/architecture/reference-architectures/hybrid-networking/hub-spoke?tabs=cli) model. Remember the the spoke is the virtual network in North Europe.  Enough talking, let's get to it: Peer the virtual networks so that the one in North Europe acts as the hub. What are you waiting for? Go! Execute!
+Right... It's kinda important for our case that the virtual networks are connected. In order to do that we need to [peer](https://learn.microsoft.com/azure/virtual-network/virtual-network-peering-overview) them using a [hub and spoke (hub-spoke)](https://learn.microsoft.com/azure/architecture/reference-architectures/hybrid-networking/hub-spoke?tabs=cli) model. Remember the the spoke is the virtual network in the shared location.  Enough talking, let's get to it: Peer the virtual networks so that the one in the shared location acts as the hub. What are you waiting for? Go! Execute!
 
 Now you should be able to open a browser in the virtual machine and navigate to the web app `https://app-<your team name>-dev-eu.azurewebsites.net/list_blobs` in the virtual network. If you can't, you're doing something wrong.
 
 ## Firewall
 
-Set up [Azure Firewall](https://learn.microsoft.com/azure/firewall/overview) in the North Europe virtual network.
+Set up [Azure Firewall](https://learn.microsoft.com/azure/firewall/overview) in the virtual network in the **shared location**.
 
 ## Routing
 
