@@ -14,13 +14,14 @@ Let's fix that!
 
 ## Virtual machine
 
-1. Create [network security group (NSG)](https://learn.microsoft.com/azure/virtual-network/network-security-groups-overview)
-    * Name: `nsg-jumpbox-{team name}-dev`
-    * Location: North Europe
+1. Create [network security group (NSG)](https://learn.microsoft.com/azure/virtual-network/network-security-groups-overview) in the **shared location**.
 1. Add rule to the NSG to deny all inbound traffic.
-1. Create a Windows desktop virtual machine with no public IP or public inbound ports. Assign the network security group to the virtual machine.
-    * Name: `vm{team name}`
-    * Location: North Europe
+1. Create a Windows desktop virtual machine, in the **shared location**, with no public IP or public inbound ports. Assign the network security group to the virtual machine.
+
+> Naming recommendations:
+>
+> * NSG: `nsg-jumpbox-{team name}-dev`
+> * VM: `vm{team name}`
 
 ## Bastion
 
@@ -28,14 +29,15 @@ So, umm... we created a virtual machine we can't access. What was the point of t
 
 The solution:
 
-1. Create a subnet for Azure Bastion in the VNET in the shared location - the name and size need to be specific and you must figure out what they are
-1. Create a public IP address
-    * Name: `pip-bastion-{team name}-dev` (see what we're getting at?)
-    * Location: North Europe
+1. Create a subnet for Azure Bastion in the VNET in the **shared location** - the name and size need to be specific and you must figure out what they are
+1. Create a public IP address in the **shared location**
 1. Create [Azure Bastion](https://learn.microsoft.com/azure/bastion/bastion-overview) resource using the newly created public IP address and add it to the virtual network
-    * Name: `bas-{team name}-dev`
-    * Location: North Europe
 
-Login to the virtual machine using Azure Bastion and verify that your Private DNS Zone work, by running in a command prompt `nslookup app-<your team name>-dev-eu.azurewebsites.net`. You should see an IP from the private IP address space.
+> Naming recommendations:
+>
+> * Public IP address: `pip-bastion-{team name}-dev`
+> * Bastion: `bas-{team name}-dev`
+
+Login to the virtual machine using Azure Bastion and verify that your Private DNS zones work by running the following command in the command prompt/PowerShell: `nslookup app-<your team name>-dev-eu.azurewebsites.net`. You should see an IP in the private IP address space.
 
 This exercise can only be completed by installing Solitaire and winning the game. Extra points for pro mode i.e., allowing only one time to go through the deck.
