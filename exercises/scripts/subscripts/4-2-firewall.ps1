@@ -1,16 +1,23 @@
+#!/usr/bin/env pwsh
+
 param(
-    [Parameter(Mandatory=$True)][string]$TeamName,
-    [string]$Location = "swedencentral"
+    [string]$TeamName = $env:TEAM_NAME,
+    [string]$Location = $env:HUB_LOCATION
 )
 
+if ($TeamName.Length -lt 2) {
+    Write-Error "Invalid argument: Team name missing or too short (must be at least 2 characters long)"
+    exit 1
+}
+
 $Environment = "dev"
-$ResourceGroupName = "rg-${TeamName}-${Environment}"
+$ResourceGroupName = "rg-hub-${TeamName}-${Environment}"
 $FirewallName = "afw-${TeamName}-${Environment}-${Location}"
 $FirewallPublicIpAddressName = "pip-firewall-${TeamName}-${Environment}-${Location}"
 $FirewallPublicIpConfigName = "config-${FirewallPublicIpAddressName}"
 $VnetName = "vnet-${TeamName}-${Environment}-${Location}"
 
-.\2-1-subnet.ps1 $TeamName $Location "firewall" "10.0.0.128/26"
+#.\2-1-subnet.ps1 $TeamName $Location "firewall" "10.0.0.128/26"
 
 Write-Output "`nCreating firewall ${FirewallName}..."
 

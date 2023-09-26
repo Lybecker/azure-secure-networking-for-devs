@@ -1,10 +1,19 @@
+#!/usr/bin/env pwsh
+
 param(
-    [Parameter(Mandatory=$True)][string]$TeamName,
-    [string]$PrimaryLocation = "westeurope",
-    [string]$SecondaryLocation = "eastus",
-    [string]$SharedLocation = "swedencentral"
+    [string]$TeamName = $env:TEAM_NAME,
+    [string]$EuLocation = $env:EU_LOCATION,
+    [string]$UsLocation = $env:US_LOCATION,
+    [string]$HubLocation = $env:HUB_LOCATION
 )
 
-.\1-1-vnet.ps1 $TeamName $SharedLocation "10.0.0"
-.\1-1-vnet.ps1 $TeamName $PrimaryLocation "10.0.4"
-.\1-1-vnet.ps1 $TeamName $SecondaryLocation "10.0.8"
+if ($TeamName.Length -lt 2) {
+    Write-Error "Invalid argument: Team name missing or too short (must be at least 2 characters long)"
+    exit 1
+}
+
+$Environment = "dev"
+
+.\subscripts\1-1-vnet.ps1 $TeamName $HubLocation "rg-hub-${TeamName}-${Environment}" "10.0.0"
+.\subscripts\1-1-vnet.ps1 $TeamName $EuLocation "rg-${TeamName}-${Environment}-eu" "10.0.4"
+.\subscripts\1-1-vnet.ps1 $TeamName $UsLocation "rg-${TeamName}-${Environment}-us" "10.0.8"

@@ -5,7 +5,7 @@
 > In case you need to catch up, run the script to get to where we need to be now:
 >
 > ```ps1
-> .\1-vnets.ps1 -TeamName <your team name>
+> .\1-vnets.ps1
 > ```
 
 ## Subnets
@@ -13,10 +13,8 @@
 Our virtual networks sure feel empty and sad. Let's cheer them up by giving them subnets!
 
 1. In the "shared" virtual network - the one by default in Sweden (heja Sverige!) - create a subnet for shared resources: `snet-shared-{team name}-dev-{location}`, span of 64 IP addresses should be plenty for our needs
-        <!-- * Add service endpoint for storage -->
 1. In the both two other virtual networks, create:
     1. `snet-shared-{team name}-dev-{location}` with the range of 128 addresses
-        <!-- * Add service endpoint for storage -->
     1. `snet-apps-{team name}-dev-{location}` with the range of 128 addresses
         * Delegate this subnet for `Microsoft.Web/serverFarms`
 
@@ -28,7 +26,7 @@ Now, on to some D-N-S-ing (if that's not a word, it darn well should be).
 
 1. Create two [private DNS zones](https://learn.microsoft.com/azure/dns/private-dns-privatednszone) for:
     1. Web apps ("`privatelink.azurewebsites.net`")
-    1. Blob storages
+    1. Blob storages ("`privatelink.blob.core.windows.net`")
 1. Link the created DNS zones to all three virtual networks with [virtual network links](https://learn.microsoft.com/azure/dns/private-dns-virtual-network-links)
 
 > **Fun fact!**
@@ -45,7 +43,7 @@ For all 3 storage accounts and 2 web app services:
 
     > Use the following resource name pattern:
     >
-    > * Private endpoint name: `pep-{resource name}` e.g., for the shared storage account `pep-stshared{team name}dev`
+    > * Private endpoint name: `pep-{resource name}` e.g., for the hub storage account `pep-sthub{team name}dev`
     > * Network interface name: `nic-pep-{resource name}`
 
 1. Add [private DNS zone groups](https://learn.microsoft.com/azure/private-link/private-endpoint-dns#private-dns-zone-group) for the endpoints
@@ -62,3 +60,9 @@ Disable access to app services and storage accounts:
 1. The app services should have access restrictions and private endpoints **on**
 
 Enable the virtual network (VNET) integration for the outbound traffic for both EU and US web apps.
+
+Launch any of the two web apps (e.g., `https://app-<your team name>-dev-eu.azurewebsites.net/`) in your browser. You should now be greeted with not so friendly 403 message.
+
+## Status check
+
+TODO: Where are we now?

@@ -1,22 +1,34 @@
+#!/usr/bin/env pwsh
+
 param(
-    [Parameter(Mandatory=$True)][string]$TeamName,
-    [string]$PrimaryLocation = "westeurope",
-    [string]$SecondaryLocation = "eastus",
-    [string]$SharedLocation = "swedencentral"
+    [string]$TeamName = $env:TEAM_NAME,
+    [string]$EuLocation = $env:EU_LOCATION,
+    [string]$UsLocation = $env:US_LOCATION,
+    [string]$HubLocation = $env:HUB_LOCATION
 )
 
-$Environment = "dev"
-$ResourceGroupName = "rg-${TeamName}-${Environment}"
+if ($TeamName.Length -lt 2) {
+    Write-Error "Invalid argument: Team name missing or too short (must be at least 2 characters long)"
+    exit 1
+}
 
-$VnetNameEu = "vnet-${TeamName}-${Environment}-${PrimaryLocation}"
-$VnetNameUs = "vnet-${TeamName}-${Environment}-${SecondaryLocation}"
-$VnetNameShared = "vnet-${TeamName}-${Environment}-${SharedLocation}"
+$Environment = "dev"
+
+$ResourceGroupNameHub = "rg-hub-${TeamName}-${Environment}"
+$ResourceGroupNameEu = "rg-${TeamName}-${Environment}-eu"
+$ResourceGroupNameUs = "rg-${TeamName}-${Environment}-us"
+
+$VnetNameEu = "vnet-${TeamName}-${Environment}-${EuLocation}"
+$VnetNameUs = "vnet-${TeamName}-${Environment}-${UsLocation}"
+$VnetNameHub = "vnet-${TeamName}-${Environment}-${HubLocation}"
 
 Write-Output "`nPeering virtual networks to using the hub and spoke model..."
 
-.\4-1-vnet-peerings.ps1 -ResourceGroupName $ResourceGroupName -VnetName1 $VnetNameShared -VnetName2 $VnetNameEu
-.\4-1-vnet-peerings.ps1 -ResourceGroupName $ResourceGroupName -VnetName1 $VnetNameShared -VnetName2 $VnetNameUs
+.\subscripts\4-1-vnet-peerings.ps1 -ResourceGroupName1 $ResourceGroupNameHub -VnetName1 $VnetNameHub -ResourceGroupName2 $ResourceGroupNameEu -VnetName2 $VnetNameEu
+.\subscripts\4-1-vnet-peerings.ps1 -ResourceGroupName1 $ResourceGroupNameHub -VnetName1 $VnetNameHub -ResourceGroupName2 $ResourceGroupNameUs -VnetName2 $VnetNameUs
 
-.\4-2-firewall.ps1 -TeamName $TeamName -Location $SharedLocation
+.\subscripts\2-1-subnet.ps1 $TeamName $HubLocation $ResourceGroupNameHub "firewall" "10.0.0.128/26"
+
+.\subscripts\4-2-firewall.ps1 -TeamName $TeamName -Location $HubLocation
 
 # TODO: Routing

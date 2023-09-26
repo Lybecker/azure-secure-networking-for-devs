@@ -1,13 +1,13 @@
 param(
     [Parameter(Mandatory=$True)][string]$TeamName,
     [Parameter(Mandatory=$True)][string]$Location,
+    [Parameter(Mandatory=$True)][string]$ResourceGroupName,
     [Parameter(Mandatory=$True)][string]$SubnetId,  # Used in the name to identify the purpose e.g., "shared"
     [Parameter(Mandatory=$True)][string]$AddressPrefixes,
     [string]$AdditionalArguments = ""
 )
 
 $Environment = "dev"
-$ResourceGroupName = "rg-${TeamName}-${Environment}"
 $VnetName = "vnet-${TeamName}-${Environment}-${Location}"
 
 if ($SubnetId.ToLower() -Match "bastion") {

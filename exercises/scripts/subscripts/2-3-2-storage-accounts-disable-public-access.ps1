@@ -3,11 +3,14 @@ param(
 )
 
 $Environment = "dev"
-$ResourceGroupName = "rg-${TeamName}-${Environment}"
+$ResourceGroupNames = @("rg-hub-${TeamName}-${Environment}", "rg-${TeamName}-${Environment}-eu", "rg-${TeamName}-${Environment}-us")
 $StorageAccountNamePrefix = "st${TeamName}${Environment}"
-$StorageAccountNames = @("${StorageAccountNamePrefix}eu", "${StorageAccountNamePrefix}us", "stshared${TeamName}${Environment}")
+$StorageAccountNames = @("sthub${TeamName}${Environment}", "${StorageAccountNamePrefix}eu", "${StorageAccountNamePrefix}us")
 
-foreach ($StorageAccountName in $StorageAccountNames) {
+for ($i = 0; $i -lt 3; $i++) {
+    $StorageAccountName = $StorageAccountNames[$i]
+    $ResourceGroupName = $ResourceGroupNames[$i]
+
     Write-Output "`nDisabling public access to storage account ${StorageAccountName}..."
     # https://learn.microsoft.com/cli/azure/resource?view=azure-cli-latest#az-resource-update
 

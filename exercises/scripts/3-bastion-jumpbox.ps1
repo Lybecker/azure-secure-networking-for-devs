@@ -1,29 +1,39 @@
+#!/usr/bin/env pwsh
+
 param(
-    [Parameter(Mandatory=$True)][string]$TeamName,
-    [string]$Location = "swedencentral"
+    [string]$TeamName = $env:TEAM_NAME,
+    [string]$Location = $env:HUB_LOCATION
 )
 
+if ($TeamName.Length -lt 2) {
+    Write-Error "Invalid argument: Team name missing or too short (must be at least 2 characters long)"
+    exit 1
+}
+
 $Environment = "dev"
-$ResourceGroupName = "rg-${TeamName}-${Environment}"
+$ResourceGroupNameHub = "rg-hub-${TeamName}-${Environment}"
 $VnetName = "vnet-${TeamName}-${Environment}-${Location}"
 $JumpboxNsgName = "nsg-jumpbox-${TeamName}-${Environment}"
 $JumpboxNicName = "nic-jumpbox-${TeamName}-${Environment}"
 $JumpboxVmName = "vm${TeamName}"
-$JumpboxVmImage = "MicrosoftWindowsDesktop:Windows-11:win11-22h2-pro:22621.1265.230207" # URN format for '--image': "Publisher:Offer:Sku:Version"
+
+# To list available VMs, run command "az vm image list --offer Windows-11 --all --output table"
+$JumpboxVmImage = "MicrosoftWindowsDesktop:windows-11:win11-22h2-pro:22621.2283.230901" # URN format for '--image': "Publisher:Offer:Sku:Version"
+
 $JumpboxSubnetName = "snet-shared-${TeamName}-${Environment}-${Location}"
 $JumpboxAdminUsername = "jumpboxuser"
 $JumpboxAdminPassword = "JumpboxPassword123!"
 $BastionPublicIpAddressName = "pip-bastion-${TeamName}-${Environment}"
 $BastionName = "bas-${TeamName}-${Environment}"
 
-.\2-1-subnet.ps1 $TeamName $Location "bastion" "10.0.0.64/26"
+.\subscripts\2-1-subnet.ps1 $TeamName $Location $ResourceGroupNameHub "bastion" "10.0.0.64/26"
 
 Write-Output "`nCreating network security group (NSG) for jumpbox..."
 # https://learn.microsoft.com/cli/azure/network/nsg?view=azure-cli-latest#az-network-nsg-create
 
 az network nsg create `
     --name $JumpboxNsgName `
-    --resource-group $ResourceGroupName `
+    --resource-group $ResourceGroupNameHub `
     --location $Location `
     --no-wait false
 
@@ -33,7 +43,7 @@ Write-Output "`nCreating rule to deny all inbound traffic for NSG..."
 
 az network nsg rule create `
     --name "DenyAllInbound" `
-    --resource-group $ResourceGroupName `
+    --resource-group $ResourceGroupNameHub `
     --nsg-name $JumpboxNsgName `
     --priority "200" `
     --access "Deny" `
@@ -47,7 +57,7 @@ Write-Output "`nCreating network interface (NIC) for jumpbox..."
 
 az network nic create `
     --name $JumpboxNicName `
-    --resource-group $ResourceGroupName `
+    --resource-group $ResourceGroupNameHub `
     --location $Location `
     --vnet-name $VnetName `
     --subnet $JumpboxSubnetName `
@@ -58,7 +68,7 @@ Write-Output "`nCreating jumpbox VM..."
 
 az vm create `
     --name $JumpboxVmName `
-    --resource-group $ResourceGroupName `
+    --resource-group $ResourceGroupNameHub `
     --location $Location `
     --image $JumpboxVmImage `
     --admin-username $JumpboxAdminUsername `
@@ -70,7 +80,7 @@ Write-Output "`nCreating public IP address for Azure Bastion..."
 
 az network public-ip create `
     --name $BastionPublicIpAddressName `
-    --resource-group $ResourceGroupName `
+    --resource-group $ResourceGroupNameHub `
     --location $Location `
     --sku Standard
 
@@ -79,7 +89,7 @@ Write-Output "`nCreating Azure Bastion resource..."
 
 az network bastion create `
     --name $BastionName `
-    --resource-group $ResourceGroupName `
+    --resource-group $ResourceGroupNameHub `
     --location $Location `
     --vnet-name $VnetName `
     --public-ip-address $BastionPublicIpAddressName
