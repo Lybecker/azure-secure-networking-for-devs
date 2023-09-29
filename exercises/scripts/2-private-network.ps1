@@ -22,7 +22,7 @@ $Environment = "dev"
 .\subscripts\2-1-subnet.ps1 $TeamName $UsLocation "rg-${TeamName}-${Environment}-us" "shared" "10.0.8.0/25" "--service-endpoints Microsoft.KeyVault Microsoft.Storage"
 .\subscripts\2-1-subnet.ps1 $TeamName $UsLocation "rg-${TeamName}-${Environment}-us" "apps" "10.0.8.128/25" "--delegations Microsoft.Web/serverFarms"
 
-.\subscripts\2-2-private-dns-zones.ps1 $TeamName
+.\subscripts\2-2-private-dns-zones.ps1 $TeamName $EuLocation $UsLocation $HubLocation
 
 .\subscripts\2-3-private-endpoints.ps1 $TeamName $EuLocation $UsLocation $HubLocation
 

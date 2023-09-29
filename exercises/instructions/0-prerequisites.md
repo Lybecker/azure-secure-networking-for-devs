@@ -60,7 +60,7 @@ Let's provision our first resources in Azure!
     > | US | `US_LOCATION` | East US (`eastus`) |
     > | Hub | `HUB_LOCATION` | Sweden central (`swedencentral`)
 
-    If all goes well, you should now have the [resources](#resources) deployed including the code for the web apps.
+    If all goes well, you should now have the [resources](#status-check) deployed including the code for the web apps.
 
 1. Test the web apps and generate blobs:
     1. In your browser, navigate to the web app in the EU region: `https://app-<your team name>-dev-eu.azurewebsites.net/`
@@ -71,6 +71,35 @@ Let's provision our first resources in Azure!
 ## Status check
 
 We shoud now have the following resources created:
+
+```mermaid
+graph
+    subgraph rg-hub["rg-hub-{team name}-dev"]
+        st-hub("sthub{team name}dev")
+    end
+    subgraph rg-eu["rg-{team name}-dev-eu"]
+        direction TB
+
+        asp-eu("asp-{team name}-dev-eu")
+        app-eu("app-{team name}-dev-eu")
+        st-eu("st{team name}deveu")
+
+        asp-eu---app-eu
+        app-eu-- Storage Blob Data Contributor -->st-hub
+        app-eu-- Storage Blob Data Contributor -->st-eu
+    end
+    subgraph rg-us["rg-{team name}-dev-us"]
+        direction TB
+
+        asp-us("asp-{team name}-dev-us")
+        app-us("app-{team name}-dev-us")
+        st-us("st{team name}devus")
+
+        asp-us---app-us
+        app-us-- Storage Blob Data Contributor -->st-hub
+        app-us-- Storage Blob Data Contributor -->st-us
+    end
+```
 
 | Resource type | Resource name | Resource group | Default location |
 | ------------- | ------------- | -------------- | ---------------- |

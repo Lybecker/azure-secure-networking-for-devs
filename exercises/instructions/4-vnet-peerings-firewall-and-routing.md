@@ -3,7 +3,7 @@
 > That Bastion stuff wasn't that bad, was it? But in case you were playing Solitare the entire time, here you go:
 >
 > ```ps1
-> .\3-bastion-jumpbox.ps1 -TeamName <your team name>
+> .\3-bastion-jumpbox.ps1
 > ```
 
 Virtual networks, like galaxies. Systems of cells interlinked within cells interlinked. *Cells interlinked*. Drifting away in the empty vastness of silent space. In solitude, forever to travel alone until the last dark star shines its last light.
@@ -20,4 +20,22 @@ Now you should be able to open a browser in the virtual machine and navigate to 
 
 ## Status check
 
-TODO: Where are we now?
+Now this is rather simple, isn't it?
+
+```mermaid
+graph
+    subgraph rg-hub["rg-hub-{team name}-dev"]
+        vnet-hub("vnet-{team name}-dev-{hub location}")
+    end
+
+    subgraph rg-eu["rg-{team name}-dev-eu"]
+        vnet-eu("vnet-{team name}-dev-{EU location}")
+    end
+
+    subgraph rg-us["rg-{team name}-dev-us"]
+        vnet-us("vnet-{team name}-dev-{US location}")
+    end
+
+    vnet-eu<-- peered -->vnet-hub
+    vnet-us<-- peered -->vnet-hub
+```

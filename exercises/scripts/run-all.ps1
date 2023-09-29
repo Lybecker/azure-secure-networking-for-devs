@@ -11,4 +11,5 @@ param(
 .\1-vnets.ps1 -TeamName $TeamName -EuLocation $EuLocation -UsLocation $UsLocation -HubLocation $HubLocation
 .\2-private-network.ps1 -TeamName $TeamName -EuLocation $EuLocation -UsLocation $UsLocation -HubLocation $HubLocation
 .\3-bastion-jumpbox.ps1 -TeamName $TeamName -Location $HubLocation
-.\4-vnet-peerings-firewall-and-routing.ps1 -TeamName $TeamName -EuLocation $EuLocation -UsLocation $UsLocation -HubLocation $HubLocation
+.\4-vnet-peerings.ps1 -TeamName $TeamName -EuLocation $EuLocation -UsLocation $UsLocation -HubLocation $HubLocation
+.\5-firewall.ps1 -TeamName $TeamName -HubLocation $HubLocation
