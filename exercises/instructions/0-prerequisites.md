@@ -70,7 +70,7 @@ Let's provision our first resources in Azure!
 
 ## Status check
 
-We shoud now have the following resources created:
+We should now have the following resources created:
 
 ```mermaid
 graph
