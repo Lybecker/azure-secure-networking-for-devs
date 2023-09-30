@@ -21,7 +21,7 @@ Navigate to the Virtual Machine -> Networking -> Nic -> Effective routes and sho
 
 Azure automatically adds routes to the system route table when you create a virtual network, VPN gateway, or virtual network peering. Only when you want to change the default behavior, you need to add custom routes.
 
-## Network security with NSG and ASG
+## Network segmentation with NSG and ASG
 
 1. Create ASG asg-web-role and assign it to the nic of the web server/VM
 1. Create ASG asg-db-role and assign in the the (SQL -> Networking -> Private access -> pep-sql-corpwebsite -> Application security groups)
