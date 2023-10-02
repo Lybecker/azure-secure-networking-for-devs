@@ -1,6 +1,4 @@
 $location = "swedencentral"
-$vm_username = "theadmin"
-$vm_password = "LifeIsComplexSoShouldYourP@asswordBe"
 
 Write-Output "Creating resource group rg-corpwebsite-dev-${location}"
 az group create `
@@ -20,7 +18,8 @@ az network vnet subnet update `
     --name snet-corpwebsite-dev-${location} `
     --resource-group rg-corpwebsite-dev-${location} `
     --vnet-name vnet-corpwebsite-dev-${location} `
-    --disable-private-endpoint-network-policies true 
+    --disable-private-endpoint-network-policies false `
+    --disable-private-endpoint-network-policies false
 
 Write-Output "Creating virtual network vnet-hub-dev-${location}"
 az network vnet create `
@@ -89,13 +88,20 @@ Write-Output "Creating VM with public IP to act as a web server"
 az vm create `
     --name vm-web-dev `
     --resource-group rg-corpwebsite-dev-${location} `
-    --image Win2022Datacenter `
-    --size Standard_A4_v2 `
+    --image Ubuntu2204 `
+    --size Standard_B2s `
     --vnet-name vnet-corpwebsite-dev-${location} `
     --subnet snet-corpwebsite-dev-${location} `
     --public-ip-sku Standard `
-    --admin-username ${vm_username} `
-    --admin-password ${vm_password}
+    --admin-username azureuser `
+    --generate-ssh-keys
 
 Write-Output "Login to the VM via RDP and verify you can reach the database via Powershell command:"
 Write-Output "Test-NetConnection -ComputerName 'sql-corpwebsite-dev-${location}.database.windows.net' -Port 1433" 
+
+
+
+
+create subnet AzureFirewallSubnet
+Create FW with policy and public IP
+Route table - associate to subnet + add route to
