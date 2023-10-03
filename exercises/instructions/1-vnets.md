@@ -14,4 +14,38 @@ If you have time left over, debate the existentialism of virtual networks. Are t
 
 ## Status check
 
-TODO: Where are we now?
+The current state of affairs should look something like this:
+
+```mermaid
+graph
+    subgraph rg-hub["rg-hub-{team name}-dev"]
+        st-hub("sthub{team name}dev")
+        vnet-hub("vnet-{team name}-dev-{hub location}")
+    end
+    subgraph rg-eu["rg-{team name}-dev-eu"]
+        direction TB
+
+        asp-eu("asp-{team name}-dev-eu")
+        app-eu("app-{team name}-dev-eu")
+        st-eu("st{team name}deveu")
+
+        vnet-eu("vnet-{team name}-dev-{EU location}")
+
+        asp-eu---app-eu
+        app-eu-- Storage Blob Data Contributor -->st-hub
+        app-eu-- Storage Blob Data Contributor -->st-eu
+    end
+    subgraph rg-us["rg-{team name}-dev-us"]
+        direction TB
+
+        asp-us("asp-{team name}-dev-us")
+        app-us("app-{team name}-dev-us")
+        st-us("st{team name}devus")
+
+        vnet-us("vnet-{team name}-dev-{US location}")
+
+        asp-us---app-us
+        app-us-- Storage Blob Data Contributor -->st-hub
+        app-us-- Storage Blob Data Contributor -->st-us
+    end
+```

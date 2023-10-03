@@ -65,4 +65,89 @@ Launch any of the two web apps (e.g., `https://app-<your team name>-dev-eu.azure
 
 ## Status check
 
-TODO: Where are we now?
+How about those resources - sure keep piling up, eh? Notice something funny regarding the app services with respect to subnets?
+
+```mermaid
+graph
+    subgraph rg-hub["rg-hub-{team name}-dev"]
+        subgraph vnet-hub["vnet-{team name}-dev-{hub location}"]
+            subgraph snet-shared-hub["snet-shared-{team name}-dev-{hub location}"]
+                st-hub("sthub{team name}dev")
+                nic-pep-st-hub("nic-pep-sthub{team name}dev")
+                pep-st-hub("pep-sthub{team name}dev")
+            end
+        end
+
+        priv-dns-zone-blobs{"privatelink.blob.core.windows.net"}
+        priv-dns-zone-sites{"privatelink.azurewebsites.net"}
+
+        st-hub---pep-st-hub
+        nic-pep-st-hub-- attached to -->pep-st-hub
+    end
+
+    subgraph rg-eu["rg-{team name}-dev-eu"]
+        asp-eu("asp-{team name}-dev-eu")
+
+        subgraph vnet-eu["vnet-{team name}-dev-{EU location}"]
+            subgraph snet-apps-eu["snet-apps-{team name}-dev-{EU location}"]
+                app-eu("app-{team name}-dev-eu")
+            end
+
+            subgraph snet-shared-eu["snet-shared-{team name}-dev-{EU location}"]
+                st-eu("st{team name}deveu")
+                nic-pep-st-eu("nic-pep-st{team name}deveu")
+                pep-st-eu("pep-st{team name}deveu")
+                nic-pep-app-eu("nic-app-{team name}-dev-eu")
+                pep-app-eu("pep-app-{team name}-dev-eu")
+            end
+        end
+
+        asp-eu---app-eu
+        app-eu-- Storage Blob Data Contributor -->st-hub
+        app-eu-- Storage Blob Data Contributor -->st-eu
+
+        st-eu---pep-st-eu
+        nic-pep-st-eu-- attached to -->pep-st-eu
+        app-eu---pep-app-eu
+        nic-pep-app-eu-- attached to -->pep-app-eu
+    end
+
+    subgraph rg-us["rg-{team name}-dev-us"]
+        asp-us("asp-{team name}-dev-us")
+
+        subgraph vnet-us["vnet-{team name}-dev-{US location}"]
+            subgraph snet-apps-us["snet-apps-{team name}-dev-{US location}"]
+                app-us("app-{team name}-dev-us")
+            end
+
+            subgraph snet-shared-us["snet-shared-{team name}-dev-{US location}"]
+                st-us("st{team name}devus")
+                nic-pep-st-us("nic-pep-st{team name}devus")
+                pep-st-us("pep-st{team name}devus")
+                nic-pep-app-us("nic-app-{team name}-dev-us")
+                pep-app-us("pep-app-{team name}-dev-us")
+            end
+        end
+
+        asp-us---app-us
+        app-us-- Storage Blob Data Contributor -->st-hub
+        app-us-- Storage Blob Data Contributor -->st-us
+
+        st-us---pep-st-us
+        nic-pep-st-us-- attached to -->pep-st-us
+        app-us---pep-app-us
+        nic-pep-app-us-- attached to -->pep-app-us
+    end
+
+    vnet-hub-- linked ---priv-dns-zone-blobs
+    vnet-hub-- linked ---priv-dns-zone-sites
+    vnet-eu-- linked ---priv-dns-zone-blobs
+    vnet-eu-- linked ---priv-dns-zone-sites
+    vnet-us-- linked ---priv-dns-zone-blobs
+    vnet-us-- linked ---priv-dns-zone-sites
+    pep-st-hub---priv-dns-zone-blobs
+    pep-st-eu---priv-dns-zone-blobs
+    pep-st-us---priv-dns-zone-blobs
+    pep-app-eu---priv-dns-zone-sites
+    pep-app-us---priv-dns-zone-sites
+```
