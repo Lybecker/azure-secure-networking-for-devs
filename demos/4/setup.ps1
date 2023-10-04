@@ -12,15 +12,23 @@ az network vnet create `
     --resource-group $resourceGroup `
     --location $location `
     --address-prefix 10.0.0.0/16 `
-    --subnet-name snet-corpwebsite-dev-${location} `
+    --subnet-name snet-web-dev-${location} `
     --subnet-prefix 10.0.0.0/24 `
 
 az network vnet subnet update `
-    --name snet-corpwebsite-dev-${location} `
+    --name snet-web-dev-${location} `
     --resource-group $resourceGroup `
     --vnet-name vnet-corpwebsite-dev-${location} `
     --disable-private-endpoint-network-policies false `
-    --disable-private-endpoint-network-policies false
+    --disable-private-link-service-network-policies false
+
+az network vnet subnet create `
+    --name snet-db-dev-${location} `
+    --vnet-name vnet-corpwebsite-dev-${location} `
+    --resource-group $resourceGroup `
+    --address-prefix 10.0.1.0/24 `
+    --disable-private-endpoint-network-policies false `
+    --disable-private-link-service-network-policies false
 
 Write-Output "Creating virtual network vnet-hub-dev-${location}"
 az network vnet create `
@@ -114,7 +122,7 @@ az network firewall network-rule create `
 
 Write-Output "Creating (managed SQL) database"
 az sql server create `
-    --name sql-corpwebsite-dev-${location} `
+    --name sql-db-dev-${location} `
     --resource-group $resourceGroup `
     --location $location `
     --admin-user sqladmin `
@@ -127,7 +135,7 @@ az network private-endpoint create `
     --name pep-sql-corpwebsite `
     --resource-group $resourceGroup `
     --vnet-name vnet-corpwebsite-dev-${location} `
-    --subnet snet-corpwebsite-dev-${location} `
+    --subnet snet-db-dev-${location} `
     --private-connection-resource-id ${id} `
     --group-ids sqlServer `
     --connection-name pl-sql-corpwebsite
@@ -158,15 +166,7 @@ az vm create `
     --image Ubuntu2204 `
     --size Standard_B2s `
     --vnet-name vnet-corpwebsite-dev-${location} `
-    --subnet snet-corpwebsite-dev-${location} `
+    --subnet snet-web-dev-${location} `
     --admin-username azureuser `
     --public-ip-address "" `
     --generate-ssh-keys
-
-Write-Output "Login to the VM via RDP and verify you can reach the database via Powershell command:"
-Write-Output "Test-NetConnection -ComputerName 'sql-corpwebsite-dev-${location}.database.windows.net' -Port 1433" 
-
-
-
-
-Route table - associate to subnet + add route to

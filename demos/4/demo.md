@@ -1,13 +1,16 @@
 # Routes & network security demo
 
-Run the [setup.ps1](setup.ps1) script, which creates
-:
+Run the [setup.ps1](setup.ps1) script, which creates:
 
 - Two virtual peered networks (Corp website and Hub)
 - Virtual machine that acts as a web server in the Corp website virtual network.
 - Azure SQL with private link in the Corp website virtual network
 - Azure Firewall
 - Azure Bastion
+
+> [Powershell handles empty quotes](https://learn.microsoft.com/en-us/cli/azure/use-cli-effectively?tabs=bash%2Cbash2#use-quotation-marks-in-parameters) differently than bash. If you want to run the script from Powershell, you need to replace `""` with `'""'`.
+
+> The script is not digitally signed, so you might have to run `Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope CurrentUser` to allow it to run.
 
 All demos are in the Azure portal.
 
@@ -32,27 +35,46 @@ Azure automatically adds routes to the system route table when you create a virt
 ## Network segmentation with NSG and ASG
 
 1. Create ASG `asg-web-role` and assign it to the nic of the web server/VM
-1. Create ASG `asg-db-role` and assign in the the (SQL -> Networking -> Private access -> pep-sql-corpwebsite -> Application security groups)
-1. Create NSG `nsg-corpwebsite-dev-swedencentral` and associate with subnet `snet-corpwebsite-dev-swedencentral`. Because the AllowVNetInBound default security rule allows all communication between resources in the same virtual network, this rule is needed to deny traffic from all resources.
+1. Create NSG `nsg-db-dev-swedencentral` and associate with subnet `snet-db-dev-swedencentral`. Because the AllowVNetInBound default security rule allows all communication between resources, this rule is needed to deny traffic from all resources.
     - Create rule `Deny-Database-All`
     - with priority 120
-    - deny all traffic to `asg-db-role`
+    - source any
+    - destination any
+    - service ms sql  (port 1433)
 1. Show it is not possible to access the database from the web server
 
     ```bash
-    telnet sql-corpwebsite-dev-swedencentral.database.windows.net 1433
+    telnet sql-db-dev-swedencentral.database.windows.net 1433
     ```
 
 1. Create rule `Allow-Database-BusinessLogic`
     - with priority 110
-    - allow traffic from `asg-web-role` to `asg-db-role`
+    - allow from application security group `asg-web-role`
+    - destination any
+    - service ms sql  (port 1433)
+
+    ![Azure resources](assets/asg-allow-database-businesslogic.png)
 1. Show it is now possible to access the database from the web server
 
     ```bash
-    telnet sql-corpwebsite-dev-swedencentral.database.windows.net 1433
+    telnet sql-db-dev-swedencentral.database.windows.net 1433
     ```
 
-## Firewall
+> Note internal Microsoft processes create NSGs via policies for each subnet. Show they exists, so people are aware of them. ![Azure resources](assets/azureresources.png)
+
+## Firewall & routing
+
+First of all outbound traffic should be routed via the firewall. This is done by creating a route table and associating it with the subnets.
+
+1. Create route table `rt-corpwebsite-dev-swedencentral`
+1. Associate it with subnet `snet-web-dev-swedencentral` and `snet-db-dev-swedencentral`
+1. Add route `outbound-firewall`
+    - Destination IP Addresses
+    - Destination 0.0.0.0/0 (meaning Internet traffic)
+    - Network type Virtual appliance
+    - Next hop internal IP of the firewall
+
+This routes all Internet traffic via the firewall.
 
 By default the Firewall allows no traffic. You need to create rules to allow traffic. We already created and outbound network rule allowing DNS lookups.
 
