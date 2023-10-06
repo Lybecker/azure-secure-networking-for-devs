@@ -39,3 +39,9 @@ graph
     vnet-eu<-- peered -->vnet-hub
     vnet-us<-- peered -->vnet-hub
 ```
+
+## Tips and tricks
+
+### Relevant Azure CLI commands
+
+* [az network vnet peering create](https://learn.microsoft.com/cli/azure/network/vnet/peering?view=azure-cli-latest#az-network-vnet-peering-create())

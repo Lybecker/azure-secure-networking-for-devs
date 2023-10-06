@@ -9,7 +9,7 @@ $VnetName = "vnet-${TeamName}-${Environment}-${Location}"
 $AddressPrefixes = "${IpPrefix}.0/22"
 
 Write-Output "`nCreating virtual network `"${VnetName}`" with address prefixes ${AddressPrefixes}..."
-# https://learn.microsoft.com/en-us/azure/network/vnet?view=azure-cli-latest#az-network-vnet-create
+# https://learn.microsoft.com/cli/azure/network/vnet?view=azure-cli-latest#az-network-vnet-create()
 
 az network vnet create `
     --name $VnetName `

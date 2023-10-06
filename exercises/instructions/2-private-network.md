@@ -12,7 +12,7 @@
 
 Our virtual networks sure feel empty and sad. Let's cheer them up by giving them subnets!
 
-1. In the "shared" virtual network - the one by default in Sweden (heja Sverige!) - create a subnet for shared resources: `snet-shared-{team name}-dev-{location}`, span of 64 IP addresses should be plenty for our needs
+1. In the "shared" virtual network - the one by default in Sweden (heja Sverige!) - create a subnet for shared resources: `snet-shared-{team name}-dev-{location}`, span of 64 (or 64 - 5 = 59) IP addresses should be plenty for our needs
 1. In the both two other virtual networks, create:
     1. `snet-shared-{team name}-dev-{location}` with the range of 128 addresses
     1. `snet-apps-{team name}-dev-{location}` with the range of 128 addresses
@@ -151,3 +151,21 @@ graph
     pep-app-eu---priv-dns-zone-sites
     pep-app-us---priv-dns-zone-sites
 ```
+
+## Tips and tricks
+
+### Learning resources
+
+* [Add, change, or delete a virtual network subnet](https://learn.microsoft.com/azure/virtual-network/virtual-network-manage-subnet?tabs=azure-portal)
+* [What is a private Azure DNS zone?](https://learn.microsoft.com/azure/dns/private-dns-privatednszone)
+* [What is a private endpoint?](https://learn.microsoft.com/azure/private-link/private-endpoint-overview)
+
+### Relevant Azure CLI commands
+
+* [az-network-vnet-subnet-create](https://learn.microsoft.com/cli/azure/network/vnet/subnet?view=azure-cli-latest#az-network-vnet-subnet-create())
+* [az network private-dns zone create](https://learn.microsoft.com/cli/azure/network/private-dns/zone?view=azure-cli-latest#az-network-private-dns-zone-create())
+* [az network private-dns link vnet create](https://learn.microsoft.com/en-us/cli/azure/network/private-dns/link/vnet?view=azure-cli-latest#az-network-private-dns-link-vnet-create())
+* [az network private-endpoint create](https://learn.microsoft.com/cli/azure/network/private-endpoint?view=azure-cli-latest#az-network-private-endpoint-create())
+* [az network private-endpoint dns-zone-group add](https://learn.microsoft.com/en-us/cli/azure/network/private-endpoint/dns-zone-group?view=azure-cli-latest#az-network-private-endpoint-dns-zone-group-add())
+* [az resource update](https://learn.microsoft.com/cli/azure/resource?view=azure-cli-latest#az-resource-update())
+* [az webapp vnet-integration add](https://learn.microsoft.com/cli/azure/webapp/vnet-integration?view=azure-cli-latest#az-webapp-vnet-integration-add())

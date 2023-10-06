@@ -37,7 +37,7 @@ $StorageAccountInformationHub = (az storage account list --resource-group $Resou
 $StorageAccountResourceIdShared = $StorageAccountInformationHub.id
 
 Write-Output "`nCreating private endpoint for EU app service..."
-# https://learn.microsoft.com/cli/azure/network/private-endpoint?view=azure-cli-latest#az-network-private-endpoint-create
+# https://learn.microsoft.com/cli/azure/network/private-endpoint?view=azure-cli-latest#az-network-private-endpoint-create()
 
 az network private-endpoint create `
     --connection-name "sc-pep-${AppServiceNamePrefix}-eu" `
@@ -111,7 +111,7 @@ Write-Output "`nPausing the script to give time for the private endpoints to rea
 Start-Sleep -Seconds 90
 
 Write-Output "`nAdding private endpoint of EU app service to DNS zone group..."
-# https://learn.microsoft.com/en-us/cli/azure/network/private-endpoint/dns-zone-group?view=azure-cli-latest#az-network-private-endpoint-dns-zone-group-add
+# https://learn.microsoft.com/en-us/cli/azure/network/private-endpoint/dns-zone-group?view=azure-cli-latest#az-network-private-endpoint-dns-zone-group-add()
 
 $PrivateDnsZoneIdWebsites = (az network private-dns zone show --name privatelink.azurewebsites.net --resource-group $ResourceGroupNameHub --query id --output tsv)
 
@@ -166,7 +166,7 @@ az network private-endpoint dns-zone-group add `
     --no-wait false
 
 Write-Output "`nDisabling public access to EU app service..."
-# https://learn.microsoft.com/cli/azure/resource?view=azure-cli-latest#az-resource-update
+# https://learn.microsoft.com/cli/azure/resource?view=azure-cli-latest#az-resource-update()
 
 az resource update `
     --resource-group $ResourceGroupNameEu `

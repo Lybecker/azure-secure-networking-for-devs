@@ -111,7 +111,7 @@ graph
 | Web app service | `app-{team name}-dev-eu` | `rg-{team name}-dev-eu` | West Europe |
 | Web app service | `app-{team name}-dev-us` | `rg-{team name}-dev-us` | East US |
 
-## Naming is hard
+## Tips and tricks: Naming is hard
 
 Links to help with naming resources (these will be useful later):
 

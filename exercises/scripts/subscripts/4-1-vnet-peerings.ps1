@@ -10,7 +10,7 @@ Write-Output "`nPeering virtual networks ${VnetName1} <-> ${VnetName2}..."
 $VnetResourceId1 = (az network vnet show --resource-group $ResourceGroupName1 --name $VnetName1 | ConvertFrom-Json).id
 $VnetResourceId2 = (az network vnet show --resource-group $ResourceGroupName2 --name $VnetName2 | ConvertFrom-Json).id
 
-# https://learn.microsoft.com/cli/azure/network/vnet/peering?view=azure-cli-latest#az-network-vnet-peering-create
+# https://learn.microsoft.com/cli/azure/network/vnet/peering?view=azure-cli-latest#az-network-vnet-peering-create()
 
 az network vnet peering create `
     --name "peer-${VnetName1}-${VnetName2}" `
