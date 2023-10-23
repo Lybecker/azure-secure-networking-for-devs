@@ -39,13 +39,13 @@ The solution:
 > * Public IP address: `pip-bastion-{team name}-dev`
 > * Bastion: `bas-{team name}-dev`
 
+## Status check
+
 Login to the virtual machine using Azure Bastion and verify that your Private DNS zones work by running the following command in the command prompt/PowerShell: `nslookup app-<your team name>-dev-eu.azurewebsites.net`. You should see an IP in the private IP address space. Try accessing the web app in the browser of your jumpbox - does that work? Should it?
 
 This exercise can only be completed by installing Solitaire and winning the game. Extra points for pro mode i.e., allowing only one time to go through the deck.
 
-## Status check
-
-EU and US resource groups are omitted since we didn't touch them in this exercise.
+The current status of the hub resource group should now be as depicted below. EU and US resource groups are omitted since we didn't touch them in this exercise.
 
 ```mermaid
 graph

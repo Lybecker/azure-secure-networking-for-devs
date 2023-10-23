@@ -62,13 +62,14 @@ Let's provision our first resources in Azure!
 
     If all goes well, you should now have the [resources](#status-check) deployed including the code for the web apps.
 
-1. Test the web apps and generate blobs:
-    1. In your browser, navigate to the web app in the EU region: `https://app-<your team name>-dev-eu.azurewebsites.net/`
-    1. Generate blobs: `https://app-<your team name>-dev-eu.azurewebsites.net/create_blobs`
-    1. List blobs: `https://app-<your team name>-dev-eu.azurewebsites.net/list_blobs`
-    1. Repeat the steps for the app service in the US region
-
 ## Status check
+
+Test the web apps and generate blobs:
+
+1. In your browser, navigate to the web app in the EU region: `https://app-<your team name>-dev-eu.azurewebsites.net/`
+1. Generate blobs: `https://app-<your team name>-dev-eu.azurewebsites.net/create_blobs`
+1. List blobs: `https://app-<your team name>-dev-eu.azurewebsites.net/list_blobs`
+1. Repeat the steps for the app service in the US region
 
 We should now have the following resources created:
 
