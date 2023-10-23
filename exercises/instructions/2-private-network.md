@@ -51,7 +51,7 @@ For storage accounts and web app services:
 
 > **Note:** Azure web apps are a little bit special. They have private endpoints and VNET integration. Don't worry, you will figure it out!
 
-> ⏭ **Short cut available** ⏭
+> ⏭ **Shortcut available** ⏭
 >
 > When you have successfully configured private endpoints for a one storage account and app service, you may run the catch up script (`2-private-network.ps1`) at the end of this exercise to configure the rest, because the work is rather repetitive and time consuming. **Note** that you must have followed the naming convention in order for the script to run successfully.
 
