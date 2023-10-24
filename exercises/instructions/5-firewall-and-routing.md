@@ -6,6 +6,10 @@
 > .\4-vnet-peerings.ps1
 > ```
 
+You secured a lot of stuff in the previous exercises, but there's still a lot of work to do. Let's get to it!
+
+We would like restrict data exfiltration of the HR data. That means controlling the traffic between the virtual network and the internet. We'll do that by setting up a firewall to route all outgoing traffic through.
+
 ## Firewall
 
 Set up [Azure Firewall](https://learn.microsoft.com/azure/firewall/overview) - not the basic SKU - in the virtual network in the **hub location**.
@@ -14,7 +18,7 @@ Set up [Azure Firewall](https://learn.microsoft.com/azure/firewall/overview) - n
 
 Finally:
 
-1. Add a [route table](https://learn.microsoft.com/azure/virtual-network/manage-route-table) and direct next hop traffic from VM to Azure Firewall
+1. Add a [route table](https://learn.microsoft.com/azure/virtual-network/manage-route-table), assign it to each subnet and direct next hop traffic from VM to Azure Firewall
 1. Block all sites except GitHub
 
 ## Status check
