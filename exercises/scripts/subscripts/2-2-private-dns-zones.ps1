@@ -36,7 +36,7 @@ foreach ($PrivateDnsZoneName in $PrivateDnsZoneNames) {
         Write-Output "`nCreating virtual network link for network ${VnetName} (resource group ${ResourceGroupName}) to private DNS zone ${PrivateDnsZoneName}..."
         Write-Output "VNET ID: ${VnetId}"
 
-        # https://learn.microsoft.com/en-us/cli/azure/network/private-dns/link/vnet?view=azure-cli-latest#az-network-private-dns-link-vnet-create
+        # https://learn.microsoft.com/en-us/cli/azure/network/private-dns/link/vnet?view=azure-cli-latest#az-network-private-dns-link-vnet-create()
 
         $VnetLinkName = "${VnetName}-${PrivateDnsZoneName}".Replace(".", "-")
 

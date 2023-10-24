@@ -33,7 +33,7 @@ for i in {0..2}; do
 done
 
 echo -e "\nCreating storage accounts..."
-# https://learn.microsoft.com/cli/azure/storage/account?view=azure-cli-latest#az-storage-account-create
+# https://learn.microsoft.com/cli/azure/storage/account?view=azure-cli-latest#az-storage-account-create()
 
 for i in {0..2}; do
     echo -e "\nCreating storage account group \"${StorageAccountNames[$i]}\" in location \"${Locations[$i]}\"..."
@@ -47,7 +47,7 @@ for i in {0..2}; do
 done
 
 echo -e "\nCreating app service plans..."
-# https://learn.microsoft.com/cli/azure/appservice/plan?view=azure-cli-latest#az-appservice-plan-create
+# https://learn.microsoft.com/cli/azure/appservice/plan?view=azure-cli-latest#az-appservice-plan-create()
 
 AppServicePlanSku="S1"
 
@@ -66,7 +66,7 @@ az appservice plan create \
     --is-linux
 
 echo -e "\nCreating web apps..."
-# https://learn.microsoft.com/cli/azure/webapp?view=azure-cli-latest#az-webapp-create
+# https://learn.microsoft.com/cli/azure/webapp?view=azure-cli-latest#az-webapp-create()
 
 az webapp create \
     --name "${AppServiceNamePrefix}-eu" \
@@ -81,7 +81,7 @@ az webapp create \
     --runtime PYTHON:3.9
 
 echo -e "\nEnabling web app build automation and configuring app settings..."
-# https://learn.microsoft.com/cli/azure/webapp/config/appsettings?view=azure-cli-latest#az-webapp-config-appsettings-set
+# https://learn.microsoft.com/cli/azure/webapp/config/appsettings?view=azure-cli-latest#az-webapp-config-appsettings-set()
 
 az webapp config appsettings set \
     --name "${AppServiceNamePrefix}-eu" \
@@ -96,7 +96,7 @@ az webapp config appsettings set \
 for i in {0..1}; do
     AppServiceName="${AppServiceNames[i]}"
     echo -e "\nAssigning identity for app service ${AppServiceName}..."
-    # https://learn.microsoft.com/cli/azure/webapp/identity?view=azure-cli-latest#az-webapp-identity-assign
+    # https://learn.microsoft.com/cli/azure/webapp/identity?view=azure-cli-latest#az-webapp-identity-assign()
 
     ResourceGroupNameIndex=$((i+1))
 
@@ -116,7 +116,7 @@ for i in {0..1}; do
         fi
 
         echo -e "\nAdding Storage Blob Data Contributor role for app service ${AppServiceName} in storage account ${StorageAccountName}..."
-        # https://learn.microsoft.com/cli/azure/role/assignment?view=azure-cli-latest#az-role-assignment-create
+        # https://learn.microsoft.com/cli/azure/role/assignment?view=azure-cli-latest#az-role-assignment-create()
 
         Scope="/subscriptions/${AzureSubscriptionId}/resourceGroups/${ResourceGroupNames[$j]}/providers/Microsoft.Storage/storageAccounts/${StorageAccountName}"
 
@@ -129,7 +129,7 @@ for i in {0..1}; do
 done
 
 echo -e "\nDeploying web app code package..."
-# https://learn.microsoft.com/cli/azure/webapp?view=azure-cli-latest#az-webapp-deploy
+# https://learn.microsoft.com/cli/azure/webapp?view=azure-cli-latest#az-webapp-deploy()
 
 az webapp deploy \
     --name "${AppServiceNamePrefix}-eu" \

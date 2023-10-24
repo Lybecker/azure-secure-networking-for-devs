@@ -20,7 +20,7 @@ $SubnetNameEu = "snet-apps-${TeamName}-${Environment}-${EuLocation}"
 $SubnetNameUs = "snet-apps-${TeamName}-${Environment}-${UsLocation}"
 
 Write-Output "`nAdding VNET integration for app service ${AppServiceNameEu} using virtual network and subnet ${VnetNameEu}/${SubnetNameEu}..."
-# https://learn.microsoft.com/cli/azure/webapp/vnet-integration?view=azure-cli-latest#az-webapp-vnet-integration-add
+# https://learn.microsoft.com/cli/azure/webapp/vnet-integration?view=azure-cli-latest#az-webapp-vnet-integration-add()
 
 az webapp vnet-integration add `
     --name $AppServiceNameEu `

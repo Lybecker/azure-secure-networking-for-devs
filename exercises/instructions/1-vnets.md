@@ -4,7 +4,7 @@ Let's start simple. Your mission, should you accept it, is to create three virtu
 
 Each one should span 1024 IP addresses with first virtual network starting from IP address `10.0.0.0`. Have the address spaces of all the virtual networks adjacent i.e, to be next to each other i.e., no empty space between the address spaces.
 
-The recommended order and names below:
+The recommended order and names below as per [Abbreviation examples for Azure resources](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/resource-abbreviations):
 
 1. `vnet-{team name}-dev-{hub location}` in the hub location (region) (starting from 10.0.0.0) e.g., `vnet-crzycatseyes-dev-swedencentral`
 1. `vnet-{team name}-dev-{EU location}` in EU
@@ -22,6 +22,7 @@ graph
         st-hub("sthub{team name}dev")
         vnet-hub("vnet-{team name}-dev-{hub location}")
     end
+
     subgraph rg-eu["rg-{team name}-dev-eu"]
         direction TB
 
@@ -35,6 +36,7 @@ graph
         app-eu-- Storage Blob Data Contributor -->st-hub
         app-eu-- Storage Blob Data Contributor -->st-eu
     end
+
     subgraph rg-us["rg-{team name}-dev-us"]
         direction TB
 
@@ -49,3 +51,18 @@ graph
         app-us-- Storage Blob Data Contributor -->st-us
     end
 ```
+
+## Tips and tricks
+
+### Learning resources
+
+* [What is Azure Virtual Network?](https://learn.microsoft.com/azure/virtual-network/virtual-networks-overview)
+* [Quickstart: Use the Azure portal to create a virtual network](https://learn.microsoft.com/azure/virtual-network/quick-create-portal)
+
+### Relevant Azure CLI commands
+
+* [az network vnet create](https://learn.microsoft.com/cli/azure/network/vnet?view=azure-cli-latest#az-network-vnet-create())
+
+### Tools
+
+* [CIDR to IPv4 Conversion](https://www.ipaddressguide.com/cidr)

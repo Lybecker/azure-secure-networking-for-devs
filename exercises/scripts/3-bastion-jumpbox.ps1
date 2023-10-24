@@ -29,7 +29,7 @@ $BastionName = "bas-${TeamName}-${Environment}"
 .\subscripts\2-1-subnet.ps1 $TeamName $Location $ResourceGroupNameHub "bastion" "10.0.0.64/26"
 
 Write-Output "`nCreating network security group (NSG) for jumpbox..."
-# https://learn.microsoft.com/cli/azure/network/nsg?view=azure-cli-latest#az-network-nsg-create
+# https://learn.microsoft.com/cli/azure/network/nsg?view=azure-cli-latest#az-network-nsg-create()
 
 az network nsg create `
     --name $JumpboxNsgName `
@@ -39,7 +39,7 @@ az network nsg create `
 
 Write-Output "`nCreating rule to deny all inbound traffic for NSG..."
 # Update Azure CLI (az upgrade) in case running into this bug: https://github.com/Azure/azure-cli/issues/24939
-# https://learn.microsoft.com/cli/azure/network/nsg/rule?view=azure-cli-latest#az-network-nsg-rule-create
+# https://learn.microsoft.com/cli/azure/network/nsg/rule?view=azure-cli-latest#az-network-nsg-rule-create()
 
 az network nsg rule create `
     --name "DenyAllInbound" `
@@ -53,7 +53,7 @@ az network nsg rule create `
     --no-wait false
 
 Write-Output "`nCreating network interface (NIC) for jumpbox..."
-# https://learn.microsoft.com/cli/azure/network/nic?view=azure-cli-latest#az-network-nic-create
+# https://learn.microsoft.com/cli/azure/network/nic?view=azure-cli-latest#az-network-nic-create()
 
 az network nic create `
     --name $JumpboxNicName `
@@ -64,7 +64,7 @@ az network nic create `
     --network-security-group $JumpboxNsgName
 
 Write-Output "`nCreating jumpbox VM..."
-# https://learn.microsoft.com/cli/azure/vm?view=azure-cli-latest#az-vm-create
+# https://learn.microsoft.com/cli/azure/vm?view=azure-cli-latest#az-vm-create()
 
 az vm create `
     --name $JumpboxVmName `
@@ -76,7 +76,7 @@ az vm create `
     --nics $JumpboxNicName
 
 Write-Output "`nCreating public IP address for Azure Bastion..."
-# https://learn.microsoft.com/cli/azure/network/public-ip?view=azure-cli-latest#az-network-public-ip-create
+# https://learn.microsoft.com/cli/azure/network/public-ip?view=azure-cli-latest#az-network-public-ip-create()
 
 az network public-ip create `
     --name $BastionPublicIpAddressName `
@@ -85,7 +85,7 @@ az network public-ip create `
     --sku Standard
 
 Write-Output "`nCreating Azure Bastion resource..."
-# https://learn.microsoft.com/cli/azure/network/bastion?view=azure-cli-latest#az-network-bastion-create
+# https://learn.microsoft.com/cli/azure/network/bastion?view=azure-cli-latest#az-network-bastion-create()
 
 az network bastion create `
     --name $BastionName `

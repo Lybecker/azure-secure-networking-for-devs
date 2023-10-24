@@ -12,7 +12,7 @@ for ($i = 0; $i -lt 3; $i++) {
     $ResourceGroupName = $ResourceGroupNames[$i]
 
     Write-Output "`nDisabling public access to storage account ${StorageAccountName}..."
-    # https://learn.microsoft.com/cli/azure/resource?view=azure-cli-latest#az-resource-update
+    # https://learn.microsoft.com/cli/azure/resource?view=azure-cli-latest#az-resource-update()
 
     az resource update `
         --resource-group $ResourceGroupName `

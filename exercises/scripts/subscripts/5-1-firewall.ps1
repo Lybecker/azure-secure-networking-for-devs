@@ -20,6 +20,7 @@ $VnetName = "vnet-${TeamName}-${Environment}-${Location}"
 #.\2-1-subnet.ps1 $TeamName $Location "firewall" "10.0.0.128/26"
 
 Write-Output "`nCreating firewall ${FirewallName}..."
+# https://learn.microsoft.com/cli/azure/network/firewall?view=azure-cli-latest#az-network-firewall-create(azure-firewall)
 
 az network firewall create `
     --name $FirewallName `
@@ -39,6 +40,7 @@ az network public-ip create `
 #Start-Sleep -Seconds 30
 
 Write-Output "`nConfiguring public IP for firewall..."
+# https://learn.microsoft.com/cli/azure/network/firewall/ip-config?view=azure-cli-latest#az-network-firewall-ip-config-create(azure-firewall)
 
 az network firewall ip-config create `
     --firewall-name $FirewallName `
@@ -48,6 +50,7 @@ az network firewall ip-config create `
     --vnet-name $VnetName
 
 Write-Output "`nUpdating firewall..."
+# https://learn.microsoft.com/cli/azure/network/firewall?view=azure-cli-latest#az-network-firewall-update(azure-firewall)
 
 az network firewall update `
     --name $FirewallName `

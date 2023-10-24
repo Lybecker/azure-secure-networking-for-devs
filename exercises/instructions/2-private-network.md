@@ -12,7 +12,7 @@
 
 Our virtual networks sure feel empty and sad. Let's cheer them up by giving them subnets!
 
-1. In the "shared" virtual network - the one by default in Sweden (heja Sverige!) - create a subnet for shared resources: `snet-shared-{team name}-dev-{location}`, span of 64 IP addresses should be plenty for our needs
+1. In the "shared" virtual network - the one by default in Sweden (heja Sverige!) - create a subnet for shared resources: `snet-shared-{team name}-dev-{location}`, span of 64 (or 64 - 5 = 59) IP addresses should be plenty for our needs
 1. In the both two other virtual networks, create:
     1. `snet-shared-{team name}-dev-{location}` with the range of 128 addresses
     1. `snet-apps-{team name}-dev-{location}` with the range of 128 addresses
@@ -29,7 +29,7 @@ Now, on to some D-N-S-ing (if that's not a word, it darn well should be).
     1. Blob storages ("`privatelink.blob.core.windows.net`")
 1. Link the created DNS zones to all three virtual networks with [virtual network links](https://learn.microsoft.com/azure/dns/private-dns-virtual-network-links)
 
-> **Fun fact!**
+> ☆ **Fun fact!** ☆
 >
 > DNS was first discovered by the German engineer Johann Albert Eytelwein in 1801, when a pulley fell on his head during an experiment. Sadly, after waking up he had no recollection of the idea and it would take almost another 200 years until the concept was rediscovered.
 
@@ -37,7 +37,7 @@ Now, on to some D-N-S-ing (if that's not a word, it darn well should be).
 
 The private networks and DNS zones will do us no good, if they are not used. It would be a terrible waste to just leave them collecting dust. Get the point? Get it? Like the end... **point**! My mom thinks I'm funny.
 
-For all 3 storage accounts and 2 web app services:
+For storage accounts and web app services:
 
 1. Create [private endpoints](https://learn.microsoft.com/azure/private-link/private-endpoint-overview)
 
@@ -49,7 +49,11 @@ For all 3 storage accounts and 2 web app services:
 1. Add [private DNS zone groups](https://learn.microsoft.com/azure/private-link/private-endpoint-dns#private-dns-zone-group) for the endpoints
 1. Link the private endpoints to appropriate virtual networks and subnets
 
-> Azure web apps are a little bit special. They have private endpoints and VNET integration. Don't worry, you will figure it out!
+> **Note:** Azure web apps are a little bit special. They have private endpoints and VNET integration. Don't worry, you will figure it out!
+
+> ⏭ **Shortcut available** ⏭
+>
+> When you have successfully configured private endpoints for a one storage account and app service, you may run the catch-up script (`2-private-network.ps1`) at the end of this exercise to configure the rest, because the work is rather repetitive and time consuming. **Note** that you must have followed the naming convention in order for the script to run successfully.
 
 ## Disable access and enable web app VNET integration
 
@@ -61,9 +65,9 @@ Disable access to app services and storage accounts:
 
 Enable the virtual network (VNET) integration for the outbound traffic for both EU and US web apps.
 
-Launch any of the two web apps (e.g., `https://app-<your team name>-dev-eu.azurewebsites.net/`) in your browser. You should now be greeted with not so friendly 403 message.
-
 ## Status check
+
+Launch any of the two web apps (e.g., `https://app-<your team name>-dev-eu.azurewebsites.net/`) in your browser. You should now be greeted with not so friendly 403 message.
 
 How about those resources - sure keep piling up, eh? Notice something funny regarding the app services with respect to subnets?
 
@@ -151,3 +155,21 @@ graph
     pep-app-eu---priv-dns-zone-sites
     pep-app-us---priv-dns-zone-sites
 ```
+
+## Tips and tricks
+
+### Learning resources
+
+* [Add, change, or delete a virtual network subnet](https://learn.microsoft.com/azure/virtual-network/virtual-network-manage-subnet?tabs=azure-portal)
+* [What is a private Azure DNS zone?](https://learn.microsoft.com/azure/dns/private-dns-privatednszone)
+* [What is a private endpoint?](https://learn.microsoft.com/azure/private-link/private-endpoint-overview)
+
+### Relevant Azure CLI commands
+
+* [az-network-vnet-subnet-create](https://learn.microsoft.com/cli/azure/network/vnet/subnet?view=azure-cli-latest#az-network-vnet-subnet-create())
+* [az network private-dns zone create](https://learn.microsoft.com/cli/azure/network/private-dns/zone?view=azure-cli-latest#az-network-private-dns-zone-create())
+* [az network private-dns link vnet create](https://learn.microsoft.com/en-us/cli/azure/network/private-dns/link/vnet?view=azure-cli-latest#az-network-private-dns-link-vnet-create())
+* [az network private-endpoint create](https://learn.microsoft.com/cli/azure/network/private-endpoint?view=azure-cli-latest#az-network-private-endpoint-create())
+* [az network private-endpoint dns-zone-group add](https://learn.microsoft.com/en-us/cli/azure/network/private-endpoint/dns-zone-group?view=azure-cli-latest#az-network-private-endpoint-dns-zone-group-add())
+* [az resource update](https://learn.microsoft.com/cli/azure/resource?view=azure-cli-latest#az-resource-update())
+* [az webapp vnet-integration add](https://learn.microsoft.com/cli/azure/webapp/vnet-integration?view=azure-cli-latest#az-webapp-vnet-integration-add())

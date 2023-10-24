@@ -34,7 +34,7 @@ for ($i = 0; $i -lt 3; $i++) {
 }
 
 Write-Output "`nCreating storage accounts..."
-# https://learn.microsoft.com/cli/azure/storage/account?view=azure-cli-latest#az-storage-account-create
+# https://learn.microsoft.com/cli/azure/storage/account?view=azure-cli-latest#az-storage-account-create()
 
 az storage account create `
     --name "sthub${TeamName}${Environment}" `
@@ -58,7 +58,7 @@ az storage account create `
     --sku Standard_LRS
 
 Write-Output "`nCreating app service plans..."
-# https://learn.microsoft.com/cli/azure/appservice/plan?view=azure-cli-latest#az-appservice-plan-create
+# https://learn.microsoft.com/cli/azure/appservice/plan?view=azure-cli-latest#az-appservice-plan-create()
 
 $AppServicePlanSku = "S1"
 
@@ -77,7 +77,7 @@ az appservice plan create `
     --is-linux
 
 Write-Output "`nCreating web apps..."
-# https://learn.microsoft.com/cli/azure/webapp?view=azure-cli-latest#az-webapp-create
+# https://learn.microsoft.com/cli/azure/webapp?view=azure-cli-latest#az-webapp-create()
 
 az webapp create `
     --name "${AppServiceNamePrefix}-eu" `
@@ -92,7 +92,7 @@ az webapp create `
     --runtime PYTHON:3.9
 
 Write-Output "`nEnabling web app build automation and configuring app settings..."
-# https://learn.microsoft.com/cli/azure/webapp/config/appsettings?view=azure-cli-latest#az-webapp-config-appsettings-set
+# https://learn.microsoft.com/cli/azure/webapp/config/appsettings?view=azure-cli-latest#az-webapp-config-appsettings-set()
 
 az webapp config appsettings set `
     --name "${AppServiceNamePrefix}-eu" `
@@ -109,7 +109,7 @@ for ($i = 0; $i -lt 2; $i++) {
     $ResourceGroupName = $ResourceGroupNames[($i + 1)]
 
     Write-Output "`nAssigning identity for app service `"${AppServiceName}`" (resource group `"${ResourceGroupName}`")..."
-    # https://learn.microsoft.com/cli/azure/webapp/identity?view=azure-cli-latest#az-webapp-identity-assign
+    # https://learn.microsoft.com/cli/azure/webapp/identity?view=azure-cli-latest#az-webapp-identity-assign()
 
     $AppServicePrincipalId = (az webapp identity assign --resource-group $ResourceGroupName --name $AppServiceName | ConvertFrom-Json).principalId
     Write-Output "Principal ID of app service ${AppServiceName}: ${AppServicePrincipalId}"
@@ -127,7 +127,7 @@ for ($i = 0; $i -lt 2; $i++) {
         }
 
         Write-Output "`nAdding Storage Blob Data Contributor role for app service `"${AppServiceName}`" in storage account `"${StorageAccountName}`"..."
-        # https://learn.microsoft.com/cli/azure/role/assignment?view=azure-cli-latest#az-role-assignment-create
+        # https://learn.microsoft.com/cli/azure/role/assignment?view=azure-cli-latest#az-role-assignment-create()
 
         $Scope = "/subscriptions/${AzureSubscriptionId}/resourceGroups/${ResourceGroupName}/providers/Microsoft.Storage/storageAccounts/${StorageAccountName}"
         Write-Output "Scope: ${Scope}"
@@ -141,7 +141,7 @@ for ($i = 0; $i -lt 2; $i++) {
 }
 
 Write-Output "`nDeploying web app code package..."
-# https://learn.microsoft.com/cli/azure/webapp?view=azure-cli-latest#az-webapp-deploy
+# https://learn.microsoft.com/cli/azure/webapp?view=azure-cli-latest#az-webapp-deploy()
 
 az webapp deploy `
     --name "${AppServiceNamePrefix}-eu" `
