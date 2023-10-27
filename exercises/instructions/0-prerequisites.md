@@ -18,13 +18,11 @@ Let's provision our first resources in Azure!
     az account set --subscription <subscription name or ID>
     ```
 
-1. Set environment variables defining the team name and the Azure locations (regions) to use: Edit the environment variables script to set your values and run it:
+1. Set environment variables defining the team name and the Azure locations (regions) to use:
 
     ```ps1
-    .\set-env.ps1
+    .\set-env.ps1 -TeamName <your team name, max 12 alphanumeric characters>
     ```
-
-    > Verify that the variables are set by printing out the team name variable: "`$env:TEAM_NAME`" command in PowerShell.
 
 1. Run the script to provision resources
 
