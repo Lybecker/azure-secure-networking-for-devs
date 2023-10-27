@@ -14,6 +14,6 @@ if ($TeamName.Length -lt 2) {
 
 $Environment = "dev"
 
-.\subscripts\1-1-vnet.ps1 $TeamName $HubLocation "rg-hub-${TeamName}-${Environment}" "10.0.0"
+#.\subscripts\1-1-vnet.ps1 $TeamName $HubLocation "rg-hub-${TeamName}-${Environment}" "10.0.0"
 .\subscripts\1-1-vnet.ps1 $TeamName $EuLocation "rg-${TeamName}-${Environment}-eu" "10.0.4"
 .\subscripts\1-1-vnet.ps1 $TeamName $UsLocation "rg-${TeamName}-${Environment}-us" "10.0.8"

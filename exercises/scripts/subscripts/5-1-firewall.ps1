@@ -17,8 +17,6 @@ $FirewallPublicIpAddressName = "pip-firewall-${TeamName}-${Environment}-${Locati
 $FirewallPublicIpConfigName = "config-${FirewallPublicIpAddressName}"
 $VnetName = "vnet-${TeamName}-${Environment}-${Location}"
 
-#.\2-1-subnet.ps1 $TeamName $Location "firewall" "10.0.0.128/26"
-
 Write-Output "`nCreating firewall ${FirewallName}..."
 # https://learn.microsoft.com/cli/azure/network/firewall?view=azure-cli-latest#az-network-firewall-create(azure-firewall)
 

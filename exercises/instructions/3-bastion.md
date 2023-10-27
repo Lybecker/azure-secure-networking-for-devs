@@ -12,21 +12,11 @@ Oops! Anybody got the key? Now, this is embarrassing; I think we just locked our
 
 Let's fix that!
 
-## Virtual machine
-
-1. Create [network security group (NSG)](https://learn.microsoft.com/azure/virtual-network/network-security-groups-overview) in the **hub location**.
-1. Create a Windows desktop virtual machine, in the **hub location**, with no public IP or public inbound ports. Assign the network security group to the virtual machine.
-
-> Naming recommendations:
->
-> * NSG: `nsg-jumpbox-{team name}-dev`
-> * VM: `vm{team name}` (Windows VM resource names are [restrictred to maximum of 15 characters](https://learn.microsoft.com/azure/azure-resource-manager/management/resource-name-rules#microsoftcompute))
-
 ## Bastion
 
-So, umm... we created a virtual machine we can't access. What was the point of that?!
+So, umm... we have a virtual machine - created during the warm-up (prerequisites) - that we can't access. What's the point of that?!
 
-The solution:
+The solution to make it make sense:
 
 > **Note:** When creating Bastion in Azure portal, the subnet and the public IP address can be created in the same process and do not need to be separately provisioned.
 

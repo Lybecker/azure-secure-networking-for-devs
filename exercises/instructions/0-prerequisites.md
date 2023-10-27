@@ -18,34 +18,18 @@ Let's provision our first resources in Azure!
     az account set --subscription <subscription name or ID>
     ```
 
-1. Set environment variables defining the team name and the Azure locations (regions) to use: Edit the environment variables script (`set-env.{ps1|sh}`) to set your values and run it
-
-    PowerShell:
+1. Set environment variables defining the team name and the Azure locations (regions) to use: Edit the environment variables script to set your values and run it:
 
     ```ps1
     .\set-env.ps1
     ```
 
-    Bash:
-
-    ```bash
-    . ./set-env.sh
-    ```
-
-    > Verify that the variables are set by printing out the team name variable: "`$env:TEAM_NAME`" command in PowerShell and "`echo $TEAM_NAME`" command in Bash.
+    > Verify that the variables are set by printing out the team name variable: "`$env:TEAM_NAME`" command in PowerShell.
 
 1. Run the script to provision resources
 
-    PowerShell:
-
     ```ps1
     .\0-prerequisites.ps1
-    ```
-
-    Bash:
-
-    ```bash
-    ./0-prerequisites.sh
     ```
 
     > Make sure your working directory is `scripts` when running the script. This is because the web app code package to deploy is referenced using a relative path.
@@ -76,8 +60,20 @@ We should now have the following resources created:
 ```mermaid
 graph
     subgraph rg-hub["rg-hub-{team name}-dev"]
+        subgraph vnet-hub["vnet-{team name}-dev-{hub location}"]
+            subgraph snet-shared-hub["snet-shared-{team name}-dev-{hub location}"]
+                nic-jumpbox("nic-jumpbox-{team name}-dev")
+                vm("vm{team name}")
+            end
+        end
+
         st-hub("sthub{team name}dev")
+        nsg-jumpbox("nsg-jumpbox-{team name}-dev")
+
+        nic-jumpbox-- attached to -->nsg-jumpbox
+        nic-jumpbox-- attached to -->vm
     end
+
     subgraph rg-eu["rg-{team name}-dev-eu"]
         direction TB
 
@@ -89,6 +85,7 @@ graph
         app-eu-- Storage Blob Data Contributor -->st-hub
         app-eu-- Storage Blob Data Contributor -->st-eu
     end
+
     subgraph rg-us["rg-{team name}-dev-us"]
         direction TB
 
@@ -102,6 +99,8 @@ graph
     end
 ```
 
+The main resources are listed in the table below.
+
 | Resource type | Resource name | Resource group | Default location |
 | ------------- | ------------- | -------------- | ---------------- |
 | Storage account | `sthub{team name}dev` | `rg-hub-{team name}-dev` | Sweden central |
@@ -111,6 +110,7 @@ graph
 | App service plan (Linux) | `asp-{team name}-dev-us` | `rg-{team name}-dev-us` | East US |
 | Web app service | `app-{team name}-dev-eu` | `rg-{team name}-dev-eu` | West Europe |
 | Web app service | `app-{team name}-dev-us` | `rg-{team name}-dev-us` | East US |
+| Virtual machine (jumpbox) | `vm{team name}` | `rg-hub-{team name}-dev` | Sweden central |
 
 ## Tips and tricks: Naming is hard
 

@@ -21,6 +21,17 @@ $StorageAccountNames = @("sthub${TeamName}${Environment}", "st${TeamName}${Envir
 $AppServicePlanNamePrefix = "asp-${TeamName}-${Environment}"
 $AppServiceNamePrefix = "app-${TeamName}-${Environment}"
 $AppServiceNames = @("${AppServiceNamePrefix}-eu", "${AppServiceNamePrefix}-us")
+$HubVnetName = "vnet-${TeamName}-${Environment}-${HubLocation}"
+$JumpboxNsgName = "nsg-jumpbox-${TeamName}-${Environment}"
+$JumpboxNicName = "nic-jumpbox-${TeamName}-${Environment}"
+$JumpboxVmName = "vm${TeamName}"  # Max 15 characters for Windows machines
+
+# To list available VMs, run command "az vm image list --offer Windows-11 --all --output table"
+$JumpboxVmImage = "MicrosoftWindowsDesktop:windows-11:win11-22h2-pro:22621.2283.230901" # URN format for '--image': "Publisher:Offer:Sku:Version"
+
+$JumpboxSubnetName = "snet-shared-${TeamName}-${Environment}-${HubLocation}"
+$JumpboxAdminUsername = "jumpboxuser"
+$JumpboxAdminPassword = "JumpboxPassword123!"
 
 $AzureSubscriptionId = (az account show | ConvertFrom-Json).id
 
@@ -154,3 +165,39 @@ az webapp deploy `
     --resource-group $ResourceGroupNames[2] `
     --type zip `
     --src-path ../../src/web-app.zip
+
+# Create VNET and subnet in hub resource group
+.\subscripts\1-1-vnet.ps1 $TeamName $HubLocation $ResourceGroupNames[0] "10.0.0"
+.\subscripts\2-1-subnet.ps1 $TeamName $HubLocation "rg-hub-${TeamName}-${Environment}" "shared" "10.0.0.0/26" "--service-endpoints Microsoft.KeyVault Microsoft.Storage"
+
+Write-Output "`nCreating network security group (NSG) for jumpbox..."
+# https://learn.microsoft.com/cli/azure/network/nsg?view=azure-cli-latest#az-network-nsg-create()
+
+az network nsg create `
+    --name $JumpboxNsgName `
+    --resource-group $ResourceGroupNames[0] `
+    --location $HubLocation `
+    --no-wait false
+
+Write-Output "`nCreating network interface (NIC) for jumpbox..."
+# https://learn.microsoft.com/cli/azure/network/nic?view=azure-cli-latest#az-network-nic-create()
+
+az network nic create `
+    --name $JumpboxNicName `
+    --resource-group $ResourceGroupNames[0] `
+    --location $HubLocation `
+    --vnet-name $HubVnetName `
+    --subnet $JumpboxSubnetName `
+    --network-security-group $JumpboxNsgName
+
+Write-Output "`nCreating jumpbox virtual machine..."
+# https://learn.microsoft.com/cli/azure/vm?view=azure-cli-latest#az-vm-create()
+
+az vm create `
+    --name $JumpboxVmName `
+    --resource-group $ResourceGroupNames[0] `
+    --location $HubLocation `
+    --image $JumpboxVmImage `
+    --admin-username $JumpboxAdminUsername `
+    --admin-password $JumpboxAdminPassword `
+    --nics $JumpboxNicName

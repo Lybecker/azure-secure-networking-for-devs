@@ -10,13 +10,11 @@
 
 ## Subnets
 
-Our virtual networks sure feel empty and sad. Let's cheer them up by giving them subnets!
+Our virtual networks sure feel empty and sad. Let's cheer them up by giving them subnets! In both the EU and US virtual networks, create:
 
-1. In the "shared" virtual network - the one by default in Sweden (heja Sverige!) - create a subnet for shared resources: `snet-shared-{team name}-dev-{location}`, span of 64 (or 64 - 5 = 59) IP addresses should be plenty for our needs
-1. In the both two other virtual networks, create:
-    1. `snet-shared-{team name}-dev-{location}` with the range of 128 addresses
-    1. `snet-apps-{team name}-dev-{location}` with the range of 128 addresses
-        * Delegate this subnet for `Microsoft.Web/serverFarms`
+1. `snet-shared-{team name}-dev-{location}` with the range of 128 addresses
+1. `snet-apps-{team name}-dev-{location}` with the range of 128 addresses
+    * Delegate this subnet for `Microsoft.Web/serverFarms`
 
 > The `shared` subnet is for any kind of Azure resources. The `apps` subnet is delegated to Azure web apps, meaning you cannot use it for anything else.
 
@@ -27,7 +25,7 @@ Now, on to some D-N-S-ing (if that's not a word, it darn well should be).
 1. Create two [private DNS zones](https://learn.microsoft.com/azure/dns/private-dns-privatednszone) for:
     1. Web apps ("`privatelink.azurewebsites.net`")
     1. Blob storages ("`privatelink.blob.core.windows.net`")
-1. Link the created DNS zones to all three virtual networks with [virtual network links](https://learn.microsoft.com/azure/dns/private-dns-virtual-network-links)
+1. Link the created DNS zones to **all three** virtual networks with [virtual network links](https://learn.microsoft.com/azure/dns/private-dns-virtual-network-links)
 
 > ☆ **Fun fact!** ☆
 >
@@ -79,6 +77,9 @@ graph
                 st-hub("sthub{team name}dev")
                 nic-pep-st-hub("nic-pep-sthub{team name}dev")
                 pep-st-hub("pep-sthub{team name}dev")
+
+                nic-jumpbox("nic-jumpbox-{team name}-dev")
+                vm("vm{team name}")
             end
         end
 
@@ -87,6 +88,11 @@ graph
 
         st-hub---pep-st-hub
         nic-pep-st-hub-- attached to -->pep-st-hub
+
+        nsg-jumpbox("nsg-jumpbox-{team name}-dev")
+
+        nic-jumpbox-- attached to -->nsg-jumpbox
+        nic-jumpbox-- attached to -->vm
     end
 
     subgraph rg-eu["rg-{team name}-dev-eu"]

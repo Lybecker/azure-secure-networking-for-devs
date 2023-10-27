@@ -14,7 +14,7 @@ if ($TeamName.Length -lt 2) {
 
 $Environment = "dev"
 
-.\subscripts\2-1-subnet.ps1 $TeamName $HubLocation "rg-hub-${TeamName}-${Environment}" "shared" "10.0.0.0/26" "--service-endpoints Microsoft.KeyVault Microsoft.Storage"
+#.\subscripts\2-1-subnet.ps1 $TeamName $HubLocation "rg-hub-${TeamName}-${Environment}" "shared" "10.0.0.0/26" "--service-endpoints Microsoft.KeyVault Microsoft.Storage"
 
 .\subscripts\2-1-subnet.ps1 $TeamName $EuLocation "rg-${TeamName}-${Environment}-eu" "shared" "10.0.4.0/25" "--service-endpoints Microsoft.KeyVault Microsoft.Storage"
 .\subscripts\2-1-subnet.ps1 $TeamName $EuLocation "rg-${TeamName}-${Environment}-eu" "apps" "10.0.4.128/25" "--delegations Microsoft.Web/serverFarms"
