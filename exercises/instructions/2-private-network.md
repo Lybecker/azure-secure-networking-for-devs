@@ -25,6 +25,7 @@ Now, on to some D-N-S-ing (if that's not a word, it darn well should be).
 1. Create two [private DNS zones](https://learn.microsoft.com/azure/dns/private-dns-privatednszone) for:
     1. Web apps ("`privatelink.azurewebsites.net`")
     1. Blob storages ("`privatelink.blob.core.windows.net`")
+    > DNS zones are a global resource, so you only need to create them once. But they need to reside in a resource group.
 1. Link the created DNS zones to **all three** virtual networks with [virtual network links](https://learn.microsoft.com/azure/dns/private-dns-virtual-network-links)
 
 > ☆ **Fun fact!** ☆
@@ -36,6 +37,7 @@ Now, on to some D-N-S-ing (if that's not a word, it darn well should be).
 The private networks and DNS zones will do us no good, if they are not used. It would be a terrible waste to just leave them collecting dust. Get the point? Get it? Like the end... **point**! My mom thinks I'm funny.
 
 For storage accounts and web app services:
+> 3 Blob storage accounts and 2 web apps in total. Suggest your team split the work.
 
 1. Create [private endpoints](https://learn.microsoft.com/azure/private-link/private-endpoint-overview)
 
