@@ -18,13 +18,15 @@ Let's provision our first resources in Azure!
     az account set --subscription <subscription name or ID>
     ```
 
-1. Set environment variables defining the team name and the Azure locations (regions) to use: Edit the environment variables script to set your values and run it:
+1. Open PowerShell and navigate to folder `/exercises/scripts/`
+
+1. Set environment variables defining the team name and the Azure locations (regions) to use:
 
     ```ps1
-    .\set-env.ps1
+    .\set-env.ps1 -TeamName <your team name>
     ```
 
-    > Verify that the variables are set by printing out the team name variable: "`$env:TEAM_NAME`" command in PowerShell.
+    > **Important:** The team name should be given as lower case alphanumeric characters with the maximum length of 10. This is because it is used in the resource names that can have very short allowed length.
 
 1. Run the script to provision resources
 
@@ -33,8 +35,6 @@ Let's provision our first resources in Azure!
     ```
 
     > Make sure your working directory is `scripts` when running the script. This is because the web app code package to deploy is referenced using a relative path.
-    >
-    > Team name should be given as lower case alphanumeric characters with the maximum length of 10.
     >
     > There are three locations (regions) we will be using during the exercises. The default values shown in the table below:
     >
