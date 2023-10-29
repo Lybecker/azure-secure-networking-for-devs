@@ -14,6 +14,10 @@ We would like restrict data exfiltration of data. That means controlling the tra
 
 We have already created an [Azure Firewall](https://learn.microsoft.com/azure/firewall/overview) for you in the hub virtual network.
 
+Azure Firewall and Azure Bastion are both shared resources, so they are placed in the hub virtual network. This means that they can be used by all virtual networks in the hub.
+
+> Cost is another reason to not create many instances of Azure Firewall and Azure Bastion. They are both billed for allocation per hour and for data traffic processed. Unlike e.g. Azure Key Vault that only is billed per usage.
+
 The Azure Firewall requires a subnet like Azure Bastion named `AzureFirewallSubnet` and a public IP. The public IP will the source IP of all outgoing traffic from the virtual network on the public Internet.
 
 By default the Firewall allows no traffic. You need to create rules to allow traffic. There are tree types of rules:
