@@ -29,13 +29,15 @@ By default the Firewall allows no traffic. You need to create rules to allow tra
 
 ## Routing
 
-The firewall is not used yet, so route all Internet the traffic through it.
+The firewall is not used yet, so route all Internet traffic through it.
 
-1. Add a [route table](https://learn.microsoft.com/azure/virtual-network/manage-route-table) `rt-{teamname}-dev`, assign it to each subnet and route like this:
+1. Add a [route table](https://learn.microsoft.com/azure/virtual-network/manage-route-table) with prefix `rt-`, assign it to each subnet and route like this:
     - Destination: 0.0.0.0/0 (Internet)
     - Next hop type: Virtual appliance
     - Next hop address: Private IP of firewall
 1. Create firewall rule(s) to block all sites except GitHub.com
+
+> Note: a route table can only be associated with a subnet in the same virtual network. This means that you need to create a route table for each virtual network.
 
 ## Status check
 
