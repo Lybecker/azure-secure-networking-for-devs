@@ -2,23 +2,13 @@
 
 Let's provision our first resources in Azure!
 
-1. Login to Azure with [Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli)
+It is recommended to use Azure Cloud Shell for the exercises, as it has all the tools you need to complete the exercises. You can access the Azure Cloud Shell via the portal or go to [shell.azure.com](https://shell.azure.com/).
 
-    ```ps1
-    az login
-    ```
+1. Make sure the Cloud Shell is using PowerShell.
 
-1. Make sure you have the desired subscription set and change it if necessary
+1. Git clone this repository into the Cloud Shell:
 
-    ```ps1
-    az account show
-    ```
-
-    ```ps1
-    az account set --subscription <subscription name or ID>
-    ```
-
-1. Open PowerShell and navigate to folder `/exercises/scripts/`
+1. Navigate to folder `/exercises/scripts/`
 
 1. Set environment variables defining the team name and the Azure locations (regions) to use:
 
