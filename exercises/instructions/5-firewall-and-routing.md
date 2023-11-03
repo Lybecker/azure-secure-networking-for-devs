@@ -8,20 +8,40 @@
 
 You secured a lot of stuff in the previous exercises, but there's still a lot of work to do. Let's get to it!
 
-We would like restrict data exfiltration of the HR data. That means controlling the traffic between the virtual network and the internet. We'll do that by setting up a firewall to route all outgoing traffic through.
+We would like restrict data exfiltration of data. That means controlling the traffic between the virtual network and the internet. We'll do that by setting up a firewall to route all egress (outgoing) traffic through.
 
 ## Firewall
 
-Set up [Azure Firewall](https://learn.microsoft.com/azure/firewall/overview) - not the basic SKU - in the virtual network in the **hub location**.
+We have already created an [Azure Firewall](https://learn.microsoft.com/azure/firewall/overview) for you in the hub virtual network.
+
+Azure Firewall and Azure Bastion are both shared resources, so they are placed in the hub virtual network. This means that they can be used by all virtual networks in the hub.
+
+> Cost is another reason to not create many instances of Azure Firewall and Azure Bastion. They are both billed for allocation per hour and for data traffic processed. Unlike e.g. Azure Key Vault that only is billed per usage.
+
+The Azure Firewall requires a subnet like Azure Bastion named `AzureFirewallSubnet` and a public IP. The public IP will the source IP of all outgoing traffic from the virtual network on the public Internet.
+
+By default the Firewall allows no traffic. You need to create rules to allow traffic. There are tree types of rules:
+
+- NAT rules - allows you to share network services with external networks. E.g. you can use a single public IP address to allow external clients to access multiple internal servers.
+- Network rules - non-HTTP/S traffic that will be allowed to flow through the firewall must have a network rule.
+- Application rules - HTTP/HTTPS traffic at Layer-7 network traffic filtering.
+
 
 ## Routing
 
-Finally:
+The firewall is not used yet, so route all Internet traffic through it.
 
-1. Add a [route table](https://learn.microsoft.com/azure/virtual-network/manage-route-table), assign it to each subnet and direct next hop traffic from VM to Azure Firewall
-1. Block all sites except GitHub
+1. Add a [route table](https://learn.microsoft.com/azure/virtual-network/manage-route-table) with prefix `rt-`, assign it to each subnet and route like this:
+    - Destination: 0.0.0.0/0 (Internet)
+    - Next hop type: Virtual appliance
+    - Next hop address: Private IP of firewall
+1. Create firewall rule(s) to block all sites except GitHub.com
+
+> Note: a route table can only be associated with a subnet in the same virtual network. This means that you need to create a route table for each virtual network.
 
 ## Status check
+
+RDP into the jumpbox and verify that the only site you can visit is GitHub.com.
 
 ```mermaid
 graph
