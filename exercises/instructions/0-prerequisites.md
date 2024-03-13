@@ -6,9 +6,19 @@ It is recommended to use Azure Cloud Shell for the exercises, as it has all the 
 
 1. Make sure the Cloud Shell is using PowerShell.
 
+    ![switch to powershell](../../assets/switch-to-powershell.png)
+
 1. Git clone this repository into the Cloud Shell:
 
+    ```ps1
+    git clone https://github.com/Lybecker/AzureSecureNetworkingForSoftwareEngineers/
+    ```
+
 1. Navigate to folder `/exercises/scripts/`
+
+    ```ps1
+    cd ./AzureSecureNetworkingForSoftwareEngineers/exercises/scripts/ 
+    ```
 
 1. Set environment variables defining the team name and the Azure locations (regions) to use:
 

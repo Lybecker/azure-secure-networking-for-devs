@@ -12,4 +12,4 @@ $env:HUB_LOCATION = $HubLocation
 $env:EU_LOCATION = $EuLocation
 $env:US_LOCATION = $UsLocation
 
-Write-Output "Config set:`n  - Team name: ${env:TEAM_NAME}`n  - Hub location: ${env:HUB_LOCATION}`n  - EU location: ${env:EU_LOCATION}`n  - US location: ${env:US_LOCATION}`n"
+Write-Output "Config set successfully:`n  - Team name: ${env:TEAM_NAME}`n  - Hub location: ${env:HUB_LOCATION}`n  - EU location: ${env:EU_LOCATION}`n  - US location: ${env:US_LOCATION}`n"
