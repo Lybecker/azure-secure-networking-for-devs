@@ -1,8 +1,8 @@
-# Azure Secure Networking for Software Engineers
+# Azure Secure Networking for Developers
 
-This content is designed for developers who want to learn how to use Azure networking services to secure their applications. It is not meant to make you an expert in Azure networking, but to give you enough knowledge to create secure network designs and discuss and collaborate with confidence with network administrators.more information.
+This content is designed for developers who want to learn how to use Azure networking services to secure their applications. It is not meant to make you an expert in Azure networking, but to give you enough knowledge to create secure network designs and discuss and collaborate with confidence with network administrators.
 
-It is designed as an instructor lead course, so you can discuss best practices, pros and cons while guiding guidance along the way. 
+It is designed as an instructor lead course, so you can discuss best practices, pros and cons while guiding guidance along the way.
 
 The exercises are designed to be completed in order and the narrative for the work you are doing is in the story below.
 
