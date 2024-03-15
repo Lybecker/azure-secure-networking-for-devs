@@ -21,5 +21,5 @@ if ($SubnetId.ToLower() -Match "bastion") {
 Write-Output "`nCreating subnet ${SubnetName} with address prefixes ${AddressPrefixes} in virtual network ${VnetName}..."
 # https://learn.microsoft.com/cli/azure/network/vnet/subnet?view=azure-cli-latest#az-network-vnet-subnet-create()
 
-$Command = "az network vnet subnet create --name ${SubnetName} --resource-group ${ResourceGroupName} --vnet-name ${VnetName} --address-prefixes ${AddressPrefixes} --private-endpoint-network-policies Disabled --disable-private-link-service-network-policies false ${AdditionalArguments}"
+$Command = "az network vnet subnet create --name ${SubnetName} --resource-group ${ResourceGroupName} --vnet-name ${VnetName} --address-prefixes ${AddressPrefixes} --private-endpoint-network-policies Disabled --private-link-service-network-policies Disabled ${AdditionalArguments}"
 Invoke-Expression $Command

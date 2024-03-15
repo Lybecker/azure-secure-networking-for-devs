@@ -83,7 +83,7 @@ foreach ($Location in $Locations) {
         --vnet-name $VnetName `
         --address-prefixes "10.0.${IpIncrement}.0/26" `
         --private-endpoint-network-policies Disabled `
-        --disable-private-link-service-network-policies false `
+        --private-link-service-network-policies Disabled `
         --service-endpoints Microsoft.KeyVault Microsoft.Storage
 
     Write-Output "`nCreating subnet for shared resources in virtual network ${VnetName}..."
@@ -94,7 +94,7 @@ foreach ($Location in $Locations) {
         --vnet-name $VnetName `
         --address-prefixes "10.0.${IpIncrement}.64/26" `
         --private-endpoint-network-policies Disabled `
-        --disable-private-link-service-network-policies false `
+        --private-link-service-network-policies Disabled `
         --service-endpoints Microsoft.KeyVault Microsoft.Storage
 
     if ($Location -eq $Locations[0]) {
@@ -108,7 +108,7 @@ foreach ($Location in $Locations) {
             --vnet-name $VnetName `
             --address-prefixes "10.0.${IpIncrement}.128/26" `
             --private-endpoint-network-policies Disabled `
-            --disable-private-link-service-network-policies false
+            --private-link-service-network-policies Disabled
 
         Write-Output "`nCreating subnet for apps in virtual network ${VnetName}..."
 
@@ -119,7 +119,7 @@ foreach ($Location in $Locations) {
             --address-prefixes "10.0.${IpIncrement}.192/26" `
             --delegations Microsoft.Web/serverFarms `
             --private-endpoint-network-policies Disabled `
-            --disable-private-link-service-network-policies false `
+            --private-link-service-network-policies Disabled `
             --service-endpoints Microsoft.Web
 
         Write-Output "`nCreating subnet for jumpbox in virtual network ${VnetName}..."
@@ -130,7 +130,7 @@ foreach ($Location in $Locations) {
             --vnet-name $VnetName `
             --address-prefixes "10.0.$($IpIncrement + 1).0/26" `
             --private-endpoint-network-policies Disabled `
-            --disable-private-link-service-network-policies false
+            --private-link-service-network-policies Disabled
     }
 
     $IpIncrement += 4
