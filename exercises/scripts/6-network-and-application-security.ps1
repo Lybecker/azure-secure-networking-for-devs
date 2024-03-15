@@ -2,6 +2,8 @@
 
 param(
     [string]$TeamName = $env:TEAM_NAME,
+    [string]$EuLocation = $env:EU_LOCATION,
+    [string]$UsLocation = $env:US_LOCATION,
     [string]$HubLocation = $env:HUB_LOCATION
 )
 
