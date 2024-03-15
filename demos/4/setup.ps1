@@ -19,7 +19,7 @@ az network vnet subnet update `
     --name snet-web-dev-${location} `
     --resource-group $resourceGroup `
     --vnet-name vnet-corpwebsite-dev-${location} `
-    --disable-private-endpoint-network-policies false `
+    --private-endpoint-network-policies Disabled `
     --disable-private-link-service-network-policies false
 
 az network vnet subnet create `
@@ -27,7 +27,7 @@ az network vnet subnet create `
     --vnet-name vnet-corpwebsite-dev-${location} `
     --resource-group $resourceGroup `
     --address-prefix 10.0.1.0/24 `
-    --disable-private-endpoint-network-policies false `
+    --private-endpoint-network-policies Disabled `
     --disable-private-link-service-network-policies false
 
 Write-Output "Creating virtual network vnet-hub-dev-${location}"
@@ -60,7 +60,7 @@ az network vnet subnet create `
     --resource-group $resourceGroup `
     --vnet-name vnet-hub-dev-${location} `
     --address-prefix 10.1.1.0/26 `
-    --disable-private-endpoint-network-policies false `
+    --private-endpoint-network-policies Disabled `
     --disable-private-link-service-network-policies false
 
 az network public-ip create `

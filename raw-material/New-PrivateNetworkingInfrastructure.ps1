@@ -82,7 +82,7 @@ foreach ($Location in $Locations) {
         --resource-group $ResourceGroupName `
         --vnet-name $VnetName `
         --address-prefixes "10.0.${IpIncrement}.0/26" `
-        --disable-private-endpoint-network-policies false `
+        --private-endpoint-network-policies Disabled `
         --disable-private-link-service-network-policies false `
         --service-endpoints Microsoft.KeyVault Microsoft.Storage
 
@@ -93,7 +93,7 @@ foreach ($Location in $Locations) {
         --resource-group $ResourceGroupName `
         --vnet-name $VnetName `
         --address-prefixes "10.0.${IpIncrement}.64/26" `
-        --disable-private-endpoint-network-policies false `
+        --private-endpoint-network-policies Disabled `
         --disable-private-link-service-network-policies false `
         --service-endpoints Microsoft.KeyVault Microsoft.Storage
 
@@ -107,7 +107,7 @@ foreach ($Location in $Locations) {
             --resource-group $ResourceGroupName `
             --vnet-name $VnetName `
             --address-prefixes "10.0.${IpIncrement}.128/26" `
-            --disable-private-endpoint-network-policies false `
+            --private-endpoint-network-policies Disabled `
             --disable-private-link-service-network-policies false
 
         Write-Output "`nCreating subnet for apps in virtual network ${VnetName}..."
@@ -118,7 +118,7 @@ foreach ($Location in $Locations) {
             --vnet-name $VnetName `
             --address-prefixes "10.0.${IpIncrement}.192/26" `
             --delegations Microsoft.Web/serverFarms `
-            --disable-private-endpoint-network-policies false `
+            --private-endpoint-network-policies Disabled `
             --disable-private-link-service-network-policies false `
             --service-endpoints Microsoft.Web
 
@@ -129,7 +129,7 @@ foreach ($Location in $Locations) {
             --resource-group $ResourceGroupName `
             --vnet-name $VnetName `
             --address-prefixes "10.0.$($IpIncrement + 1).0/26" `
-            --disable-private-endpoint-network-policies false `
+            --private-endpoint-network-policies Disabled `
             --disable-private-link-service-network-policies false
     }
 
