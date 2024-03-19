@@ -183,3 +183,7 @@ graph
 * [az network private-endpoint dns-zone-group add](https://learn.microsoft.com/en-us/cli/azure/network/private-endpoint/dns-zone-group?view=azure-cli-latest#az-network-private-endpoint-dns-zone-group-add())
 * [az resource update](https://learn.microsoft.com/cli/azure/resource?view=azure-cli-latest#az-resource-update())
 * [az webapp vnet-integration add](https://learn.microsoft.com/cli/azure/webapp/vnet-integration?view=azure-cli-latest#az-webapp-vnet-integration-add())
+
+## Back to the overview
+
+[Azure Secure Networking for Developers - start page](/readme.md)

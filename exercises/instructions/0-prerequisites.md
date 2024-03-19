@@ -118,3 +118,7 @@ Links to help with naming resources (these will be useful later):
 
 * [Abbreviation examples for Azure resources](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/resource-abbreviations)
 * [Naming rules and restrictions for Azure resources](https://learn.microsoft.com/azure/azure-resource-manager/management/resource-name-rules)
+
+## Back to the overview
+
+[Azure Secure Networking for Developers - start page](/readme.md)
