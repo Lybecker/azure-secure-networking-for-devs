@@ -37,6 +37,8 @@ This exercise can only be completed by installing Solitaire and winning the game
 
 The current status of the hub resource group should now be as depicted below. EU and US resource groups are omitted since we didn't touch them in this exercise.
 
+> If you forgot the password for the jumpbox, you can reset it in the portal.
+
 ```mermaid
 graph
     subgraph rg-hub["rg-hub-{team name}-dev"]
