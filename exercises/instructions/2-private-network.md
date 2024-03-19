@@ -57,13 +57,15 @@ For storage accounts and web app services:
 
 ## Disable access and enable web app VNET integration
 
-Disable access to app services and storage accounts:
+All the hard work is done, but we are not quite finished yet. We created virtual networks and private endpoints for the Azure resources to protect them from the prying eyes of the public internet. 
+
+Now, disable public internet access to app services and storage accounts:
 
 <!-- 1. The access to the storage accounts should be only allowed from the virtual network they are in -->
 1. The public access to all three storage accounts should be disabled
 1. The app services should have access restrictions and private endpoints **on**
 
-Enable the virtual network (VNET) integration for the outbound traffic for both EU and US web apps.
+Enable the virtual network (VNET) integration for the outbound traffic for both EU and US web apps. No traffic should ever leave the virtual networks.
 
 ## Status check
 
