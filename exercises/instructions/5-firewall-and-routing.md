@@ -36,6 +36,7 @@ The firewall is not used yet, so route all Internet traffic through it from all 
     - Destination: 0.0.0.0/0 (Internet)
     - Next hop type: Virtual appliance
     - Next hop address: Private IP of firewall
+1. Via the jumpbox verify that all Internet requests are denied.
 1. Create firewall rule(s) to block all sites except GitHub.com
 
 > Note: a route table can only be associated with a subnet in the same virtual network. This means that you need to create a route table for each virtual network.
