@@ -10,7 +10,7 @@ You secured a lot of stuff in the previous exercises, but there's still a lot of
 
 We would like restrict data exfiltration of data. That means controlling the traffic between the virtual network and the internet. We'll do that by setting up a firewall to route all egress (outgoing) traffic through.
 
-## Firewall
+## Firewall setup
 
 Now it is time to get familiar with [Azure Firewall](https://learn.microsoft.com/azure/firewall/overview).
 
@@ -37,13 +37,17 @@ The firewall is not used yet, so route all Internet traffic through it from all 
     - Next hop type: Virtual appliance
     - Next hop address: Private IP of firewall
 1. Via the jumpbox verify that all Internet requests are denied.
-1. Create firewall rule(s) to block all sites except GitHub.com
 
 > Note: a route table can only be associated with a subnet in the same virtual network. This means that you need to create a route table for each virtual network.
 
-## Status check
+## Firewall rules
 
-RDP into the jumpbox and verify that the only site you can visit is GitHub.com.
+1. Create firewall rule(s) to block all sites except GitHub.com
+2. Via the jumpbox verify the only site you can visit is GitHub.com.
+
+> If you configure network rules and application rules, then network rules are applied in priority order before application rules. The rules are terminating. So, if a match is found in a network rule, no other rules are processed.
+
+## Status check
 
 ```mermaid
 graph
