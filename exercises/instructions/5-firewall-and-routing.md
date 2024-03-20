@@ -1,4 +1,4 @@
-# Extra credit: Shields up, red alert!
+# Shields up, red alert!
 
 > Gotta have them networks peered so if they ain't, go do it:
 >
@@ -12,13 +12,13 @@ We would like restrict data exfiltration of data. That means controlling the tra
 
 ## Firewall
 
-We have already created an [Azure Firewall](https://learn.microsoft.com/azure/firewall/overview) for you in the hub virtual network.
+Now it is time to get familiar with [Azure Firewall](https://learn.microsoft.com/azure/firewall/overview).
 
-Azure Firewall and Azure Bastion are both shared resources, so they are placed in the hub virtual network. This means that they can be used by all virtual networks in the hub.
+Create an Azure firewall (choose Standard SKU as it support network level FQDN filtering) - it requires some extra ressources, but you will figure it out.
+
+Azure Firewall and Azure Bastion are resources that are prime for sharing between solution, so they should be placed in the hub virtual network. This means that they can be used by all virtual networks in the hub.
 
 > Cost is another reason to not create many instances of Azure Firewall and Azure Bastion. They are both billed for allocation per hour and for data traffic processed. Unlike e.g. Azure Key Vault that only is billed per usage.
-
-The Azure Firewall requires a subnet like Azure Bastion named `AzureFirewallSubnet` and a public IP. The public IP will the source IP of all outgoing traffic from the virtual network on the public Internet.
 
 By default the Firewall allows no traffic. You need to create rules to allow traffic. There are tree types of rules:
 
@@ -26,6 +26,7 @@ By default the Firewall allows no traffic. You need to create rules to allow tra
 - Network rules - non-HTTP/S traffic that will be allowed to flow through the firewall must have a network rule.
 - Application rules - HTTP/HTTPS traffic at Layer-7 network traffic filtering.
 
+> [Azure Firewall SKU comparison](https://learn.microsoft.com/en-us/azure/firewall/choose-firewall-sku).
 
 ## Routing
 
