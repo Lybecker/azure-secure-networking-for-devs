@@ -15,14 +15,15 @@ Network security group is being used for filtering network traffic within Azure 
 Let's jump on the exercise;
 
 1. Create [network security group (NSG)](https://learn.microsoft.com/azure/virtual-network/network-security-groups-overview) in **any** location. Once you pick the region, keep that in mind, because we will use that later to provision resource within.
-2. Create [network security group rule (NSG)](https://learn.microsoft.com/azure/virtual-network/network-security-groups-overview#security-rules) to allow inbound SQL port. Once you create network security group, there will be automatically created rules for only allowing virtual network inbound. We should allow virtual network to access only to SQL port.
-3. Create a Linux desktop virtual machine, in selected location, with no public IP or public inbound ports. 
+    Default rules for only allowing virtual network inbound is created. We will only allow virtual network to access only to SQL port.
+2. Create a new [network security group rule (NSG)](https://learn.microsoft.com/azure/virtual-network/network-security-groups-overview#security-rules) to allow inbound SQL port with lower priority.
+3. Create a Linux desktop virtual machine, in selected location, with no public IP or public inbound ports.
 4. Assign the network security group to the virtual machine.
 
 > Naming recommendations:
 >
 > * NSG: `nsg-{subnet-name}-{team name}-dev`
-> * VM: `vm{team name}` (Linux VM resource names are [restrictred to maximum of 15 characters](https://learn.microsoft.com/azure/azure-resource-manager/management/resource-name-rules#microsoftcompute))
+> * VM: `vm{team name}` (Linux VM resource names are [restricted to maximum of 15 characters](https://learn.microsoft.com/azure/azure-resource-manager/management/resource-name-rules#microsoftcompute))
 
 ## Status check
 
