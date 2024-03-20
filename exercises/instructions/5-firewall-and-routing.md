@@ -43,7 +43,7 @@ The firewall is not used yet, so route all Internet traffic through it from all 
 ## Firewall rules
 
 1. Create firewall rule(s) to block all sites except GitHub.com
-2. Via the jumpbox verify the only site you can visit is GitHub.com.
+2. Via the jumpbox verify the all other sites than GitHub.com is denied.
 
 > If you configure network rules and application rules, then network rules are applied in priority order before application rules. The rules are terminating. So, if a match is found in a network rule, no other rules are processed.
 
