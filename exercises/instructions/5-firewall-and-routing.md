@@ -30,7 +30,7 @@ By default the Firewall allows no traffic. You need to create rules to allow tra
 
 ## Routing
 
-The firewall is not used yet, so route all Internet traffic through it.
+The firewall is not used yet, so route all Internet traffic through it from all virtual networks.
 
 1. Add a [route table](https://learn.microsoft.com/azure/virtual-network/manage-route-table) with prefix `rt-`, assign it to each subnet and route like this:
     - Destination: 0.0.0.0/0 (Internet)
