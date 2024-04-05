@@ -21,7 +21,7 @@ Before starting you need to have an Azure subscription and setup the [prerequisi
 1. [Gaining access to secured resources](./exercises/instructions/3-bastion.md)
 1. [Virtual network peering](./exercises/instructions/4-vnet-peerings.md)
 1. [Firewall and routing](./exercises/instructions/5-firewall-and-routing.md)
-1. [Private networks](./exercises/instructions/6-network-and-application-security.md)
+1. [Network security group](./exercises/instructions/6-network-and-application-security.md)
 
 ## Instructor notes
 
