@@ -6,7 +6,7 @@ param(
     [string]$UsLocation = $env:US_LOCATION,
     [string]$HubLocation = $env:HUB_LOCATION,
     [string]$JumpboxAdminUsername = "jumpboxuser",
-    [securestring]$JumpboxAdminPassword = "JumpboxPassword123!"
+    [string]$JumpboxAdminPassword = "JumpboxPassword123!"
 )
 
 if ($TeamName.Length -lt 2) {
