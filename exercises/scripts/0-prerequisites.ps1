@@ -4,7 +4,9 @@ param(
     [string]$TeamName = $env:TEAM_NAME,
     [string]$EuLocation = $env:EU_LOCATION,
     [string]$UsLocation = $env:US_LOCATION,
-    [string]$HubLocation = $env:HUB_LOCATION
+    [string]$HubLocation = $env:HUB_LOCATION,
+    [string]$JumpboxAdminUsername = "jumpboxuser",
+    [securestring]$JumpboxAdminPassword = "JumpboxPassword123!"
 )
 
 if ($TeamName.Length -lt 2) {
@@ -30,8 +32,6 @@ $JumpboxVmName = "vm${TeamName}"  # Max 15 characters for Windows machines
 $JumpboxVmImage = "MicrosoftWindowsDesktop:windows-11:win11-23h2-pro:22631.3007.240105" # URN format for '--image': "Publisher:Offer:Sku:Version"
 
 $JumpboxSubnetName = "snet-shared-${TeamName}-${Environment}-${HubLocation}"
-$JumpboxAdminUsername = "jumpboxuser"
-$JumpboxAdminPassword = "JumpboxPassword123!"
 
 $AzureSubscriptionId = (az account show | ConvertFrom-Json).id
 

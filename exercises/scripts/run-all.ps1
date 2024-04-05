@@ -4,10 +4,19 @@ param(
     [string]$TeamName = $env:TEAM_NAME,
     [string]$EuLocation = $env:EU_LOCATION,
     [string]$UsLocation = $env:US_LOCATION,
-    [string]$HubLocation = $env:HUB_LOCATION
+    [string]$HubLocation = $env:HUB_LOCATION,
+    [string]$JumpboxAdminUsername = "jumpboxuser",
+    [securestring]$JumpboxAdminPassword = "JumpboxPassword123!"
 )
 
-.\0-prerequisites.ps1 -TeamName $TeamName -EuLocation $EuLocation -UsLocation $UsLocation -HubLocation $HubLocation
+.\0-prerequisites.ps1 `
+    -TeamName $TeamName `
+    -EuLocation $EuLocation `
+    -UsLocation $UsLocation `
+    -HubLocation $HubLocation `
+    -JumpboxAdminUsername $JumpboxAdminUsername `
+    -JumpboxAdminPassword $JumpboxAdminPassword
+
 .\1-vnets.ps1 -TeamName $TeamName -EuLocation $EuLocation -UsLocation $UsLocation -HubLocation $HubLocation
 .\2-private-network.ps1 -TeamName $TeamName -EuLocation $EuLocation -UsLocation $UsLocation -HubLocation $HubLocation
 .\3-bastion-jumpbox.ps1 -TeamName $TeamName -Location $HubLocation
