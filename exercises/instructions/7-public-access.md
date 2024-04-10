@@ -31,4 +31,4 @@ There are multiple ways to achieve this. You pick the one that your prefer. Disc
 
 ## Back to the overview
 
-[Azure Secure Networking for Developers - start page](/readme.md)
+[Azure Secure Networking for Developers - start page](/README.md)
