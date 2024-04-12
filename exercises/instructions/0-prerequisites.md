@@ -123,4 +123,4 @@ Links to help with naming resources (these will be useful later):
 
 ## Back to the overview
 
-[Azure Secure Networking for Developers - start page](/readme.md)
+[Azure Secure Networking for Developers - start page](/README.md)
