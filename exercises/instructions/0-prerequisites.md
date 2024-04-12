@@ -4,20 +4,20 @@ Let's provision our first resources in Azure!
 
 It is recommended to use Azure Cloud Shell for the exercises, as it has all the tools you need to complete the exercises. You can access the Azure Cloud Shell via the portal or go to [shell.azure.com](https://shell.azure.com/).
 
-1. Make sure the Cloud Shell is using PowerShell.
+1. Make sure the Cloud Shell is using PowerShell:
 
     ![switch to powershell](../../assets/switch-to-powershell.png)
 
-1. Git clone this repository into the Cloud Shell:
+1. Clone this repository into the Cloud Shell:
 
     ```ps1
     git clone https://github.com/Lybecker/AzureSecureNetworkingForSoftwareEngineers/
     ```
 
-1. Navigate to folder `/exercises/scripts/`
+1. Navigate to folder `/exercises/scripts/`:
 
     ```ps1
-    cd ./AzureSecureNetworkingForSoftwareEngineers/exercises/scripts/ 
+    cd ./AzureSecureNetworkingForSoftwareEngineers/exercises/scripts/
     ```
 
 1. Set environment variables defining the team name and the Azure locations (regions) to use:
@@ -28,7 +28,7 @@ It is recommended to use Azure Cloud Shell for the exercises, as it has all the 
 
     > **Important:** The team name should be given as lower case alphanumeric characters with the maximum length of 10. This is because it is used in the resource names that can have very short allowed length.
 
-1. Run the script to provision resources
+1. Run the script to provision resources, but **read the notes below** before doing this:
 
     ```ps1
     .\0-prerequisites.ps1
@@ -43,6 +43,8 @@ It is recommended to use Azure Cloud Shell for the exercises, as it has all the 
     > | EU | `EU_LOCATION` | West Europe (`westeurope`) |
     > | US | `US_LOCATION` | East US (`eastus`) |
     > | Hub | `HUB_LOCATION` | Sweden central (`swedencentral`)
+    >
+    > You also have an option to set the jumpbox virtual machine username and password with `-JumpboxAdminUsername` and `-JumpboxAdminPassword` parameters. Otherwise the default values - *check what they are in the script* - will be used.
 
     If all goes well, you should now have the [resources](#status-check) deployed including the code for the web apps.
 
