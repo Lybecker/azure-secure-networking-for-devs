@@ -32,7 +32,7 @@ $JumpboxOsDiskName = "vmdisk-hub-${TeamName}-${Environment}"
 # To list available VMs, run command "az vm image list --offer Windows-11 --all --output table"
 $JumpboxVmImage = "MicrosoftWindowsDesktop:windows-11:win11-23h2-pro:22631.3007.240105" # URN format for '--image': "Publisher:Offer:Sku:Version"
 
-$JumpboxSubnetName = "snet-shared-${TeamName}-${Environment}-${HubLocation}"
+$JumpboxSubnetName = "snet-default-${TeamName}-${Environment}-${HubLocation}"
 
 $AzureSubscriptionId = (az account show | ConvertFrom-Json).id
 
@@ -169,7 +169,7 @@ az webapp deploy `
 
 # Create VNET and subnet in hub resource group
 .\subscripts\1-1-vnet.ps1 $TeamName $HubLocation $ResourceGroupNames[0] "10.0.0"
-.\subscripts\2-1-subnet.ps1 $TeamName $HubLocation "rg-hub-${TeamName}-${Environment}" "shared" "10.0.0.0/26" "--service-endpoints Microsoft.KeyVault Microsoft.Storage"
+.\subscripts\2-1-subnet.ps1 $TeamName $HubLocation "rg-hub-${TeamName}-${Environment}" "default" "10.0.0.0/26" "--service-endpoints Microsoft.KeyVault Microsoft.Storage"
 
 Write-Output "`nCreating network security group (NSG) for jumpbox..."
 # https://learn.microsoft.com/cli/azure/network/nsg?view=azure-cli-latest#az-network-nsg-create()

@@ -16,7 +16,7 @@ $Environment = "dev"
 $ResourceGroupNames = @("rg-hub-${TeamName}-${Environment}", "rg-${TeamName}-${Environment}-eu", "rg-${TeamName}-${Environment}-us")
 $Locations = @($HubLocation, $EuLocation, $UsLocation)
 $VirtualNetworkNames = @("vnet-${TeamName}-${Environment}-${HubLocation}", "vnet-${TeamName}-${Environment}-${EuLocation}", "vnet-${TeamName}-${Environment}-${UsLocation}")
-$SubnetNames = @("snet-shared-${TeamName}-${Environment}-${HubLocation}", "snet-shared-${TeamName}-${Environment}-${EuLocation}", "snet-shared-${TeamName}-${Environment}-${UsLocation}")
+$SubnetNames = @("snet-default-${TeamName}-${Environment}-${HubLocation}", "snet-default-${TeamName}-${Environment}-${EuLocation}", "snet-default-${TeamName}-${Environment}-${UsLocation}")
 
 for ($i = 0; $i -lt 3; $i++) {
     $ResourceGroupName = $ResourceGroupNames[$i]

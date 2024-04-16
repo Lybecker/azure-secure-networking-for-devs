@@ -63,7 +63,7 @@ We should now have the following resources created:
 graph
     subgraph rg-hub["rg-hub-{team name}-dev"]
         subgraph vnet-hub["vnet-{team name}-dev-{hub location}"]
-            subgraph snet-shared-hub["snet-shared-{team name}-dev-{hub location}"]
+            subgraph snet-default-hub["snet-default-{team name}-dev-{hub location}"]
                 nic-jumpbox("nic-jumpbox-{team name}-dev")
                 vm("vm{team name}")
             end

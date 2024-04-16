@@ -12,11 +12,11 @@
 
 Our virtual networks sure feel empty and sad. Let's cheer them up by giving them subnets! In both the EU and US virtual networks, create:
 
-1. `snet-shared-{team name}-dev-{location}` with the range of 128 addresses
+1. `snet-default-{team name}-dev-{location}` with the range of 128 addresses
 1. `snet-apps-{team name}-dev-{location}` with the range of 128 addresses
     * Delegate this subnet for `Microsoft.Web/serverFarms`
 
-> The `shared` subnet is for any kind of Azure resources. The `apps` subnet is delegated to Azure web apps, meaning you cannot use it for anything else.
+> The `default` subnet is for any kind of Azure resources. The `apps` subnet is delegated to Azure web apps, meaning you cannot use it for anything else.
 
 ## Private DNS zones
 
@@ -77,7 +77,7 @@ How about those resources - sure keep piling up, eh? Notice something funny rega
 graph
     subgraph rg-hub["rg-hub-{team name}-dev"]
         subgraph vnet-hub["vnet-{team name}-dev-{hub location}"]
-            subgraph snet-shared-hub["snet-shared-{team name}-dev-{hub location}"]
+            subgraph snet-default-hub["snet-default-{team name}-dev-{hub location}"]
                 st-hub("sthub{team name}dev")
                 nic-pep-st-hub("nic-pep-sthub{team name}dev")
                 pep-st-hub("pep-sthub{team name}dev")
@@ -107,7 +107,7 @@ graph
                 app-eu("app-{team name}-dev-eu")
             end
 
-            subgraph snet-shared-eu["snet-shared-{team name}-dev-{EU location}"]
+            subgraph snet-default-eu["snet-default-{team name}-dev-{EU location}"]
                 st-eu("st{team name}deveu")
                 nic-pep-st-eu("nic-pep-st{team name}deveu")
                 pep-st-eu("pep-st{team name}deveu")
@@ -134,7 +134,7 @@ graph
                 app-us("app-{team name}-dev-us")
             end
 
-            subgraph snet-shared-us["snet-shared-{team name}-dev-{US location}"]
+            subgraph snet-default-us["snet-default-{team name}-dev-{US location}"]
                 st-us("st{team name}devus")
                 nic-pep-st-us("nic-pep-st{team name}devus")
                 pep-st-us("pep-st{team name}devus")

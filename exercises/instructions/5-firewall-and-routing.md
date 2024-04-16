@@ -53,7 +53,7 @@ The firewall is not used yet, so route all Internet traffic through it from all 
 graph
     subgraph rg-hub["rg-hub-{team name}-dev"]
         subgraph vnet-hub["vnet-{team name}-dev-{hub location}"]
-            subgraph snet-shared-hub["snet-shared-{team name}-dev-{hub location}"]
+            subgraph snet-default-hub["snet-default-{team name}-dev-{hub location}"]
                 st-hub("sthub{team name}dev")
                 nic-pep-st-hub("nic-pep-sthub{team name}dev")
                 pep-st-hub("pep-sthub{team name}dev")

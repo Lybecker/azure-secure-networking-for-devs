@@ -14,12 +14,12 @@ if ($TeamName.Length -lt 2) {
 
 $Environment = "dev"
 
-#.\subscripts\2-1-subnet.ps1 $TeamName $HubLocation "rg-hub-${TeamName}-${Environment}" "shared" "10.0.0.0/26" "--service-endpoints Microsoft.KeyVault Microsoft.Storage"
+#.\subscripts\2-1-subnet.ps1 $TeamName $HubLocation "rg-hub-${TeamName}-${Environment}" "default" "10.0.0.0/26" "--service-endpoints Microsoft.KeyVault Microsoft.Storage"
 
-.\subscripts\2-1-subnet.ps1 $TeamName $EuLocation "rg-${TeamName}-${Environment}-eu" "shared" "10.0.4.0/25" "--service-endpoints Microsoft.KeyVault Microsoft.Storage"
+.\subscripts\2-1-subnet.ps1 $TeamName $EuLocation "rg-${TeamName}-${Environment}-eu" "default" "10.0.4.0/25" "--service-endpoints Microsoft.KeyVault Microsoft.Storage"
 .\subscripts\2-1-subnet.ps1 $TeamName $EuLocation "rg-${TeamName}-${Environment}-eu" "apps" "10.0.4.128/25" "--delegations Microsoft.Web/serverFarms"
 
-.\subscripts\2-1-subnet.ps1 $TeamName $UsLocation "rg-${TeamName}-${Environment}-us" "shared" "10.0.8.0/25" "--service-endpoints Microsoft.KeyVault Microsoft.Storage"
+.\subscripts\2-1-subnet.ps1 $TeamName $UsLocation "rg-${TeamName}-${Environment}-us" "default" "10.0.8.0/25" "--service-endpoints Microsoft.KeyVault Microsoft.Storage"
 .\subscripts\2-1-subnet.ps1 $TeamName $UsLocation "rg-${TeamName}-${Environment}-us" "apps" "10.0.8.128/25" "--delegations Microsoft.Web/serverFarms"
 
 .\subscripts\2-2-private-dns-zones.ps1 $TeamName $EuLocation $UsLocation $HubLocation
