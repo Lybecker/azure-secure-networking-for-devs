@@ -25,8 +25,9 @@ $AppServiceNamePrefix = "app-${TeamName}-${Environment}"
 $AppServiceNames = @("${AppServiceNamePrefix}-eu", "${AppServiceNamePrefix}-us")
 $HubVnetName = "vnet-${TeamName}-${Environment}-${HubLocation}"
 $JumpboxNsgName = "nsg-jumpbox-${TeamName}-${Environment}"
-$JumpboxNicName = "nic-jumpbox-${TeamName}-${Environment}"
-$JumpboxVmName = "vm${TeamName}"  # Max 15 characters for Windows machines
+$JumpboxNicName = "nic-vm-hub-${TeamName}-${Environment}"
+$JumpboxVmName = "vmhub${TeamName}"  # Max 15 characters for Windows machines
+$JumpboxOsDiskName = "vmdisk-hub-${TeamName}-${Environment}" 
 
 # To list available VMs, run command "az vm image list --offer Windows-11 --all --output table"
 $JumpboxVmImage = "MicrosoftWindowsDesktop:windows-11:win11-23h2-pro:22631.3007.240105" # URN format for '--image': "Publisher:Offer:Sku:Version"
@@ -200,4 +201,5 @@ az vm create `
     --image $JumpboxVmImage `
     --admin-username $JumpboxAdminUsername `
     --admin-password $JumpboxAdminPassword `
-    --nics $JumpboxNicName
+    --nics $JumpboxNicName `
+    --os-disk-name $JumpboxOsDiskName
