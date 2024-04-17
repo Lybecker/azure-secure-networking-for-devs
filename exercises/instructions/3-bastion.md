@@ -39,41 +39,7 @@ The current status of the hub resource group should now be as depicted below. EU
 
 > If you forgot the password for the jumpbox, you can reset it in the portal.
 
-```mermaid
-graph
-    subgraph rg-hub["rg-hub-{team name}-dev"]
-        subgraph vnet-hub["vnet-{team name}-dev-{hub location}"]
-            subgraph snet-default-hub["snet-default-{team name}-dev-{hub location}"]
-                st-hub("sthub{team name}dev")
-                nic-pep-st-hub("nic-pep-sthub{team name}dev")
-                pep-st-hub("pep-sthub{team name}dev")
-                nic-jumpbox("nic-jumpbox-{team name}-dev")
-                vm("vm{team name}")
-            end
-
-            subgraph snet-bastion["AzureBastionSubnet"]
-                bas("bas-{team name}-dev")
-            end
-        end
-
-        nsg-jumpbox("nsg-jumpbox-{team name}-dev")
-        pip-bas("pip-bastion-{team name}-dev")
-
-        priv-dns-zone-blobs{"privatelink.blob.core.windows.net"}
-        priv-dns-zone-sites{"privatelink.azurewebsites.net"}
-
-        st-hub---pep-st-hub
-        nic-pep-st-hub-- attached to -->pep-st-hub
-
-        nic-jumpbox-- attached to -->nsg-jumpbox
-        nic-jumpbox-- attached to -->vm
-        pip-bas-- associated to -->bas
-    end
-
-    vnet-hub-- linked ---priv-dns-zone-blobs
-    vnet-hub-- linked ---priv-dns-zone-sites
-    pep-st-hub---priv-dns-zone-blobs
-```
+![3](../../assets/3-architecture.drawio.png)
 
 ## Tips and tricks
 

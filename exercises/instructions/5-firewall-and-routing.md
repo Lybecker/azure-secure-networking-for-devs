@@ -49,49 +49,9 @@ The firewall is not used yet, so route all Internet traffic through it from all 
 
 ## Status check
 
-```mermaid
-graph
-    subgraph rg-hub["rg-hub-{team name}-dev"]
-        subgraph vnet-hub["vnet-{team name}-dev-{hub location}"]
-            subgraph snet-default-hub["snet-default-{team name}-dev-{hub location}"]
-                st-hub("sthub{team name}dev")
-                nic-pep-st-hub("nic-pep-sthub{team name}dev")
-                pep-st-hub("pep-sthub{team name}dev")
-                nic-jumpbox("nic-jumpbox-{team name}-dev")
-                vm("vm{team name}")
-            end
+The current status of the hub resource group should now be as depicted below.
 
-            subgraph snet-bas["AzureBastionSubnet"]
-                bas("bas-{team name}-dev")
-            end
-
-            subgraph snet-afw["AzureFirewallSubnet"]
-                afw("afw-{team name}-dev-{hub location}")
-            end
-        end
-
-        nsg-jumpbox("nsg-jumpbox-{team name}-dev")
-        pip-bas("pip-bastion-{team name}-dev")
-
-        pip-afw("pip-firewall-{team name}-dev-{hub location}")
-
-        priv-dns-zone-blobs{"privatelink.blob.core.windows.net"}
-        priv-dns-zone-sites{"privatelink.azurewebsites.net"}
-
-        st-hub---pep-st-hub
-        nic-pep-st-hub-- attached to -->pep-st-hub
-
-        nic-jumpbox-- attached to -->nsg-jumpbox
-        nic-jumpbox-- attached to -->vm
-        pip-bas-- associated to -->bas
-
-        pip-afw-- associated to -->afw
-    end
-
-    vnet-hub-- linked ---priv-dns-zone-blobs
-    vnet-hub-- linked ---priv-dns-zone-sites
-    pep-st-hub---priv-dns-zone-blobs
-```
+![5](../../assets/5-architecture.drawio.png)
 
 ## Tips and tricks
 

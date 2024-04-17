@@ -52,39 +52,9 @@ Follow these steps:
 telnet <address> <port_number> # ie: telnet amazon.com 80  
 ```
 
-```mermaid
-graph
-    subgraph rg-eu-["rg-{team name}-dev-eu"]
-        subgraph vnet-eu["vnet-{team name}-dev-eu"]
-            subgraph snet-database-eu["snet-{subnet name}-{team name}-dev-eu"]
-                nic-database-eu("nic-{subnet}-{team name}-dev-eu")
-                vm-eu("vm{team name}")
-            end
-        end
+The current status of the hub resource group should now be as depicted below.
 
-        nsg-subnet-eu("nsg-{subnet name}-{team name}-dev-eu")
-        
-        nic-database-eu-- attached to -->nsg-subnet-eu
-        nic-database-eu-- attached to -->vm-eu
-
-    end
-
-    subgraph rg-us-["rg-{team name}-dev-us"]
-        subgraph vnet-us["vnet-{team name}-dev-us"]
-            subgraph snet-database-us["snet-{subnet name}-{team name}-dev-us"]
-                nic-database-us("nic-{subnet}-{team name}-dev-us")
-                vm-us("vm{team name}")
-            end
-        end
-
-        nsg-subnet-us("nsg-{subnet name}-{team name}-dev-eu")
-        
-        nic-database-us-- attached to -->nsg-subnet-us
-        nic-database-us-- attached to -->vm-us
-
-    end
-
-```
+![6](../../assets/6-architecture.drawio.png)
 
 ## Tips and tricks
 

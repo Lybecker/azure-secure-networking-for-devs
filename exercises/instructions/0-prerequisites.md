@@ -59,47 +59,7 @@ Test the web apps and generate blobs:
 
 We should now have the following resources created:
 
-```mermaid
-graph
-    subgraph rg-hub["rg-hub-{team name}-dev"]
-        subgraph vnet-hub["vnet-{team name}-dev-{hub location}"]
-            subgraph snet-default-hub["snet-default-{team name}-dev-{hub location}"]
-                nic-jumpbox("nic-jumpbox-{team name}-dev")
-                vm("vm{team name}")
-            end
-        end
-
-        st-hub("sthub{team name}dev")
-        nsg-jumpbox("nsg-jumpbox-{team name}-dev")
-
-        nic-jumpbox-- attached to -->nsg-jumpbox
-        nic-jumpbox-- attached to -->vm
-    end
-
-    subgraph rg-eu["rg-{team name}-dev-eu"]
-        direction TB
-
-        asp-eu("asp-{team name}-dev-eu")
-        app-eu("app-{team name}-dev-eu")
-        st-eu("st{team name}deveu")
-
-        asp-eu---app-eu
-        app-eu-- Storage Blob Data Contributor -->st-hub
-        app-eu-- Storage Blob Data Contributor -->st-eu
-    end
-
-    subgraph rg-us["rg-{team name}-dev-us"]
-        direction TB
-
-        asp-us("asp-{team name}-dev-us")
-        app-us("app-{team name}-dev-us")
-        st-us("st{team name}devus")
-
-        asp-us---app-us
-        app-us-- Storage Blob Data Contributor -->st-hub
-        app-us-- Storage Blob Data Contributor -->st-us
-    end
-```
+![Prerequisites](../../assets/0-architecture.drawio.png)
 
 The main resources are listed in the table below.
 

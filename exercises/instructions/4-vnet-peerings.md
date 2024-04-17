@@ -22,23 +22,7 @@ Now you should be able to open a browser in the virtual machine and navigate to 
 
 And how about our current infrastructure; this is rather simple, isn't it?
 
-```mermaid
-graph
-    subgraph rg-hub["rg-hub-{team name}-dev"]
-        vnet-hub("vnet-{team name}-dev-{hub location}")
-    end
-
-    subgraph rg-eu["rg-{team name}-dev-eu"]
-        vnet-eu("vnet-{team name}-dev-{EU location}")
-    end
-
-    subgraph rg-us["rg-{team name}-dev-us"]
-        vnet-us("vnet-{team name}-dev-{US location}")
-    end
-
-    vnet-eu<-- peered -->vnet-hub
-    vnet-us<-- peered -->vnet-hub
-```
+![4](../../assets/4-architecture.drawio.png)
 
 ## Tips and tricks
 
