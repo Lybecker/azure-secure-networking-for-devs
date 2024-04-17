@@ -1,0 +1,29 @@
+---
+###########################
+###########################
+## Markdown Linter rules ##
+###########################
+###########################
+
+# Linter rules doc:
+# - https://github.com/DavidAnson/markdownlint
+#
+# Note:
+# To comment out a single error:
+#   <!-- markdownlint-disable -->
+#   any violations you want
+#   <!-- markdownlint-restore -->
+#
+
+###############
+# Rules by id #
+###############
+MD013:
+  line_length: 1500            # Line length 80 is far to short
+MD026:
+  punctuation: ".,;:。，；:"  # List of not allowed
+MD028: false                  # two blockquotes next to each other
+
+#################
+# Rules by tags #
+#################

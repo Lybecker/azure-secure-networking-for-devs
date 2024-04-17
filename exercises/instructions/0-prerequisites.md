@@ -42,7 +42,7 @@ It is recommended to use Azure Cloud Shell for the exercises, as it has all the 
     > | ------- | ------------------------ | ---------------- |
     > | EU | `EU_LOCATION` | West Europe (`westeurope`) |
     > | US | `US_LOCATION` | East US (`eastus`) |
-    > | Hub | `HUB_LOCATION` | Sweden central (`swedencentral`)
+    > | Hub | `HUB_LOCATION` | Sweden central (`swedencentral`) |
     >
     > You also have an option to set the jumpbox virtual machine username and password with `-JumpboxAdminUsername` and `-JumpboxAdminPassword` parameters. Otherwise the default values - *check what they are in the script* - will be used.
 

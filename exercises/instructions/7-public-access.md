@@ -6,7 +6,7 @@
 > .\6-network-and-application-security.ps1
 > ```
 
-## Bonus exercise: Enabling Internet access to the web applications.
+## Bonus exercise: Enabling Internet access to the web applications
 
 As we are all security conscious, we have secured the HR web application to the best of our ability. Another requirement has surfaced, employees and 3rd parties needs to be able to access the web application from home without VPN.
 

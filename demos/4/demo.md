@@ -98,7 +98,7 @@ By default the Firewall allows no traffic. You need to create rules to allow tra
     - with rule type HTTP,HTTPS
     - with source IP address *
     - FQDN *.google.com
-1. Connect to the `vm-web-dev` and show HTTP requests to www.google.com is allowed
+1. Connect to the `vm-web-dev` and show HTTP requests to [www.google.com](www.google.com) is allowed
 
     ```bash
     curl www.google.com

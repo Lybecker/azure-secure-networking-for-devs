@@ -97,13 +97,13 @@ graph
 
 ### Learning resources
 
-* [What is Azure Firewall?](https://learn.microsoft.com/azure/firewall/overview)
+- [What is Azure Firewall?](https://learn.microsoft.com/azure/firewall/overview)
 
 ### Relevant Azure CLI commands
 
-* [az network firewall create](https://learn.microsoft.com/cli/azure/network/firewall?view=azure-cli-latest#az-network-firewall-create(azure-firewall))
-* [az network firewall ip-config create](https://learn.microsoft.com/cli/azure/network/firewall/ip-config?view=azure-cli-latest#az-network-firewall-ip-config-create(azure-firewall))
-* [az network firewall update](https://learn.microsoft.com/cli/azure/network/firewall?view=azure-cli-latest#az-network-firewall-update(azure-firewall))
+- [az network firewall create](https://learn.microsoft.com/cli/azure/network/firewall?view=azure-cli-latest#az-network-firewall-create(azure-firewall))
+- [az network firewall ip-config create](https://learn.microsoft.com/cli/azure/network/firewall/ip-config?view=azure-cli-latest#az-network-firewall-ip-config-create(azure-firewall))
+- [az network firewall update](https://learn.microsoft.com/cli/azure/network/firewall?view=azure-cli-latest#az-network-firewall-update(azure-firewall))
 
 ## Back to the overview
 

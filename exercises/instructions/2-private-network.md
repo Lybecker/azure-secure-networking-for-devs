@@ -46,7 +46,7 @@ For storage accounts and web app services:
     > * Private endpoint name: `pep-{resource name}` e.g., for the hub storage account `pep-sthub{team name}dev`
     > * Network interface name: `nic-pep-{resource name}`
 
-1. Add [private DNS zone groups](https://learn.microsoft.com/azure/private-link/private-endpoint-dns#private-dns-zone-group) for the endpoints
+1. Add [private DNS zone records](https://learn.microsoft.com/azure/private-link/private-endpoint-dns#private-dns-zone-group) for the endpoints
 1. Link the private endpoints to appropriate virtual networks and subnets
 
 > **Note:** Azure web apps are a little bit special. They have private endpoints and VNET integration. Don't worry, you will figure it out!
@@ -57,7 +57,7 @@ For storage accounts and web app services:
 
 ## Disable access and enable web app VNET integration
 
-All the hard work is done, but we are not quite finished yet. We created virtual networks and private endpoints for the Azure resources to protect them from the prying eyes of the public internet. 
+All the hard work is done, but we are not quite finished yet. We created virtual networks and private endpoints for the Azure resources to protect them from the prying eyes of the public internet.
 
 Now, disable public internet access to app services and storage accounts:
 
