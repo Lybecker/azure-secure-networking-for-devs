@@ -2,10 +2,8 @@ param(
     [Parameter(Mandatory=$True)][string]$TeamName
 )
 
-$Environment = "dev"
-$ResourceGroupNames = @("rg-hub-${TeamName}-${Environment}", "rg-${TeamName}-${Environment}-eu", "rg-${TeamName}-${Environment}-us")
-$StorageAccountNamePrefix = "st${TeamName}${Environment}"
-$StorageAccountNames = @("sthub${TeamName}${Environment}", "${StorageAccountNamePrefix}eu", "${StorageAccountNamePrefix}us")
+$ResourceGroupNames = @($env:ASNFD_RESOURCE_GROUP_NAME_EU, $env:ASNFD_RESOURCE_GROUP_NAME_US, $env:ASNFD_RESOURCE_GROUP_NAME_HUB)
+$StorageAccountNames = @($env:ASNFD_STORAGE_ACCOUNT_NAME_EU, $env:ASNFD_STORAGE_ACCOUNT_NAME_US, $env:ASNFD_STORAGE_ACCOUNT_NAME_HUB)
 
 for ($i = 0; $i -lt 3; $i++) {
     $StorageAccountName = $StorageAccountNames[$i]

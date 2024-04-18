@@ -12,18 +12,17 @@ if ($TeamName.Length -lt 2) {
     exit 1
 }
 
-$Environment = "dev"
-$ResourceGroupNames = @("rg-hub-${TeamName}-${Environment}", "rg-${TeamName}-${Environment}-eu", "rg-${TeamName}-${Environment}-us")
+$ResourceGroupNames = @($env:ASNFD_RESOURCE_GROUP_NAME_EU, $env:ASNFD_RESOURCE_GROUP_NAME_US, $env:ASNFD_RESOURCE_GROUP_NAME_HUB)
 $Locations = @($HubLocation, $EuLocation, $UsLocation)
-$VirtualNetworkNames = @("vnet-${TeamName}-${Environment}-${HubLocation}", "vnet-${TeamName}-${Environment}-${EuLocation}", "vnet-${TeamName}-${Environment}-${UsLocation}")
-$SubnetNames = @("snet-default-${TeamName}-${Environment}-${HubLocation}", "snet-default-${TeamName}-${Environment}-${EuLocation}", "snet-default-${TeamName}-${Environment}-${UsLocation}")
+$VnetNames = @($env:ASNFD_VNET_NAME_EU, $env:ASNFD_VNET_NAME_US, $env:ASNFD_VNET_NAME_HUB)
+$SubnetNames = @($env:ASNFD_DEFAULT_SNET_NAME_EU, $env:ASNFD_DEFAULT_SNET_NAME_US, $env:ASNFD_DEFAULT_SNET_NAME_HUB)
 
 for ($i = 0; $i -lt 3; $i++) {
     $ResourceGroupName = $ResourceGroupNames[$i]
     $Location = $Locations[$i]
     $SubnetName = $SubnetNames[$i]
     $NetworkSecurityGroupName = "nsg-${SubnetName}"
-    $VirtualNetworkName = $VirtualNetworkNames[$i]
+    $VnetName = $VnetNames[$i]
 
     Write-Output "`nCreating network security group `"${NetworkSecurityGroupName}`" (resource group `"${ResourceGroupName}`")..."
     az network nsg create `
@@ -70,5 +69,5 @@ for ($i = 0; $i -lt 3; $i++) {
         --network-security-group $NetworkSecurityGroupName `
         --private-endpoint-network-policies NetworkSecurityGroupEnabled `
         --resource-group $ResourceGroupName `
-        --vnet-name $VirtualNetworkName
+        --vnet-name $VnetName
 }

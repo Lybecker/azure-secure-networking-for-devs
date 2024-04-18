@@ -5,25 +5,22 @@ param(
     [string]$HubLocation = "swedencentral"
 )
 
-$Environment = "dev"
+$ResourceGroupNameEu = $env:ASNFD_RESOURCE_GROUP_NAME_EU
+$ResourceGroupNameUs = $env:ASNFD_RESOURCE_GROUP_NAME_US
+$ResourceGroupNameHub = $env:ASNFD_RESOURCE_GROUP_NAME_HUB
 
-$ResourceGroupNameHub = "rg-hub-${TeamName}-${Environment}"
-$ResourceGroupNameEu = "rg-${TeamName}-${Environment}-eu"
-$ResourceGroupNameUs = "rg-${TeamName}-${Environment}-us"
+$VnetNameEu = $env:ASNFD_VNET_NAME_EU
+$VnetNameUs = $env:ASNFD_VNET_NAME_US
+$VnetNameHub = $env:ASNFD_VNET_NAME_HUB
+$SubnetNameEu = $env:ASNFD_DEFAULT_SNET_NAME_EU
+$SubnetNameUs = $env:ASNFD_DEFAULT_SNET_NAME_US
+$SubnetNameHub = $env:ASNFD_DEFAULT_SNET_NAME_HUB
 
-$VnetNameEu = "vnet-${TeamName}-${Environment}-${EuLocation}"
-$VnetNameUs = "vnet-${TeamName}-${Environment}-${UsLocation}"
-$VnetNameHub = "vnet-${TeamName}-${Environment}-${HubLocation}"
-$SubnetNameEu = "snet-default-${TeamName}-${Environment}-${EuLocation}"
-$SubnetNameUs = "snet-default-${TeamName}-${Environment}-${UsLocation}"
-$SubnetNameHub = "snet-default-${TeamName}-${Environment}-${HubLocation}"
-
-$AppServiceNamePrefix = "app-${TeamName}-${Environment}"
-$AppServiceNameEu = "${AppServiceNamePrefix}-eu"
-$AppServiceNameUs = "${AppServiceNamePrefix}-us"
-$StorageAccountNameEu = "st${TeamName}${Environment}eu"
-$StorageAccountNameUs = "st${TeamName}${Environment}us"
-$StorageAccountNameHub = "sthub${TeamName}${Environment}"
+$AppServiceNameEu = $env:ASNFD_APP_SERVICE_NAME_EU
+$AppServiceNameUs = $env:ASNFD_APP_SERVICE_NAME_US
+$StorageAccountNameEu = $env:ASNFD_STORAGE_ACCOUNT_NAME_EU
+$StorageAccountNameUs = $env:ASNFD_STORAGE_ACCOUNT_NAME_US
+$StorageAccountNameHub = $env:ASNFD_STORAGE_ACCOUNT_NAME_HUB
 
 $AppServiceInformationEu = (az webapp list --resource-group $ResourceGroupNameEu --query "[?name=='${AppServiceNameEu}']" | ConvertFrom-Json)
 $AppServiceResourceIdEu = $AppServiceInformationEu.id
@@ -40,28 +37,28 @@ Write-Output "`nCreating private endpoint for EU app service..."
 # https://learn.microsoft.com/cli/azure/network/private-endpoint?view=azure-cli-latest#az-network-private-endpoint-create()
 
 az network private-endpoint create `
-    --connection-name "sc-pep-${AppServiceNamePrefix}-eu" `
-    --name "pep-${AppServiceNamePrefix}-eu" `
+    --connection-name "sc-pep-${AppServiceNameEu}" `
+    --name "pep-${AppServiceNameEu}" `
     --private-connection-resource-id $AppServiceResourceIdEu `
     --resource-group $ResourceGroupNameEu `
     --subnet $SubnetNameEu `
     --group-id "sites" `
     --location $EuLocation `
-    --nic-name "nic-pep-${AppServiceNamePrefix}-eu" `
+    --nic-name "nic-pep-${AppServiceNameEu}" `
     --no-wait false `
     --vnet-name $VnetNameEu
 
 Write-Output "`nCreating private endpoint for US app service..."
 
 az network private-endpoint create `
-    --connection-name "sc-pep-${AppServiceNamePrefix}-us" `
-    --name "pep-${AppServiceNamePrefix}-us" `
+    --connection-name "sc-pep-${AppServiceNameUs}" `
+    --name "pep-${AppServiceNameUs}" `
     --private-connection-resource-id $AppServiceResourceIdUs `
     --resource-group $ResourceGroupNameUs `
     --subnet $SubnetNameUs `
     --group-id "sites" `
     --location $UsLocation `
-    --nic-name "nic-pep-${AppServiceNamePrefix}-us" `
+    --nic-name "nic-pep-${AppServiceNameUs}" `
     --no-wait false `
     --vnet-name $VnetNameUs
 
@@ -116,7 +113,7 @@ Write-Output "`nAdding private endpoint of EU app service to DNS zone group..."
 $PrivateDnsZoneIdWebsites = (az network private-dns zone show --name privatelink.azurewebsites.net --resource-group $ResourceGroupNameHub --query id --output tsv)
 
 az network private-endpoint dns-zone-group add `
-    --endpoint-name "pep-${AppServiceNamePrefix}-eu" `
+    --endpoint-name "pep-${AppServiceNameEu}" `
     --private-dns-zone $PrivateDnsZoneIdWebsites `
     --resource-group $ResourceGroupNameEu `
     --zone-name "privatelink.azurewebsites.net".Replace(".", "-") `
@@ -126,7 +123,7 @@ az network private-endpoint dns-zone-group add `
 Write-Output "`nAdding private endpoint of US app service to DNS zone group..."
 
 az network private-endpoint dns-zone-group add `
-    --endpoint-name "pep-${AppServiceNamePrefix}-us" `
+    --endpoint-name "pep-${AppServiceNameUs}" `
     --private-dns-zone $PrivateDnsZoneIdWebsites `
     --resource-group $ResourceGroupNameUs `
     --zone-name "privatelink.azurewebsites.net".Replace(".", "-") `

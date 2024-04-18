@@ -6,7 +6,9 @@ param(
     [string]$UsLocation = $env:US_LOCATION,
     [string]$HubLocation = $env:HUB_LOCATION,
     [string]$JumpboxAdminUsername = "jumpboxuser",
-    [string]$JumpboxAdminPassword = "JumpboxPassword123!"
+    [string]$JumpboxAdminPassword = "JumpboxPassword123!",
+    [switch]$SkipCodeDeployment,
+    [switch]$SkipJumpbox
 )
 
 if ($TeamName.Length -lt 2) {
@@ -16,23 +18,15 @@ if ($TeamName.Length -lt 2) {
 
 Write-Output "`nUsing config:`n  - Team name: ${TeamName}`n  - Hub location: ${HubLocation}`n  - EU location: ${EuLocation}`n  - US location: ${UsLocation}"
 
-$Locations = @($HubLocation, $EuLocation, $UsLocation)
+$Locations = @($EuLocation, $UsLocation, $HubLocation)
 $Environment = "dev"
-$ResourceGroupNames = @("rg-hub-${TeamName}-${Environment}", "rg-${TeamName}-${Environment}-eu", "rg-${TeamName}-${Environment}-us")
-$StorageAccountNames = @("sthub${TeamName}${Environment}", "st${TeamName}${Environment}eu", "st${TeamName}${Environment}us")
-$AppServicePlanNamePrefix = "asp-${TeamName}-${Environment}"
-$AppServiceNamePrefix = "app-${TeamName}-${Environment}"
-$AppServiceNames = @("${AppServiceNamePrefix}-eu", "${AppServiceNamePrefix}-us")
-$HubVnetName = "vnet-${TeamName}-${Environment}-${HubLocation}"
-$JumpboxNsgName = "nsg-jumpbox-${TeamName}-${Environment}"
-$JumpboxNicName = "nic-vm-hub-${TeamName}-${Environment}"
-$JumpboxVmName = "vmhub${TeamName}"  # Max 15 characters for Windows machines
-$JumpboxOsDiskName = "vmdisk-hub-${TeamName}-${Environment}" 
 
-# To list available VMs, run command "az vm image list --offer Windows-11 --all --output table"
-$JumpboxVmImage = "MicrosoftWindowsDesktop:windows-11:win11-23h2-pro:22631.3007.240105" # URN format for '--image': "Publisher:Offer:Sku:Version"
+.\set-resource-names.ps1 -TeamName $TeamName -EuLocation $EuLocation -UsLocation $UsLocation -HubLocation $HubLocation -Environment $Environment
 
-$JumpboxSubnetName = "snet-default-${TeamName}-${Environment}-${HubLocation}"
+$ResourceGroupNames = @($env:ASNFD_RESOURCE_GROUP_NAME_EU, $env:ASNFD_RESOURCE_GROUP_NAME_US, $env:ASNFD_RESOURCE_GROUP_NAME_HUB)
+$StorageAccountNames = @($env:ASNFD_STORAGE_ACCOUNT_NAME_EU, $env:ASNFD_STORAGE_ACCOUNT_NAME_US, $env:ASNFD_STORAGE_ACCOUNT_NAME_HUB)
+$AppServicePlanNames = @($env:ASNFD_APP_SERVICE_PLAN_NAME_EU, $env:ASNFD_APP_SERVICE_PLAN_NAME_US)
+$AppServiceNames = @($env:ASNFD_APP_SERVICE_NAME_EU, $env:ASNFD_APP_SERVICE_NAME_US)
 
 $AzureSubscriptionId = (az account show | ConvertFrom-Json).id
 
@@ -48,77 +42,58 @@ for ($i = 0; $i -lt 3; $i++) {
 Write-Output "`nCreating storage accounts..."
 # https://learn.microsoft.com/cli/azure/storage/account?view=azure-cli-latest#az-storage-account-create()
 
-az storage account create `
-    --name "sthub${TeamName}${Environment}" `
-    --resource-group $ResourceGroupNames[0] `
-    --location $HubLocation `
-    --kind StorageV2 `
-    --sku Standard_LRS
-
-az storage account create `
-    --name "st${TeamName}${Environment}eu" `
-    --resource-group $ResourceGroupNames[1] `
-    --location $EuLocation `
-    --kind StorageV2 `
-    --sku Standard_LRS
-
-az storage account create `
-    --name "st${TeamName}${Environment}us" `
-    --resource-group $ResourceGroupNames[2] `
-    --location $UsLocation `
-    --kind StorageV2 `
-    --sku Standard_LRS
-
-Write-Output "`nCreating app service plans..."
-# https://learn.microsoft.com/cli/azure/appservice/plan?view=azure-cli-latest#az-appservice-plan-create()
+for ($i = 0; $i -lt 3; $i++) {
+    az storage account create `
+        --name $StorageAccountNames[$i] `
+        --resource-group $ResourceGroupNames[$i] `
+        --location $Locations[$i] `
+        --kind StorageV2 `
+        --sku Standard_LRS
+}
 
 $AppServicePlanSku = "S1"
+Write-Output "`nCreating app service plans with SKU `"${AppServicePlanSku}`" and app services..."
 
-az appservice plan create `
-    --name "${AppServicePlanNamePrefix}-eu" `
-    --resource-group $ResourceGroupNames[1] `
-    --location $EuLocation `
-    --sku $AppServicePlanSku `
-    --is-linux
+for ($i = 0; $i -lt 2; $i++) {
+    $AppServicePlanName = $AppServicePlanNames[$i]
+    $AppServiceName = $AppServiceNames[$i]
+    $ResourceGroupName = $ResourceGroupNames[$i]
+    $Location = $Locations[$i]
 
-az appservice plan create `
-    --name "${AppServicePlanNamePrefix}-us" `
-    --resource-group $ResourceGroupNames[2] `
-    --location $UsLocation `
-    --sku $AppServicePlanSku `
-    --is-linux
+    Write-Output "`nCreating app service plan `"${AppServicePlanName}`" in resource group `"${ResourceGroupName}`" in location `"${Location}`"..."
+    # https://learn.microsoft.com/cli/azure/appservice/plan?view=azure-cli-latest#az-appservice-plan-create()
+    az appservice plan create `
+        --name $AppServicePlanName `
+        --resource-group $ResourceGroupName `
+        --location $Location `
+        --sku $AppServicePlanSku `
+        --is-linux
 
-Write-Output "`nCreating web apps..."
-# https://learn.microsoft.com/cli/azure/webapp?view=azure-cli-latest#az-webapp-create()
-
-az webapp create `
-    --name "${AppServiceNamePrefix}-eu" `
-    --resource-group $ResourceGroupNames[1] `
-    --plan "${AppServicePlanNamePrefix}-eu" `
-    --runtime PYTHON:3.9
-
-az webapp create `
-    --name "${AppServiceNamePrefix}-us" `
-    --resource-group $ResourceGroupNames[2] `
-    --plan "${AppServicePlanNamePrefix}-us" `
-    --runtime PYTHON:3.9
+    Write-Output "`nCreating web app service `"${AppServiceName}`" in resource group `"${ResourceGroupName}`"..."
+    # https://learn.microsoft.com/cli/azure/webapp?view=azure-cli-latest#az-webapp-create()
+    az webapp create `
+        --name $AppServiceNames[$i] `
+        --resource-group $ResourceGroupNames[$i] `
+        --plan $AppServicePlanNames[$i] `
+        --runtime PYTHON:3.9
+}
 
 Write-Output "`nEnabling web app build automation and configuring app settings..."
 # https://learn.microsoft.com/cli/azure/webapp/config/appsettings?view=azure-cli-latest#az-webapp-config-appsettings-set()
 
 az webapp config appsettings set `
-    --name "${AppServiceNamePrefix}-eu" `
-    --resource-group $ResourceGroupNames[1] `
+    --name $AppServiceNames[0] `
+    --resource-group $ResourceGroupNames[0] `
     --settings SCM_DO_BUILD_DURING_DEPLOYMENT=true TEAM_NAME=$TeamName LOCATION=eu
 
 az webapp config appsettings set `
-    --name "${AppServiceNamePrefix}-us" `
-    --resource-group $ResourceGroupNames[2] `
+    --name $AppServiceNames[1] `
+    --resource-group $ResourceGroupNames[1] `
     --settings SCM_DO_BUILD_DURING_DEPLOYMENT=true TEAM_NAME=$TeamName LOCATION=us
 
 for ($i = 0; $i -lt 2; $i++) {
     $AppServiceName = $AppServiceNames[$i]
-    $ResourceGroupName = $ResourceGroupNames[($i + 1)]
+    $ResourceGroupName = $ResourceGroupNames[$i]
 
     Write-Output "`nAssigning identity for app service `"${AppServiceName}`" (resource group `"${ResourceGroupName}`")..."
     # https://learn.microsoft.com/cli/azure/webapp/identity?view=azure-cli-latest#az-webapp-identity-assign()
@@ -152,54 +127,44 @@ for ($i = 0; $i -lt 2; $i++) {
     }
 }
 
-Write-Output "`nDeploying web app code package..."
-# https://learn.microsoft.com/cli/azure/webapp?view=azure-cli-latest#az-webapp-deploy()
-
-az webapp deploy `
-    --name "${AppServiceNamePrefix}-eu" `
-    --resource-group $ResourceGroupNames[1] `
-    --type zip `
-    --src-path ../../src/web-app.zip
-
-az webapp deploy `
-    --name "${AppServiceNamePrefix}-us" `
-    --resource-group $ResourceGroupNames[2] `
-    --type zip `
-    --src-path ../../src/web-app.zip
+if ($SkipCodeDeployment) {
+    Write-Output "`nSkipping code deployment"
+} else {
+    for ($i = 0; $i -lt 2; $i++) {
+        $AppServiceName = $AppServiceNames[$i]
+        Write-Output "`nDeploying web app code package to app service `"${AppServiceName}`"..."
+        # https://learn.microsoft.com/cli/azure/webapp?view=azure-cli-latest#az-webapp-deploy()
+        az webapp deploy `
+            --name $AppServiceName `
+            --resource-group $ResourceGroupNames[$i] `
+            --type zip `
+            --src-path ../../src/web-app.zip
+    }
+}
 
 # Create VNET and subnet in hub resource group
-.\subscripts\1-1-vnet.ps1 $TeamName $HubLocation $ResourceGroupNames[0] "10.0.0"
-.\subscripts\2-1-subnet.ps1 $TeamName $HubLocation "rg-hub-${TeamName}-${Environment}" "default" "10.0.0.0/26" "--service-endpoints Microsoft.KeyVault Microsoft.Storage"
+.\subscripts\1-1-vnet.ps1 $env:ASNFD_VNET_NAME_HUB $HubLocation $env:ASNFD_RESOURCE_GROUP_NAME_HUB "10.0.0"
 
-Write-Output "`nCreating network security group (NSG) for jumpbox..."
-# https://learn.microsoft.com/cli/azure/network/nsg?view=azure-cli-latest#az-network-nsg-create()
+.\subscripts\2-1-subnet.ps1 `
+    -SubnetName $env:ASNFD_DEFAULT_SNET_NAME_HUB `
+    -ResourceGroupName $env:ASNFD_RESOURCE_GROUP_NAME_HUB `
+    -AddressPrefixes "10.0.0.0/26" `
+    -VnetName $env:ASNFD_VNET_NAME_HUB `
+    -AdditionalArguments "--service-endpoints Microsoft.KeyVault Microsoft.Storage"
 
-az network nsg create `
-    --name $JumpboxNsgName `
-    --resource-group $ResourceGroupNames[0] `
-    --location $HubLocation `
-    --no-wait false
+if ($SkipJumpbox) {
+    Write-Output "`nSkipping jumpbox creation"
+} else {
+    Write-Output "`nCreating jumpbox..."
+    .\subscripts\0-1-jumpbox.ps1 `
+        -TeamName $TeamName `
+        -Environment $Environment `
+        -ResourceGroupName $env:ASNFD_RESOURCE_GROUP_NAME_HUB `
+        -Location $HubLocation `
+        -JumpboxAdminUsername $JumpboxAdminUsername `
+        -JumpboxAdminPassword $JumpboxAdminPassword `
+        -VnetName $env:ASNFD_VNET_NAME_HUB `
+        -SubnetName $env:ASNFD_DEFAULT_SNET_NAME_HUB
+}
 
-Write-Output "`nCreating network interface (NIC) for jumpbox..."
-# https://learn.microsoft.com/cli/azure/network/nic?view=azure-cli-latest#az-network-nic-create()
-
-az network nic create `
-    --name $JumpboxNicName `
-    --resource-group $ResourceGroupNames[0] `
-    --location $HubLocation `
-    --vnet-name $HubVnetName `
-    --subnet $JumpboxSubnetName `
-    --network-security-group $JumpboxNsgName
-
-Write-Output "`nCreating jumpbox virtual machine..."
-# https://learn.microsoft.com/cli/azure/vm?view=azure-cli-latest#az-vm-create()
-
-az vm create `
-    --name $JumpboxVmName `
-    --resource-group $ResourceGroupNames[0] `
-    --location $HubLocation `
-    --image $JumpboxVmImage `
-    --admin-username $JumpboxAdminUsername `
-    --admin-password $JumpboxAdminPassword `
-    --nics $JumpboxNicName `
-    --os-disk-name $JumpboxOsDiskName
+Write-Output "`nDone"

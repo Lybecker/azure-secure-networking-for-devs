@@ -3,8 +3,7 @@
 param(
     [string]$TeamName = $env:TEAM_NAME,
     [string]$EuLocation = $env:EU_LOCATION,
-    [string]$UsLocation = $env:US_LOCATION,
-    [string]$HubLocation = $env:HUB_LOCATION
+    [string]$UsLocation = $env:US_LOCATION
 )
 
 if ($TeamName.Length -lt 2) {
@@ -12,8 +11,6 @@ if ($TeamName.Length -lt 2) {
     exit 1
 }
 
-$Environment = "dev"
-
-#.\subscripts\1-1-vnet.ps1 $TeamName $HubLocation "rg-hub-${TeamName}-${Environment}" "10.0.0"
-.\subscripts\1-1-vnet.ps1 $TeamName $EuLocation "rg-${TeamName}-${Environment}-eu" "10.0.4"
-.\subscripts\1-1-vnet.ps1 $TeamName $UsLocation "rg-${TeamName}-${Environment}-us" "10.0.8"
+# Virtual network and subnet already created in hub location
+.\subscripts\1-1-vnet.ps1 -VnetName $env:ASNFD_VNET_NAME_EU -Location $EuLocation -ResourceGroupName $env:ASNFD_RESOURCE_GROUP_NAME_EU -IpPrefix "10.0.4"
+.\subscripts\1-1-vnet.ps1 -VnetName $env:ASNFD_VNET_NAME_US -Location $UsLocation -ResourceGroupName $env:ASNFD_RESOURCE_GROUP_NAME_US -IpPrefix "10.0.8"

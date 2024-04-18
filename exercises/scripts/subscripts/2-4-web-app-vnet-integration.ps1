@@ -1,39 +1,26 @@
 param(
-    [Parameter(Mandatory=$True)][string]$TeamName,
-    [string]$EuLocation = "westeurope",
-    [string]$UsLocation = "eastus",
-    [string]$HubLocation = "swedencentral"
+    [Parameter(Mandatory=$True)][string]$TeamName
 )
 
-$Environment = "dev"
+$ResourceGroupNames = @($env:ASNFD_RESOURCE_GROUP_NAME_EU, $env:ASNFD_RESOURCE_GROUP_NAME_US)
+$AppServiceNames = @($env:ASNFD_APP_SERVICE_NAME_EU, $env:ASNFD_APP_SERVICE_NAME_US)
+$VnetNames = @($env:ASNFD_VNET_NAME_EU, $env:ASNFD_VNET_NAME_US)
+$SubnetNames = @($env:ASNFD_APPS_SNET_NAME_EU, $env:ASNFD_APPS_SNET_NAME_US)
 
-$ResourceGroupNameEu = "rg-${TeamName}-${Environment}-eu"
-$ResourceGroupNameUs = "rg-${TeamName}-${Environment}-us"
 
-$AppServiceNamePrefix = "app-${TeamName}-${Environment}"
-$AppServiceNameEu = "${AppServiceNamePrefix}-eu"
-$AppServiceNameUs = "${AppServiceNamePrefix}-us"
+for ($i = 0; $i -lt 2; $i++) {
+    $ResourceGroupName = $ResourceGroupNames[$i]
+    $AppServiceName = $AppServiceNames[$i]
+    $VnetName = $VnetNames[$i]
+    $SubnetName = $SubnetNames[$i]
 
-$VnetNameEu = "vnet-${TeamName}-${Environment}-${EuLocation}"
-$VnetNameUs = "vnet-${TeamName}-${Environment}-${UsLocation}"
-$SubnetNameEu = "snet-apps-${TeamName}-${Environment}-${EuLocation}"
-$SubnetNameUs = "snet-apps-${TeamName}-${Environment}-${UsLocation}"
+    Write-Output "`nAdding VNET integration for app service ${AppServiceName} using virtual network and subnet ${VnetName}/${SubnetName}..."
+    # https://learn.microsoft.com/cli/azure/webapp/vnet-integration?view=azure-cli-latest#az-webapp-vnet-integration-add()
 
-Write-Output "`nAdding VNET integration for app service ${AppServiceNameEu} using virtual network and subnet ${VnetNameEu}/${SubnetNameEu}..."
-# https://learn.microsoft.com/cli/azure/webapp/vnet-integration?view=azure-cli-latest#az-webapp-vnet-integration-add()
-
-az webapp vnet-integration add `
-    --name $AppServiceNameEu `
-    --resource-group $ResourceGroupNameEu `
-    --subnet $SubnetNameEu `
-    --vnet $VnetNameEu `
-    --skip-delegation-check false
-
-Write-Output "`nAdding VNET integration for app service ${AppServiceNameUs} using virtual network and subnet ${VnetNameUs}/${SubnetNameUs}..."
-
-az webapp vnet-integration add `
-    --name $AppServiceNameUs `
-    --resource-group $ResourceGroupNameUs `
-    --subnet $SubnetNameUs `
-    --vnet $VnetNameUs `
-    --skip-delegation-check false
+    az webapp vnet-integration add `
+        --name $AppServiceName `
+        --resource-group $ResourceGroupName `
+        --subnet $SubnetName `
+        --vnet $VnetName `
+        --skip-delegation-check false
+}

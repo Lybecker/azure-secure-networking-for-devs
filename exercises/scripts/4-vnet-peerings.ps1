@@ -1,10 +1,7 @@
 #!/usr/bin/env pwsh
 
 param(
-    [string]$TeamName = $env:TEAM_NAME,
-    [string]$EuLocation = $env:EU_LOCATION,
-    [string]$UsLocation = $env:US_LOCATION,
-    [string]$HubLocation = $env:HUB_LOCATION
+    [string]$TeamName = $env:TEAM_NAME
 )
 
 if ($TeamName.Length -lt 2) {
@@ -12,17 +9,17 @@ if ($TeamName.Length -lt 2) {
     exit 1
 }
 
-$Environment = "dev"
-
-$ResourceGroupNameHub = "rg-hub-${TeamName}-${Environment}"
-$ResourceGroupNameEu = "rg-${TeamName}-${Environment}-eu"
-$ResourceGroupNameUs = "rg-${TeamName}-${Environment}-us"
-
-$VnetNameEu = "vnet-${TeamName}-${Environment}-${EuLocation}"
-$VnetNameUs = "vnet-${TeamName}-${Environment}-${UsLocation}"
-$VnetNameHub = "vnet-${TeamName}-${Environment}-${HubLocation}"
+$ResourceGroupNameHub = $env:ASNFD_RESOURCE_GROUP_NAME_HUB
+$VnetNameHub = $env:ASNFD_VNET_NAME_HUB
+$ResourceGroupNames = @($env:ASNFD_RESOURCE_GROUP_NAME_EU, $env:ASNFD_RESOURCE_GROUP_NAME_US)
+$VnetNames = @($env:ASNFD_VNET_NAME_EU, $env:ASNFD_VNET_NAME_US)
 
 Write-Output "`nPeering virtual networks to using the hub and spoke model..."
 
-.\subscripts\4-1-vnet-peerings.ps1 -ResourceGroupName1 $ResourceGroupNameHub -VnetName1 $VnetNameHub -ResourceGroupName2 $ResourceGroupNameEu -VnetName2 $VnetNameEu
-.\subscripts\4-1-vnet-peerings.ps1 -ResourceGroupName1 $ResourceGroupNameHub -VnetName1 $VnetNameHub -ResourceGroupName2 $ResourceGroupNameUs -VnetName2 $VnetNameUs
+for ($i = 0; $i -lt 2; $i++) {
+    .\subscripts\4-1-vnet-peerings.ps1 `
+        -ResourceGroupName1 $ResourceGroupNameHub `
+        -VnetName1 $VnetNameHub `
+        -ResourceGroupName2 $ResourceGroupNames[$i] `
+        -VnetName2 $VnetNames[$i]
+}

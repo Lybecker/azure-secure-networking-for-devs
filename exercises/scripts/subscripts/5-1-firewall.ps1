@@ -2,7 +2,9 @@
 
 param(
     [string]$TeamName = $env:TEAM_NAME,
-    [string]$Location = $env:HUB_LOCATION
+    [string]$Location = $env:HUB_LOCATION,
+    [Parameter(Mandatory=$True)][string]$ResourceGroupName,
+    [Parameter(Mandatory=$True)][string]$VnetName
 )
 
 if ($TeamName.Length -lt 2) {
@@ -11,11 +13,9 @@ if ($TeamName.Length -lt 2) {
 }
 
 $Environment = "dev"
-$ResourceGroupName = "rg-hub-${TeamName}-${Environment}"
 $FirewallName = "afw-${TeamName}-${Environment}-${Location}"
 $FirewallPublicIpAddressName = "pip-firewall-${TeamName}-${Environment}-${Location}"
 $FirewallPublicIpConfigName = "config-${FirewallPublicIpAddressName}"
-$VnetName = "vnet-${TeamName}-${Environment}-${Location}"
 
 Write-Output "`nCreating firewall ${FirewallName}..."
 # https://learn.microsoft.com/cli/azure/network/firewall?view=azure-cli-latest#az-network-firewall-create(azure-firewall)

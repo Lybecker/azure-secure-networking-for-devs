@@ -1,13 +1,9 @@
 param(
-    [Parameter(Mandatory=$True)][string]$TeamName,
-    [string]$EuLocation = "westeurope",
-    [string]$UsLocation = "eastus",
-    [string]$HubLocation = "swedencentral"
+    [Parameter(Mandatory=$True)][string]$TeamName
 )
 
-$Environment = "dev"
-$ResourceGroupNameHub = "rg-hub-${TeamName}-${Environment}"
-$ResourceGroupNames = @($ResourceGroupNameHub, "rg-${TeamName}-${Environment}-eu", "rg-${TeamName}-${Environment}-us")
+$ResourceGroupNameHub = $env:ASNFD_RESOURCE_GROUP_NAME_HUB
+$ResourceGroupNames = @($env:ASNFD_RESOURCE_GROUP_NAME_EU, $env:ASNFD_RESOURCE_GROUP_NAME_US, $ResourceGroupNameHub)
 $StorageSuffix = "core.windows.net"
 
 $PrivateDnsZoneNames = @(
@@ -15,11 +11,7 @@ $PrivateDnsZoneNames = @(
     "privatelink.blob.${StorageSuffix}"
 )
 
-$VnetNames = @(
-    "vnet-${TeamName}-${Environment}-${HubLocation}",
-    "vnet-${TeamName}-${Environment}-${EuLocation}",
-    "vnet-${TeamName}-${Environment}-${UsLocation}"
-)
+$VnetNames = @($env:ASNFD_VNET_NAME_EU, $env:ASNFD_VNET_NAME_US, $env:ASNFD_VNET_NAME_HUB)
 
 foreach ($PrivateDnsZoneName in $PrivateDnsZoneNames) {
     Write-Output "`nCreating private DNS zone ${PrivateDnsZoneName}..."

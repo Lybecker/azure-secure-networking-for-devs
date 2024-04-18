@@ -17,9 +17,9 @@ param(
     -JumpboxAdminUsername $JumpboxAdminUsername `
     -JumpboxAdminPassword $JumpboxAdminPassword
 
-.\1-vnets.ps1 -TeamName $TeamName -EuLocation $EuLocation -UsLocation $UsLocation -HubLocation $HubLocation
+.\1-vnets.ps1 -TeamName $TeamName -EuLocation $EuLocation -UsLocation $UsLocation
 .\2-private-network.ps1 -TeamName $TeamName -EuLocation $EuLocation -UsLocation $UsLocation -HubLocation $HubLocation
 .\3-bastion-jumpbox.ps1 -TeamName $TeamName -Location $HubLocation
-.\4-vnet-peerings.ps1 -TeamName $TeamName -EuLocation $EuLocation -UsLocation $UsLocation -HubLocation $HubLocation
+.\4-vnet-peerings.ps1 -TeamName $TeamName
 .\5-firewall.ps1 -TeamName $TeamName -HubLocation $HubLocation
 .\6-network-security-groups.ps1 -TeamName $TeamName -EuLocation $EuLocation -UsLocation $UsLocation -HubLocation $HubLocation

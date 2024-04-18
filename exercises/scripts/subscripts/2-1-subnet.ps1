@@ -1,22 +1,14 @@
 param(
-    [Parameter(Mandatory=$True)][string]$TeamName,
-    [Parameter(Mandatory=$True)][string]$Location,
+    [Parameter(Mandatory=$True)][string]$SubnetName,
     [Parameter(Mandatory=$True)][string]$ResourceGroupName,
-    [Parameter(Mandatory=$True)][string]$SubnetId,  # Used in the name to identify the purpose e.g., "apps"
     [Parameter(Mandatory=$True)][string]$AddressPrefixes,
+    [Parameter(Mandatory=$True)][string]$VnetName,
     [string]$AdditionalArguments = ""
 )
 
-$Environment = "dev"
-$VnetName = "vnet-${TeamName}-${Environment}-${Location}"
-
-if ($SubnetId.ToLower() -Match "bastion") {
-    $SubnetName = "AzureBastionSubnet"
-} elseif ($SubnetId.ToLower() -Match "firewall") {
-    $SubnetName = "AzureFirewallSubnet"
-} else {
-    $SubnetName = "snet-${SubnetId}-${TeamName}-${Environment}-${Location}"
-}
+# Note that the subnet names are fixed for some resources:
+# - Bastion -> AzureBastionSubnet
+# - Firewall -> AzureFirewallSubnet
 
 Write-Output "`nCreating subnet ${SubnetName} with address prefixes ${AddressPrefixes} in virtual network ${VnetName}..."
 # https://learn.microsoft.com/cli/azure/network/vnet/subnet?view=azure-cli-latest#az-network-vnet-subnet-create()

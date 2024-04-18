@@ -12,21 +12,41 @@ if ($TeamName.Length -lt 2) {
     exit 1
 }
 
-$Environment = "dev"
+# Subnet already created in hub location
 
-#.\subscripts\2-1-subnet.ps1 $TeamName $HubLocation "rg-hub-${TeamName}-${Environment}" "default" "10.0.0.0/26" "--service-endpoints Microsoft.KeyVault Microsoft.Storage"
+.\subscripts\2-1-subnet.ps1 `
+    -SubnetName $env:ASNFD_DEFAULT_SNET_NAME_EU `
+    -ResourceGroupName $env:ASNFD_RESOURCE_GROUP_NAME_EU `
+    -AddressPrefixes "10.0.4.0/25" `
+    -VnetName $env:ASNFD_VNET_NAME_EU `
+    -AdditionalArguments "--service-endpoints Microsoft.KeyVault Microsoft.Storage"
 
-.\subscripts\2-1-subnet.ps1 $TeamName $EuLocation "rg-${TeamName}-${Environment}-eu" "default" "10.0.4.0/25" "--service-endpoints Microsoft.KeyVault Microsoft.Storage"
-.\subscripts\2-1-subnet.ps1 $TeamName $EuLocation "rg-${TeamName}-${Environment}-eu" "apps" "10.0.4.128/25" "--delegations Microsoft.Web/serverFarms"
+.\subscripts\2-1-subnet.ps1 `
+    -SubnetName $env:ASNFD_APPS_SNET_NAME_EU `
+    -ResourceGroupName $env:ASNFD_RESOURCE_GROUP_NAME_EU `
+    -AddressPrefixes "10.0.4.128/25" `
+    -VnetName $env:ASNFD_VNET_NAME_EU `
+    -AdditionalArguments "--delegations Microsoft.Web/serverFarms"
 
-.\subscripts\2-1-subnet.ps1 $TeamName $UsLocation "rg-${TeamName}-${Environment}-us" "default" "10.0.8.0/25" "--service-endpoints Microsoft.KeyVault Microsoft.Storage"
-.\subscripts\2-1-subnet.ps1 $TeamName $UsLocation "rg-${TeamName}-${Environment}-us" "apps" "10.0.8.128/25" "--delegations Microsoft.Web/serverFarms"
+.\subscripts\2-1-subnet.ps1 `
+    -SubnetName $env:ASNFD_DEFAULT_SNET_NAME_US `
+    -ResourceGroupName $env:ASNFD_RESOURCE_GROUP_NAME_US `
+    -AddressPrefixes "10.0.8.0/25" `
+    -VnetName $env:ASNFD_VNET_NAME_US `
+    -AdditionalArguments "--service-endpoints Microsoft.KeyVault Microsoft.Storage"
 
-.\subscripts\2-2-private-dns-zones.ps1 $TeamName $EuLocation $UsLocation $HubLocation
+.\subscripts\2-1-subnet.ps1 `
+    -SubnetName $env:ASNFD_APPS_SNET_NAME_US `
+    -ResourceGroupName $env:ASNFD_RESOURCE_GROUP_NAME_US `
+    -AddressPrefixes "10.0.8.128/25" `
+    -VnetName $env:ASNFD_VNET_NAME_US `
+    -AdditionalArguments "--delegations Microsoft.Web/serverFarms"
+
+.\subscripts\2-2-private-dns-zones.ps1 $TeamName
 
 .\subscripts\2-3-private-endpoints.ps1 $TeamName $EuLocation $UsLocation $HubLocation
 
 Write-Output "`nDisabling public access to storage accounts..."
 .\subscripts\2-3-2-storage-accounts-disable-public-access.ps1 -TeamName $TeamName
 
-.\subscripts\2-4-web-app-vnet-integration.ps1 $TeamName $EuLocation $UsLocation $HubLocation
+.\subscripts\2-4-web-app-vnet-integration.ps1 $TeamName

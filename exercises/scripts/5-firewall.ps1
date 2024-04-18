@@ -10,12 +10,16 @@ if ($TeamName.Length -lt 2) {
     exit 1
 }
 
-$Environment = "dev"
+.\subscripts\2-1-subnet.ps1 `
+    -SubnetName "AzureFirewallSubnet" `
+    -ResourceGroupName $env:ASNFD_RESOURCE_GROUP_NAME_HUB `
+    -AddressPrefixes "10.0.0.128/26" `
+    -VnetName $env:ASNFD_VNET_NAME_HUB
 
-$ResourceGroupNameHub = "rg-hub-${TeamName}-${Environment}"
-
-.\subscripts\2-1-subnet.ps1 $TeamName $HubLocation $ResourceGroupNameHub "firewall" "10.0.0.128/26"
-
-.\subscripts\5-1-firewall.ps1 -TeamName $TeamName -Location $HubLocation
+.\subscripts\5-1-firewall.ps1 `
+    -TeamName $TeamName `
+    -Location $HubLocation `
+    -ResourceGroupName $env:ASNFD_RESOURCE_GROUP_NAME_HUB `
+    -VnetName $env:ASNFD_VNET_NAME_HUB
 
 # TODO: Routing

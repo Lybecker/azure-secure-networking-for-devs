@@ -11,13 +11,17 @@ if ($TeamName.Length -lt 2) {
 }
 
 $Environment = "dev"
-$ResourceGroupNameHub = "rg-hub-${TeamName}-${Environment}"
-$VnetName = "vnet-${TeamName}-${Environment}-${Location}"
-$JumpboxNsgName = "nsg-jumpbox-${TeamName}-${Environment}"
+$ResourceGroupNameHub = $env:ASNFD_RESOURCE_GROUP_NAME_HUB
+$VnetName = $env:ASNFD_VNET_NAME_HUB
+$JumpboxNsgName = $env:ASNFD_JUMPBOX_NSG_NAME
 $BastionPublicIpAddressName = "pip-bastion-${TeamName}-${Environment}"
 $BastionName = "bas-${TeamName}-${Environment}"
 
-.\subscripts\2-1-subnet.ps1 $TeamName $Location $ResourceGroupNameHub "bastion" "10.0.0.64/26"
+.\subscripts\2-1-subnet.ps1 `
+    -SubnetName "AzureBastionSubnet" `
+    -ResourceGroupName $ResourceGroupNameHub `
+    -AddressPrefixes "10.0.0.64/26" `
+    -VnetName $env:ASNFD_VNET_NAME_HUB
 
 Write-Output "`nCreating rule to deny all inbound traffic for NSG..."
 # Update Azure CLI (az upgrade) in case running into this bug: https://github.com/Azure/azure-cli/issues/24939
