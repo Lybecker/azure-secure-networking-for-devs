@@ -22,4 +22,4 @@ param(
 .\3-bastion-jumpbox.ps1 -TeamName $TeamName -Location $HubLocation
 .\4-vnet-peerings.ps1 -TeamName $TeamName
 .\5-firewall.ps1 -TeamName $TeamName -HubLocation $HubLocation
-.\6-network-security-groups.ps1 -TeamName $TeamName -EuLocation $EuLocation -UsLocation $UsLocation -HubLocation $HubLocation
+.\6-asgs-nsgs.ps1 -TeamName $TeamName -EuLocation $EuLocation -UsLocation $UsLocation -HubLocation $HubLocation
