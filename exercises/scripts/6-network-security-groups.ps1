@@ -12,17 +12,41 @@ if ($TeamName.Length -lt 2) {
     exit 1
 }
 
+$Environment = "dev"
 $ResourceGroupNames = @($env:ASNFD_RESOURCE_GROUP_NAME_EU, $env:ASNFD_RESOURCE_GROUP_NAME_US, $env:ASNFD_RESOURCE_GROUP_NAME_HUB)
-$Locations = @($HubLocation, $EuLocation, $UsLocation)
+$Locations = @($EuLocation, $UsLocation, $HubLocation)
+$ApplicationSecurityGroupNames = @("asg-storage-${TeamName}-${Environment}-eu", "asg-storage-${TeamName}-${Environment}-us", "asg-storage-${TeamName}-${Environment}-hub")
+$StorageAccountNames = @($env:ASNFD_STORAGE_ACCOUNT_NAME_EU, $env:ASNFD_STORAGE_ACCOUNT_NAME_US, $env:ASNFD_STORAGE_ACCOUNT_NAME_HUB)
 $VnetNames = @($env:ASNFD_VNET_NAME_EU, $env:ASNFD_VNET_NAME_US, $env:ASNFD_VNET_NAME_HUB)
 $SubnetNames = @($env:ASNFD_DEFAULT_SNET_NAME_EU, $env:ASNFD_DEFAULT_SNET_NAME_US, $env:ASNFD_DEFAULT_SNET_NAME_HUB)
 
 for ($i = 0; $i -lt 3; $i++) {
     $ResourceGroupName = $ResourceGroupNames[$i]
     $Location = $Locations[$i]
+    $ApplicationSecurityGroupName = $ApplicationSecurityGroupNames[$i]
+    $StorageAccountName = $StorageAccountNames[$i]
+    $StorageAccountPrivateEndpointName = "pep-${StorageAccountName}"
     $SubnetName = $SubnetNames[$i]
     $NetworkSecurityGroupName = "nsg-${SubnetName}"
     $VnetName = $VnetNames[$i]
+
+    Write-Output "`nCreating application security group `"${ApplicationSecurityGroupName}`" (resource group `"${ResourceGroupName}`")..."
+    # https://learn.microsoft.com/cli/azure/network/asg?view=azure-cli-latest#az-network-asg-create
+    az network asg create `
+        --name $ApplicationSecurityGroupName `
+        --resource-group $ResourceGroupName `
+        --location $Location `
+        --no-wait false
+
+    $AsgId = $(az network asg show --name $ApplicationSecurityGroupName --resource-group $ResourceGroupName --query id)
+
+    Write-Output "`Associating application security group `"${ApplicationSecurityGroupName}`" with private endpoint of storage account `"${StorageAccountName}`"..."
+    # https://learn.microsoft.com/cli/azure/network/private-endpoint/asg?view=azure-cli-latest#az-network-private-endpoint-asg-add
+    az network private-endpoint asg add `
+        --endpoint-name $StorageAccountPrivateEndpointName `
+        --resource-group $ResourceGroupName `
+        --asg-id $AsgId `
+        --no-wait false
 
     Write-Output "`nCreating network security group `"${NetworkSecurityGroupName}`" (resource group `"${ResourceGroupName}`")..."
     az network nsg create `
@@ -39,7 +63,7 @@ for ($i = 0; $i -lt 3; $i++) {
         --priority "220" `
         --access "Deny" `
         --description "Denies all inbound traffic to storage accounts" `
-        --destination-address-prefixes "Storage" `
+        --destination-asgs $AsgId `
         --destination-port-ranges "*" `
         --direction "Inbound" `
         --protocol "*" `
@@ -54,7 +78,7 @@ for ($i = 0; $i -lt 3; $i++) {
         --priority "200" `
         --access "Allow" `
         --description "Allow inbound traffic to storage accounts from app services" `
-        --destination-address-prefixes "Storage" `
+        --destination-asgs $AsgId `
         --destination-port-ranges 80 443 `
         --direction "Inbound" `
         --protocol "*" `
