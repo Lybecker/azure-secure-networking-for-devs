@@ -16,12 +16,12 @@ The Company has implemented an initial version of the application as a test envi
 
 Before starting you need to have an Azure subscription and setup the [prerequisites](./exercises/instructions/0-prerequisites.md).
 
-1. [Virtual networks and subnets](./exercises/instructions/1-vnets.md)
+1. [Virtual networks](./exercises/instructions/1-vnets.md)
 1. [Private networks](./exercises/instructions/2-private-network.md)
-1. [Gaining access to secured resources](./exercises/instructions/3-bastion.md)
-1. [Virtual network peering](./exercises/instructions/4-vnet-peerings.md)
+1. [Virtual network peering](./exercises/instructions/3-vnet-peerings.md)
+1. [Gaining access to secured resources](./exercises/instructions/4-bastion.md)
 1. [Firewall and routing](./exercises/instructions/5-firewall-and-routing.md)
-1. [Network security group](./exercises/instructions/6-network-and-application-security.md)
+1. [ASGs and NSGs](./exercises/instructions/6-asgs-and-nsgs.md)
 1. [Public access](./exercises/instructions/7-public-access.md)
 
 ## Instructor notes

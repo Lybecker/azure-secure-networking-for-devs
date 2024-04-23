@@ -1,9 +1,9 @@
 # Cells interlinked
 
-> That Bastion stuff wasn't that bad, was it? But in case you were playing Solitare the entire time, here you go:
+> Ooh wee! The previous exercise sure was tedious. I don't blame you, if you didn't get all the way through. To catch up, run the script:
 >
 > ```ps1
-> .\3-bastion-jumpbox.ps1
+> .\2-private-network.ps1
 > ```
 
 Virtual networks, like galaxies. Systems of cells interlinked within cells interlinked. *Cells interlinked*. Drifting away in the empty vastness of silent space. In solitude, forever to travel alone until the last dark star shines its last light.

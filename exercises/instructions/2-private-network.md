@@ -25,8 +25,9 @@ Now, on to some D-N-S-ing (if that's not a word, it darn well should be).
 1. Create two [private DNS zones](https://learn.microsoft.com/azure/dns/private-dns-privatednszone) for:
     1. Web apps ("`privatelink.azurewebsites.net`")
     1. Blob storages ("`privatelink.blob.core.windows.net`")
-    > DNS zones are a global resource, so you only need to create them once. But they need to reside in a resource group.
+    > DNS zones are a global resource, so you only need to create them once, but they need to reside in a resource group
 1. Link the created DNS zones to **all three** virtual networks with [virtual network links](https://learn.microsoft.com/azure/dns/private-dns-virtual-network-links)
+    * There's no official naming recommendation, but this one works: `<Virtual network name>-<DNS zone name>` with dots replaced with dashes e.g., `vnet-{team name}-dev-westeurope-privatelink-azurewebsites-net`
 
 > ☆ **Fun fact!** ☆
 >
