@@ -1,9 +1,9 @@
 # Shields up, red alert!
 
-> Gotta have them networks peered so if they ain't, go do it:
+> That Bastion stuff wasn't that bad, was it? But in case you were playing Solitare the entire time, here you go:
 >
 > ```ps1
-> .\4-vnet-peerings.ps1
+> .\4-bastion-jumpbox.ps1
 > ```
 
 You secured a lot of stuff in the previous exercises, but there's still a lot of work to do. Let's get to it!

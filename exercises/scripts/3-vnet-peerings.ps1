@@ -17,7 +17,7 @@ $VnetNames = @($env:ASNFD_VNET_NAME_EU, $env:ASNFD_VNET_NAME_US)
 Write-Output "`nPeering virtual networks to using the hub and spoke model..."
 
 for ($i = 0; $i -lt 2; $i++) {
-    .\subscripts\4-1-vnet-peerings.ps1 `
+    .\subscripts\3-1-vnet-peerings.ps1 `
         -ResourceGroupName1 $ResourceGroupNameHub `
         -VnetName1 $VnetNameHub `
         -ResourceGroupName2 $ResourceGroupNames[$i] `

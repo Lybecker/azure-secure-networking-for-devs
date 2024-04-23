@@ -2,10 +2,10 @@
 # <strike>None</strike>Some shall pass
 <!-- markdownlint-enable MD033 -->
 
-> Ooh wee! The previous exercise sure was tedious. I don't blame you, if you didn't get all the way through. To catch up, run the script:
+> Gotta have them networks peered so if they ain't, go do it:
 >
 > ```ps1
-> .\2-private-network.ps1
+> .\3-vnet-peerings.ps1
 > ```
 
 Oops! Anybody got the key? Now, this is embarrassing; I think we just locked ourselves out of the entire system! Try it out by access the web apps or storage accounts.

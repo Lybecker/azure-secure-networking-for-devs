@@ -18,7 +18,7 @@ $NsgName = "nsg-${SubnetId}-${TeamName}-${Environment}-${Location}"
 $RuleName = "rule-${InboundPort}-${SubnetId}-${TeamName}-${Environment}-${Location}"
 
 Write-Output "`nCreating nsg ${NsgName} rule on ${InboundPort}..."
-# https://learn.microsoft.com/en-gb/cli/azure/network/nsg/rule?view=azure-cli-latest#az-network-nsg-rule-create()
+# https://learn.microsoft.com/cli/azure/network/nsg/rule?view=azure-cli-latest#az-network-nsg-rule-create()
 
 $Command = "az network nsg rule create --name ${RuleName} --nsg-name ${NsgName} --priority ${RulePriority} --access ${Access} --direction ${Direction} --protocol ${Protocol} --resource-group ${ResourceGroupName} --destination-port-range ${InboundPort}"
 Invoke-Expression $Command
