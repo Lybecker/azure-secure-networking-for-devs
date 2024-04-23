@@ -16,7 +16,7 @@ The Company has implemented an initial version of the application as a test envi
 
 Before starting you need to have an Azure subscription and setup the [prerequisites](./exercises/instructions/0-prerequisites.md).
 
-1. [Virtual networks and subnets](./exercises/instructions/1-vnets.md)
+1. [Virtual networks](./exercises/instructions/1-vnets.md)
 1. [Private networks](./exercises/instructions/2-private-network.md)
 1. [Virtual network peering](./exercises/instructions/3-vnet-peerings.md)
 1. [Gaining access to secured resources](./exercises/instructions/4-bastion.md)
