@@ -31,7 +31,7 @@ It is recommended to use Azure Cloud Shell for the exercises, as it has all the 
 1. Run the script to provision resources, but **read the notes below** before doing this:
 
     ```ps1
-    .\0-prerequisites.ps1
+    .\0-prerequisites.ps1 -JumpboxAdminUsername <username> -JumpboxAdminPassword <password>
     ```
 
     > Make sure your working directory is `scripts` when running the script. This is because the web app code package to deploy is referenced using a relative path.
