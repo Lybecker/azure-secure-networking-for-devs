@@ -1,73 +1,51 @@
-# ASGs, NSGs, whatnowSGs?
+# ASGs, NSGs, and other various types of Stargåtes
 
-> *intro music plays* as our hero wanders in the wild:
+> In case you're still feelin' the burn, run the script:
 >
 > ```ps1
 > .\5-firewall.ps1
 > ```
 
-## Network Security Group
+## Application and network security groups
 
-In this exercise, we will cover network security group and how to apply it.
+> [!CAUTION]
+> Contrary to what most people are accustomed to, "SG" here does not mean "Stargate", but "security group". Sorry for the misleading title.
 
-Network security group is being used for filtering network traffic within Azure virtual network. With security rules, you can either allow or deny the traffic. This comes in handy especially working with multiple Azure resources and filtering the access. We need this type of filtering within our Azure virtual networks to limit access to database. In our scenario, database resource should only be accessed via SQL port only. If we don't limit the traffic, this can lead vulnerability on accessing database resource via SSH, HTTP or other ports.
+[**Application security groups (ASGs)**](https://learn.microsoft.com/azure/virtual-network/application-security-groups) enable you to configure network security as a natural extension of an application's structure, allowing you to group virtual machines and **private endpoints** and define network security policies based on those groups.
 
-Let's jump on the exercise;
+You can use an Azure [**network security group (NSG)**](https://learn.microsoft.com/azure/virtual-network/network-security-groups-overview) to filter network traffic between Azure resources in an Azure virtual network. A network security group contains security rules that allow or deny inbound network traffic to, or outbound network traffic from, several types of Azure resources. For each rule, you can specify source and destination, port, and protocol. NSGs can be associated with subnets and network interfaces (NICs).
 
-1. Create [network security group (NSG)](https://learn.microsoft.com/azure/virtual-network/network-security-groups-overview) in **any** location. Once you pick the region, keep that in mind, because we will use that later to provision resource within.
-    Default rules for only allowing virtual network inbound is created. We will only allow virtual network to access only to SQL port.
-2. Create a new [network security group rule (NSG)](https://learn.microsoft.com/azure/virtual-network/network-security-groups-overview#security-rules) to allow inbound SQL port with lower priority.
-3. Create a Linux desktop virtual machine, in selected location, with no public IP or public inbound ports.
-4. Assign the network security group to the virtual machine.
+The goal of this task sounds simple: For both EU and US storage accounts: Allow access only from the app services in the same region e.g., `app-<your team name>-dev-eu` should be able to access `st<your team name>deveu`, but inbound traffic from everything else should be blocked.
+
+To start off with:
+
+1. Create a network security group in EU resource group and location
+1. Create an application security group for storage account in EU resource group and location, and associated it with the private endpoint of the storage account
+1. Create a new [network security group rule (NSG)](https://learn.microsoft.com/azure/virtual-network/network-security-groups-overview#security-rules) to deny all traffic to the storage account using the newly created ASG
+1. Verify that the app service no longer can access the storage account using the `list_blobs` endpoint
+1. Create a new security group rule to allow access only from the app service in the region
+1. Verify that the app service can again access the storage account
+1. Rinse and repeat for the US region
 
 > Naming recommendations:
 >
-> * NSG: `nsg-{subnet-name}-{team name}-dev`
-> * VM: `vm{team name}` (Linux VM resource names are [restricted to maximum of 15 characters](https://learn.microsoft.com/azure/azure-resource-manager/management/resource-name-rules#microsoftcompute))
+> * NSG: `nsg-{default subnet-name}`
+> * ASG: `asg-storage-{team name}-dev-{eu|us}`
+
+## Quiz
+
+Why won't the following approaches work in network security group rules in our case?
+
+1. Storage service tags
+1. ASGs associated with app service private endpoints
 
 ## Status check
 
-Once the virtual machine is provisioned, go ahead and connect any virtual machine besides database vm via Bastion. Once you are there; you can ping the database resource and port.
-
-### For Linux
-
-```shell
-sudo apt-get install netcat
-
-nc -vz <host> <port_number> # ie: nc -vz amazon.com 80  
-```
-
-### For Windows
-
-1. Open the Control Panel.
-2. Click Programs, and then Programs and Features.
-3. Select Turn Windows features on or off.
-4. Find Telnet Client and check the box. Click OK.
-
-After completing the activation, you are ready to ping a port using telnet.
-
-Follow these steps:
-
-```shell
-telnet <address> <port_number> # ie: telnet amazon.com 80  
-```
-
-The current status of the hub resource group should now be as depicted below.
-
-![6](../../assets/6-architecture.drawio.png)
-
-## Tips and tricks
-
-* [Network traffic with network security group](https://learn.microsoft.com/en-gb/azure/virtual-network/tutorial-filter-network-traffic)
+You did that already, didn't you, you silly-billy!
 
 ### Relevant Azure CLI commands
 
+* [az network asg create](https://learn.microsoft.com/cli/azure/network/asg?view=azure-cli-latest#az-network-asg-create)
+* [az network private-endpoint asg add](https://learn.microsoft.com/cli/azure/network/private-endpoint/asg?view=azure-cli-latest#az-network-private-endpoint-asg-add)
 * [az network nsg create](https://learn.microsoft.com/cli/azure/network/nsg?view=azure-cli-latest#az-network-nsg-create())
 * [az network nsg rule create](https://learn.microsoft.com/cli/azure/network/nsg/rule?view=azure-cli-latest#az-network-nsg-rule-create())
-* [az network nic create](https://learn.microsoft.com/cli/azure/network/nic?view=azure-cli-latest#az-network-nic-create())
-* [az vm image list](https://learn.microsoft.com/cli/azure/vm/image?view=azure-cli-latest#az-vm-image-list())
-* [az vm create](https://learn.microsoft.com/cli/azure/vm?view=azure-cli-latest#az-vm-create())
-
-## Back to the overview
-
-[Azure Secure Networking for Developers - start page](/README.md)
