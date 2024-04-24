@@ -11,6 +11,9 @@ if ($TeamName.Length -lt 2) {
 }
 
 $Environment = "dev"
+
+.\set-resource-names.ps1 -TeamName $TeamName -EuLocation $env:EU_LOCATION -UsLocation $env:US_LOCATION -HubLocation $HubLocation -Environment $Environment
+
 $GatewayPublicIpAddressName = "pip-gateway-${TeamName}-${Environment}"
 $GatewayName = "vpn-gw-${TeamName}-${Environment}"
 $GatewayType = "vpn"

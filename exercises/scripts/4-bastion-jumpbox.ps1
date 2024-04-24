@@ -11,6 +11,9 @@ if ($TeamName.Length -lt 2) {
 }
 
 $Environment = "dev"
+
+.\set-resource-names.ps1 -TeamName $TeamName -EuLocation $env:EU_LOCATION -UsLocation $env:US_LOCATION -HubLocation $HubLocation -Environment $Environment
+
 $ResourceGroupNameHub = $env:ASNFD_RESOURCE_GROUP_NAME_HUB
 $VnetName = $env:ASNFD_VNET_NAME_HUB
 $JumpboxNsgName = $env:ASNFD_JUMPBOX_NSG_NAME

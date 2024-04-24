@@ -13,6 +13,9 @@ if ($TeamName.Length -lt 2) {
 }
 
 $Environment = "dev"
+
+.\set-resource-names.ps1 -TeamName $TeamName -EuLocation $EuLocation -UsLocation $UsLocation -HubLocation $HubLocation -Environment $Environment
+
 $ResourceGroupNames = @($env:ASNFD_RESOURCE_GROUP_NAME_EU, $env:ASNFD_RESOURCE_GROUP_NAME_US, $env:ASNFD_RESOURCE_GROUP_NAME_HUB)
 $Locations = @($EuLocation, $UsLocation, $HubLocation)
 $AppAsgNames = @("asg-app-${TeamName}-${Environment}-eu", "asg-app-${TeamName}-${Environment}-us")

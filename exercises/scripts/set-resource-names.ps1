@@ -28,6 +28,11 @@ if ($HubLocation.Length -eq 0) {
     exit 1
 }
 
+if ($Environment.Length -eq 0) {
+    Write-Error "Invalid argument: Environment missing"
+    exit 1
+}
+
 $env:ASNFD_RESOURCE_GROUP_NAME_EU = "rg-${TeamName}-${Environment}-eu"
 $env:ASNFD_RESOURCE_GROUP_NAME_US = "rg-${TeamName}-${Environment}-us"
 $env:ASNFD_RESOURCE_GROUP_NAME_HUB = "rg-${TeamName}-${Environment}-hub"

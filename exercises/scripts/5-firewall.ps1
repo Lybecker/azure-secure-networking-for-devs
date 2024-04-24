@@ -10,6 +10,8 @@ if ($TeamName.Length -lt 2) {
     exit 1
 }
 
+.\set-resource-names.ps1 -TeamName $TeamName -EuLocation $env:EU_LOCATION -UsLocation $env:US_LOCATION -HubLocation $HubLocation -Environment "dev"
+
 .\subscripts\2-1-subnet.ps1 `
     -SubnetName "AzureFirewallSubnet" `
     -ResourceGroupName $env:ASNFD_RESOURCE_GROUP_NAME_HUB `

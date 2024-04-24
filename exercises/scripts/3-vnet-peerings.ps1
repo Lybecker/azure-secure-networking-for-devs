@@ -9,6 +9,8 @@ if ($TeamName.Length -lt 2) {
     exit 1
 }
 
+.\set-resource-names.ps1 -TeamName $TeamName -EuLocation $env:EU_LOCATION -UsLocation $env:US_LOCATION -HubLocation $env:HUB_LOCATION -Environment "dev"
+
 $ResourceGroupNameHub = $env:ASNFD_RESOURCE_GROUP_NAME_HUB
 $VnetNameHub = $env:ASNFD_VNET_NAME_HUB
 $ResourceGroupNames = @($env:ASNFD_RESOURCE_GROUP_NAME_EU, $env:ASNFD_RESOURCE_GROUP_NAME_US)

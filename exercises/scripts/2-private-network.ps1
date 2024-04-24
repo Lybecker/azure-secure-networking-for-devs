@@ -12,6 +12,8 @@ if ($TeamName.Length -lt 2) {
     exit 1
 }
 
+.\set-resource-names.ps1 -TeamName $TeamName -EuLocation $EuLocation -UsLocation $UsLocation -HubLocation $HubLocation -Environment "dev"
+
 # Subnet already created in hub location
 
 .\subscripts\2-1-subnet.ps1 `
