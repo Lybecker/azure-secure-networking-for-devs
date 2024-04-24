@@ -17,7 +17,7 @@ It is recommended to use Azure Cloud Shell for the exercises, as it has all the 
 1. Navigate to folder `/exercises/scripts/`:
 
     ```ps1
-    cd ./AzureSecureNetworkingForSoftwareEngineers/exercises/scripts/
+    cd ./azure-secure-networking-for-devs/exercises/scripts/
     ```
 
 1. Set environment variables defining the team name and the Azure locations (regions) to use:
