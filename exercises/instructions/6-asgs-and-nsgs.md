@@ -47,8 +47,8 @@ You did that already, didn't you, you silly-billy!
 
 * [az network asg create](https://learn.microsoft.com/cli/azure/network/asg?view=azure-cli-latest#az-network-asg-create)
 * [az network private-endpoint asg add](https://learn.microsoft.com/cli/azure/network/private-endpoint/asg?view=azure-cli-latest#az-network-private-endpoint-asg-add)
-* [az network nsg create](https://learn.microsoft.com/cli/azure/network/nsg?view=azure-cli-latest#az-network-nsg-create())
-* [az network nsg rule create](https://learn.microsoft.com/cli/azure/network/nsg/rule?view=azure-cli-latest#az-network-nsg-rule-create())
+* [az network nsg create](https://learn.microsoft.com/cli/azure/network/nsg?view=azure-cli-latest#az-network-nsg-create)
+* [az network nsg rule create](https://learn.microsoft.com/cli/azure/network/nsg/rule?view=azure-cli-latest#az-network-nsg-rule-create)
 
 ## Back to the overview
 

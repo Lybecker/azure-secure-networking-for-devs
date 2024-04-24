@@ -28,7 +28,7 @@ The current state of affairs should look something like this:
 
 ### Relevant Azure CLI commands
 
-* [az network vnet create](https://learn.microsoft.com/cli/azure/network/vnet?view=azure-cli-latest#az-network-vnet-create())
+* [az network vnet create](https://learn.microsoft.com/cli/azure/network/vnet?view=azure-cli-latest#az-network-vnet-create)
 
 ### Tools
 

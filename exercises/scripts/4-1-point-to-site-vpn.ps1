@@ -68,7 +68,7 @@ $Params = @{
     HashAlgorithm = 'sha256'
     NotAfter = (Get-Date).AddMonths(18)
     CertStoreLocation = 'Cert:\CurrentUser\My'
-    Signer = $cert
+    Signer = $Cert
     TextExtension = @(
      '2.5.29.37={text}1.3.6.1.5.5.7.3.2')
 }
