@@ -22,7 +22,7 @@ Our virtual networks sure feel empty and sad. Let's cheer them up by giving them
 
 Now, on to some D-N-S-ing (if that's not a word, it darn well should be).
 
-1. Create two [private DNS zones](https://learn.microsoft.com/azure/dns/private-dns-privatednszone) for:
+1. Create two [private DNS zones](https://learn.microsoft.com/azure/dns/private-dns-privatednszone), in the hub resource group, for:
     1. Web apps ("`privatelink.azurewebsites.net`")
     1. Blob storages ("`privatelink.blob.core.windows.net`")
     > DNS zones are a global resource, so you only need to create them once, but they need to reside in a resource group
