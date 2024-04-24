@@ -22,16 +22,11 @@ $StorageAccountNameEu = $env:ASNFD_STORAGE_ACCOUNT_NAME_EU
 $StorageAccountNameUs = $env:ASNFD_STORAGE_ACCOUNT_NAME_US
 $StorageAccountNameHub = $env:ASNFD_STORAGE_ACCOUNT_NAME_HUB
 
-$AppServiceInformationEu = (az webapp list --resource-group $ResourceGroupNameEu --query "[?name=='${AppServiceNameEu}']" | ConvertFrom-Json)
-$AppServiceResourceIdEu = $AppServiceInformationEu.id
-$AppServiceInformationUs = (az webapp list --resource-group $ResourceGroupNameUs --query "[?name=='${AppServiceNameUs}']" | ConvertFrom-Json)
-$AppServiceResourceIdUs = $AppServiceInformationUs.id
-$StorageAccountInformationEu = (az storage account list --resource-group $ResourceGroupNameEu --query "[?name=='${StorageAccountNameEu}']" | ConvertFrom-Json)
-$StorageAccountResourceIdEu = $StorageAccountInformationEu.id
-$StorageAccountInformationUs = (az storage account list --resource-group $ResourceGroupNameUs --query "[?name=='${StorageAccountNameUs}']" | ConvertFrom-Json)
-$StorageAccountResourceIdUs = $StorageAccountInformationUs.id
-$StorageAccountInformationHub = (az storage account list --resource-group $ResourceGroupNameHub --query "[?name=='${StorageAccountNameHub}']" | ConvertFrom-Json)
-$StorageAccountResourceIdShared = $StorageAccountInformationHub.id
+$AppServiceResourceIdEu = (az webapp list --resource-group $ResourceGroupNameEu --query "[?name=='${AppServiceNameEu}'].id"--output tsv)
+$AppServiceResourceIdUs = (az webapp list --resource-group $ResourceGroupNameUs --query "[?name=='${AppServiceNameUs}'].id" --output tsv)
+$StorageAccountResourceIdEu = (az storage account list --resource-group $ResourceGroupNameEu --query "[?name=='${StorageAccountNameEu}'].id" --output tsv)
+$StorageAccountResourceIdUs = (az storage account list --resource-group $ResourceGroupNameUs --query "[?name=='${StorageAccountNameUs}'].id" --output tsv)
+$StorageAccountResourceIdShared = (az storage account list --resource-group $ResourceGroupNameHub --query "[?name=='${StorageAccountNameHub}'].id" --output tsv)
 
 Write-Output "`nCreating private endpoint for EU app service..."
 # https://learn.microsoft.com/cli/azure/network/private-endpoint?view=azure-cli-latest#az-network-private-endpoint-create()

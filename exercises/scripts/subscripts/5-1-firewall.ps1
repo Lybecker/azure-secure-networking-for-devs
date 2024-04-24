@@ -59,6 +59,6 @@ az network public-ip show `
     --resource-group $ResourceGroupName
 
 # https://learn.microsoft.com/cli/azure/network/firewall/ip-config?view=azure-cli-latest#az-network-firewall-ip-config-list
-$FirewallPrivateIpAddress=(az network firewall ip-config list --resource-group $ResourceGroupName --firewall-name $FirewallName --query "[?name=='${FirewallPublicIpConfigName}'].privateIpAddress" | ConvertFrom-Json)
+$FirewallPrivateIpAddress=(az network firewall ip-config list --resource-group $ResourceGroupName --firewall-name $FirewallName --query "[?name=='${FirewallPublicIpConfigName}'].privateIpAddress" --output tsv)
 
 Write-Output "`nFirewall private IP address: ${FirewallPrivateIpAddress}"
