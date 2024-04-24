@@ -39,7 +39,7 @@ The current status of the hub resource group should now be as depicted below. EU
 
 > If you forgot the password for the jumpbox, you can reset it in the portal.
 
-![3](../../assets/3-architecture.drawio.png)
+![4](../../assets/4-architecture.drawio.png)
 
 ## Tips and tricks
 

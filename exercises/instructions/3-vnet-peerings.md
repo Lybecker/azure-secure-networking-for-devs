@@ -22,7 +22,7 @@ Now you should be able to open a browser in the virtual machine and navigate to 
 
 And how about our current infrastructure; this is rather simple, isn't it?
 
-![4](../../assets/4-architecture.drawio.png)
+![3](../../assets/3-architecture.drawio.png)
 
 ## Tips and tricks
 
