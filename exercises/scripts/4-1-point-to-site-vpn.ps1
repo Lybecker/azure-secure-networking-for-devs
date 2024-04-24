@@ -10,6 +10,11 @@ if ($TeamName.Length -lt 2) {
     exit 1
 }
 
+if ($HubLocation.Length -eq 0) {
+    Write-Error "Invalid argument: Hub location missing"
+    exit 1
+}
+
 $Environment = "dev"
 
 .\set-resource-names.ps1 -TeamName $TeamName -EuLocation $env:EU_LOCATION -UsLocation $env:US_LOCATION -HubLocation $HubLocation -Environment $Environment

@@ -11,6 +11,15 @@ if ($TeamName.Length -lt 2) {
     exit 1
 }
 
+if ($EuLocation.Length -eq 0) {
+    Write-Error "Invalid argument: EU location missing"
+    exit 1
+}
+
+if ($UsLocation.Length -eq 0) {
+    Write-Error "Invalid argument: US location missing"
+    exit 1
+}
 
 .\set-resource-names.ps1 -TeamName $TeamName -EuLocation $EuLocation -UsLocation $UsLocation -HubLocation $env:HUB_LOCATION -Environment "dev"
 

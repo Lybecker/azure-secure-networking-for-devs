@@ -16,6 +16,21 @@ if ($TeamName.Length -lt 2) {
     exit 1
 }
 
+if ($EuLocation.Length -eq 0) {
+    Write-Error "Invalid argument: EU location missing"
+    exit 1
+}
+
+if ($UsLocation.Length -eq 0) {
+    Write-Error "Invalid argument: US location missing"
+    exit 1
+}
+
+if ($HubLocation.Length -eq 0) {
+    Write-Error "Invalid argument: Hub location missing"
+    exit 1
+}
+
 Write-Output "`nUsing config:`n  - Team name: ${TeamName}`n  - Hub location: ${HubLocation}`n  - EU location: ${EuLocation}`n  - US location: ${UsLocation}"
 
 $Locations = @($EuLocation, $UsLocation, $HubLocation)

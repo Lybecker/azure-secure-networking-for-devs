@@ -10,9 +10,14 @@ if ($TeamName.Length -lt 2) {
     exit 1
 }
 
+if ($Location.Length -eq 0) {
+    Write-Error "Invalid argument: Hub location missing"
+    exit 1
+}
+
 $Environment = "dev"
 
-.\set-resource-names.ps1 -TeamName $TeamName -EuLocation $env:EU_LOCATION -UsLocation $env:US_LOCATION -HubLocation $HubLocation -Environment $Environment
+.\set-resource-names.ps1 -TeamName $TeamName -EuLocation $env:EU_LOCATION -UsLocation $env:US_LOCATION -HubLocation $Location -Environment $Environment
 
 $ResourceGroupNameHub = $env:ASNFD_RESOURCE_GROUP_NAME_HUB
 $VnetName = $env:ASNFD_VNET_NAME_HUB

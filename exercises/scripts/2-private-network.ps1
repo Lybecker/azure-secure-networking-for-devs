@@ -12,6 +12,21 @@ if ($TeamName.Length -lt 2) {
     exit 1
 }
 
+if ($EuLocation.Length -eq 0) {
+    Write-Error "Invalid argument: EU location missing"
+    exit 1
+}
+
+if ($UsLocation.Length -eq 0) {
+    Write-Error "Invalid argument: US location missing"
+    exit 1
+}
+
+if ($HubLocation.Length -eq 0) {
+    Write-Error "Invalid argument: Hub location missing"
+    exit 1
+}
+
 .\set-resource-names.ps1 -TeamName $TeamName -EuLocation $EuLocation -UsLocation $UsLocation -HubLocation $HubLocation -Environment "dev"
 
 # Subnet already created in hub location
