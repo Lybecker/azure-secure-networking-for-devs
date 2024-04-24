@@ -8,8 +8,8 @@ Have the address spaces of the following virtual networks adjacent i.e, to be ne
 
 Use the recommended names below as per [Abbreviation examples for Azure resources](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/resource-abbreviations) and create:
 
-1. `vnet-{team name}-dev-{EU location}` in EU (starting from 10.0.4.0)
-1. `vnet-{team name}-dev-{US location}` in US
+1. `vnet-{team name}-dev-{EU location}` e.g., `vnet-myteam-dev-westeurope` in EU (starting from 10.0.4.0)
+1. `vnet-{team name}-dev-{US location}` e.g., `vnet-myteam-dev-eastus` in US
 
 If you have time left over, debate the existentialism of virtual networks. Are they real? Am I?
 
