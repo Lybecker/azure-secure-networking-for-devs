@@ -1,6 +1,6 @@
 # Virtual networks
 
-Let's start simple. Your mission, should you accept it, is to create two virtual networks. These virtual networks will form a network boundary around the Azure resource assigned to them, allowing you to control all traffic to and from.
+Let's start simple. Your mission, should you choose to accept it, is to create two virtual networks. These virtual networks will form a network boundary around the Azure resource assigned to them, allowing you to control all traffic to and from.
 
 Each one should span 1024 IP addresses with first virtual network starting from IP address `10.0.0.0`. In fact, we already have one virtual network created: `vnet-{team name}-dev-{hub location}` in the hub location (region)!
 
