@@ -7,6 +7,21 @@ param(
     [string]$HubLocation = "swedencentral"
 )
 
+if ($TeamName.Length -lt 2) {
+    Write-Error "Invalid argument: Team name missing or too short (must be at least 2 characters long)"
+    exit 1
+}
+
+if ($TeamName.Length -gt 10) {
+    Write-Error "Invalid argument: Team name too long (must be less than 10 characters long)"
+    exit 1
+}
+
+if ($TeamName -cnotmatch '^[a-z0-9]+$') {
+    Write-Error "Invalid argument: Team name is invalid (must be lower case alphanumeric characters)"
+    exit 1
+}
+
 $env:TEAM_NAME = $TeamName
 $env:HUB_LOCATION = $HubLocation
 $env:EU_LOCATION = $EuLocation
