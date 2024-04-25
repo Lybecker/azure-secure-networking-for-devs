@@ -20,13 +20,13 @@ It is recommended to use Azure Cloud Shell for the exercises, as it has all the 
     cd ./azure-secure-networking-for-devs/exercises/scripts/
     ```
 
-1. Set the subscription for your resources
+1. Set the Azure Subscription for your resources
 
     ```ps1
     az account set -s <subscription name or ID>
     ```
 
-1. Make sure the current subscription is the expected one
+1. Make sure the current Subscription is the expected one
 
     ```ps1
     az account show
