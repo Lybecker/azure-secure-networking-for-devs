@@ -84,7 +84,7 @@ New-SelfSignedCertificate @Params
 
 $Base64Certificate = @"
 -----BEGIN CERTIFICATE-----
-$([Convert]::ToBase64String($Cert.Export('Cert'), [System.Base64FormattingOptions]::InsertLineBreaks)))
+$([Convert]::ToBase64String($Cert.Export('Cert'), [System.Base64FormattingOptions]::InsertLineBreaks))
 -----END CERTIFICATE-----
 "@
 Set-Content -Path "P2SRootCert.cer" -Value $Base64Certificate
