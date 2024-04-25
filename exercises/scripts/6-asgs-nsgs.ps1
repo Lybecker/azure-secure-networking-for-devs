@@ -120,7 +120,7 @@ for ($i = 0; $i -lt 2; $i++) {
         --source-port-ranges "*" `
         --no-wait false
 
-    Write-Output "`nUpdating subnet `"${SubnetName}`"..."
+    Write-Output "`nUpdating subnet `"${DefaultSubnetName}`"..."
     # See https://learn.microsoft.com/cli/azure/network/vnet/subnet?view=azure-cli-latest#az-network-vnet-subnet-update
     az network vnet subnet update `
         --name $DefaultSubnetName `
