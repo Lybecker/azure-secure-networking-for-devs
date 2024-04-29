@@ -22,6 +22,7 @@ Now it may sound scary, but Azure makes it super simple. We just create somethin
     - Create a self-signed root certificate. This certificate we will upload to Azure.
 
     ```ps1
+     $Params = @{
         Type = 'Custom'
     Subject = 'CN=P2SRootCert'
     KeySpec = 'Signature'
