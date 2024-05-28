@@ -49,15 +49,15 @@ $AppServiceNamePrefix = "app-${TeamName}-${Environment}"
 $env:ASNFD_APP_SERVICE_NAME_EU = "${AppServiceNamePrefix}-eu"
 $env:ASNFD_APP_SERVICE_NAME_US = "${AppServiceNamePrefix}-us"
 
-$env:ASNFD_VNET_NAME_EU = "vnet-${TeamName}-${Environment}-${EuLocation}"
-$env:ASNFD_VNET_NAME_US = "vnet-${TeamName}-${Environment}-${UsLocation}"
-$env:ASNFD_VNET_NAME_HUB = "vnet-${TeamName}-${Environment}-${HubLocation}"
+$env:ASNFD_VNET_NAME_EU = "vnet-${TeamName}-${Environment}-eu"
+$env:ASNFD_VNET_NAME_US = "vnet-${TeamName}-${Environment}-us"
+$env:ASNFD_VNET_NAME_HUB = "vnet-${TeamName}-${Environment}-hub"
 
-$env:ASNFD_DEFAULT_SNET_NAME_EU = "snet-default-${TeamName}-${Environment}-${EuLocation}"
-$env:ASNFD_DEFAULT_SNET_NAME_US = "snet-default-${TeamName}-${Environment}-${UsLocation}"
-$env:ASNFD_DEFAULT_SNET_NAME_HUB = "snet-default-${TeamName}-${Environment}-${HubLocation}"
-$env:ASNFD_APPS_SNET_NAME_EU = "snet-apps-${TeamName}-${Environment}-${EuLocation}"
-$env:ASNFD_APPS_SNET_NAME_US = "snet-apps-${TeamName}-${Environment}-${UsLocation}"
+$env:ASNFD_DEFAULT_SNET_NAME_EU = "snet-default-${TeamName}-${Environment}-eu"
+$env:ASNFD_DEFAULT_SNET_NAME_US = "snet-default-${TeamName}-${Environment}-us"
+$env:ASNFD_DEFAULT_SNET_NAME_HUB = "snet-default-${TeamName}-${Environment}-hub"
+$env:ASNFD_APPS_SNET_NAME_EU = "snet-apps-${TeamName}-${Environment}-eu"
+$env:ASNFD_APPS_SNET_NAME_US = "snet-apps-${TeamName}-${Environment}-us"
 
 $env:ASNFD_JUMPBOX_NSG_NAME = "nsg-jumpbox-${TeamName}-${Environment}-hub"
 

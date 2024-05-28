@@ -23,7 +23,7 @@ It is recommended to use Azure Cloud Shell for the exercises, as it has all the 
 1. Set the Azure Subscription for your resources
 
     ```ps1
-    az account set -s <subscription name or ID>
+    az account set --subscription <subscription name or ID>
     ```
 
 1. Make sure the current Subscription is the expected one
@@ -38,7 +38,8 @@ It is recommended to use Azure Cloud Shell for the exercises, as it has all the 
     .\set-env.ps1 -TeamName <your team name>
     ```
 
-    > **Important:** The team name should be given as lower case alphanumeric characters with the maximum length of 10. This is because it is used in the resource names that can have very short allowed length.
+    > [!IMPORTANT]
+    > The team name should be given as lower case alphanumeric characters with the maximum length of 10. This is because it is used in the resource names that can have very short allowed length.
 
 1. Run the script to provision resources, but **read the notes below** before doing this:
 
