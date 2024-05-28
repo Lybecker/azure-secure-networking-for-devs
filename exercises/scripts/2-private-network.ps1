@@ -35,8 +35,8 @@ if ($HubLocation.Length -eq 0) {
     -SubnetName $env:ASNFD_DEFAULT_SNET_NAME_EU `
     -ResourceGroupName $env:ASNFD_RESOURCE_GROUP_NAME_EU `
     -AddressPrefixes "10.0.4.0/25" `
-    -VnetName $env:ASNFD_VNET_NAME_EU `
-    -AdditionalArguments "--service-endpoints Microsoft.KeyVault Microsoft.Storage"
+    -VnetName $env:ASNFD_VNET_NAME_EU #`
+    #-AdditionalArguments "--service-endpoints Microsoft.KeyVault Microsoft.Storage"
 
 .\subscripts\2-1-subnet.ps1 `
     -SubnetName $env:ASNFD_APPS_SNET_NAME_EU `
@@ -49,8 +49,8 @@ if ($HubLocation.Length -eq 0) {
     -SubnetName $env:ASNFD_DEFAULT_SNET_NAME_US `
     -ResourceGroupName $env:ASNFD_RESOURCE_GROUP_NAME_US `
     -AddressPrefixes "10.0.8.0/25" `
-    -VnetName $env:ASNFD_VNET_NAME_US `
-    -AdditionalArguments "--service-endpoints Microsoft.KeyVault Microsoft.Storage"
+    -VnetName $env:ASNFD_VNET_NAME_US #`
+    #-AdditionalArguments "--service-endpoints Microsoft.KeyVault Microsoft.Storage"
 
 .\subscripts\2-1-subnet.ps1 `
     -SubnetName $env:ASNFD_APPS_SNET_NAME_US `

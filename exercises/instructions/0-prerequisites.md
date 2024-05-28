@@ -38,7 +38,8 @@ It is recommended to use Azure Cloud Shell for the exercises, as it has all the 
     .\set-env.ps1 -TeamName <your team name>
     ```
 
-    > [!IMPORTANT]
+    > **Important!**
+    >
     > The team name should be given as lower case alphanumeric characters with the maximum length of 10. This is because it is used in the resource names that can have very short allowed length.
 
     > In case of an error message *"The file {path}\set-env.ps1 is not digitally signed. You cannot run this script on the current system."*, change the execution policy with the following command:
