@@ -146,14 +146,10 @@ if ($SkipCodeDeployment) {
     Write-Output "`nSkipping code deployment"
 } else {
     for ($i = 0; $i -lt 2; $i++) {
-        $AppServiceName = $AppServiceNames[$i]
-        Write-Output "`nDeploying web app code package to app service `"${AppServiceName}`"..."
-        # https://learn.microsoft.com/cli/azure/webapp?view=azure-cli-latest#az-webapp-deploy()
-        az webapp deploy `
-            --name $AppServiceName `
-            --resource-group $ResourceGroupNames[$i] `
-            --type zip `
-            --src-path ../../src/web-app.zip
+        .\subscripts\0-1-deploy-code.ps1 `
+            -ResourceGroupName $ResourceGroupNames[$i] `
+            -AppServiceName $AppServiceNames[$i] `
+            -CodePackagePath "../../src/web-app.zip"
     }
 }
 
@@ -171,7 +167,7 @@ if ($SkipJumpbox) {
     Write-Output "`nSkipping jumpbox creation"
 } else {
     Write-Output "`nCreating jumpbox..."
-    .\subscripts\0-1-jumpbox.ps1 `
+    .\subscripts\0-2-jumpbox.ps1 `
         -TeamName $TeamName `
         -Environment $Environment `
         -ResourceGroupName $env:ASNFD_RESOURCE_GROUP_NAME_HUB `

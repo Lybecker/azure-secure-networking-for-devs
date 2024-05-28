@@ -41,10 +41,16 @@ It is recommended to use Azure Cloud Shell for the exercises, as it has all the 
     > [!IMPORTANT]
     > The team name should be given as lower case alphanumeric characters with the maximum length of 10. This is because it is used in the resource names that can have very short allowed length.
 
+    > In case of an error message *"The file {path}\set-env.ps1 is not digitally signed. You cannot run this script on the current system."*, change the execution policy with the following command:
+    >
+    > ```ps1
+    > Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+    > ```
+
 1. Run the script to provision resources, but **read the notes below** before doing this:
 
     ```ps1
-    .\0-prerequisites.ps1 -JumpboxAdminUsername <username> -JumpboxAdminPassword <password>
+    .\0-prerequisites.ps1
     ```
 
     > Make sure your working directory is `scripts` when running the script. This is because the web app code package to deploy is referenced using a relative path.
@@ -57,7 +63,7 @@ It is recommended to use Azure Cloud Shell for the exercises, as it has all the 
     > | US | `US_LOCATION` | East US (`eastus`) |
     > | Hub | `HUB_LOCATION` | Sweden central (`swedencentral`) |
     >
-    > You also have an option to set the jumpbox virtual machine username and password with `-JumpboxAdminUsername` and `-JumpboxAdminPassword` parameters. Otherwise the default values - *check what they are in the script* - will be used.
+    > The script will create a jumpbox virtual machine. You have an option to set the jumpbox virtual machine username and password with `-JumpboxAdminUsername` and `-JumpboxAdminPassword` parameters. Otherwise the default values - *check what they are in the script* - will be used.
 
     If all goes well, you should now have the [resources](#status-check) deployed including the code for the web apps.
 
