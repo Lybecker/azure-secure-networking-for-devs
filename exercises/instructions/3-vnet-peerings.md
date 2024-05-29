@@ -18,7 +18,11 @@ Right... It's kinda important for our case that the virtual networks are connect
 
 ## Status check
 
+<!--
+TODO: The old status check below won't work anymore, because we moved the Bastion step *after* this exercise. Instead, instruct to inspect the network topology in Azure portal.
+
 Now you should be able to open a browser in the virtual machine and navigate to the web app `https://app-<your team name>-dev-eu.azurewebsites.net/list_blobs` in the virtual network. If you can't, you're doing something wrong.
+-->
 
 And how about our current infrastructure; this is rather simple, isn't it?
 
