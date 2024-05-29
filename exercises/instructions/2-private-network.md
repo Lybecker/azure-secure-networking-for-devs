@@ -31,7 +31,7 @@ Now, on to some D-N-S-ing (if that's not a word, it darn well should be).
     > You created them in the hub - **H-U-B! That spells hub!** - resource group, right? Please say you did.
 
 1. Link the created DNS zones to **all three** virtual networks with [virtual network links](https://learn.microsoft.com/azure/dns/private-dns-virtual-network-links)
-    * There's no official naming recommendation, but this one works: `<Virtual network name>-<DNS zone name>` with dots replaced with dashes e.g., `vnet-{team name}-dev-westeurope-privatelink-azurewebsites-net`
+    * There's no official naming recommendation, but this one works: `<Virtual network name>-<DNS zone name>` with dots replaced with dashes e.g., `vnet-{team name}-dev-eu-privatelink-azurewebsites-net`
 
 > ☆ **Fun fact!** ☆
 >
@@ -49,7 +49,7 @@ For storage accounts and web app services:
 
     > Use the following resource name pattern:
     >
-    > * Private endpoint name: `pep-{resource name}` e.g., for the hub storage account `pep-sthub{team name}dev`
+    > * Private endpoint name: `pep-{resource name}` e.g., for the hub storage account `pep-st{team name}devhub`
     > * Network interface name: `nic-pep-{resource name}`
 
 1. Add [private DNS zone records](https://learn.microsoft.com/azure/private-link/private-endpoint-dns#private-dns-zone-group) for the endpoints
@@ -57,9 +57,11 @@ For storage accounts and web app services:
 
 > **Note:** Azure web apps are a little bit special. They have private endpoints and VNET integration. Don't worry, you will figure it out!
 
+<!--
 > ⏭ **Shortcut available** ⏭
 >
 > When you have successfully configured private endpoints for a one storage account and app service, you may run the catch-up script (`2-private-network.ps1`) at the end of this exercise to configure the rest, because the work is rather repetitive and time consuming. **Note** that you must have followed the naming convention in order for the script to run successfully.
+-->
 
 ## Disable access and enable web app VNET integration
 
