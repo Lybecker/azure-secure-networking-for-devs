@@ -17,7 +17,7 @@ $JumpboxVmName = "vm${TeamName}hub"  # Max 15 characters for Windows machines
 $JumpboxOsDiskName = "vmdisk-${TeamName}-${Environment}-hub"
 
 # To list available VMs, run command "az vm image list --offer Windows-11 --all --output table"
-$JumpboxVmImage = "MicrosoftWindowsDesktop:windows-11:win11-23h2-pro:22631.3737.240607" # URN format for '--image': "Publisher:Offer:Sku:Version"
+$JumpboxVmImage = "MicrosoftWindowsDesktop:windows-11:win11-23h2-pro:22631.4037.240811" # URN format for '--image': "Publisher:Offer:Sku:Version"
 
 Write-Output "`nCreating network security group (NSG) for jumpbox..."
 # https://learn.microsoft.com/cli/azure/network/nsg?view=azure-cli-latest#az-network-nsg-create()
