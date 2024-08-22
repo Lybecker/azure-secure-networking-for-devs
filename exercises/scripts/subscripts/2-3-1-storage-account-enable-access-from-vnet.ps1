@@ -31,7 +31,7 @@ az storage account update `
     --default-action Deny
 
 Write-Output "`n3/3 Adding network rule to storage account ${StorageAccountName} to allow access via subnet ${SubnetName}..."
-$SubnetResourceId = (az network vnet subnet show --resource-group $ResourceGroupName --vnet-name $VnetName --name $SubnetName | ConvertFrom-Json).id
+$SubnetResourceId = (az network vnet subnet show --resource-group $ResourceGroupName --vnet-name $VnetName --name $SubnetName --query id --output tsv)
 
 # https://learn.microsoft.com/cli/azure/storage/account/network-rule?view=azure-cli-latest()
 

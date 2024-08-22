@@ -43,7 +43,7 @@ $StorageAccountNames = @($env:ASNFD_STORAGE_ACCOUNT_NAME_EU, $env:ASNFD_STORAGE_
 $AppServicePlanNames = @($env:ASNFD_APP_SERVICE_PLAN_NAME_EU, $env:ASNFD_APP_SERVICE_PLAN_NAME_US)
 $AppServiceNames = @($env:ASNFD_APP_SERVICE_NAME_EU, $env:ASNFD_APP_SERVICE_NAME_US)
 
-$AzureSubscriptionId = (az account show | ConvertFrom-Json).id
+$AzureSubscriptionId = (az account show --query id --output tsv)
 
 Write-Output "`nAzure subscription ID: ${AzureSubscriptionId}"
 
@@ -113,7 +113,7 @@ for ($i = 0; $i -lt 2; $i++) {
     Write-Output "`nAssigning identity for app service `"${AppServiceName}`" (resource group `"${ResourceGroupName}`")..."
     # https://learn.microsoft.com/cli/azure/webapp/identity?view=azure-cli-latest#az-webapp-identity-assign()
 
-    $AppServicePrincipalId = (az webapp identity assign --resource-group $ResourceGroupName --name $AppServiceName | ConvertFrom-Json).principalId
+    $AppServicePrincipalId = (az webapp identity assign --resource-group $ResourceGroupName --name $AppServiceName --query principalId --output tsv)
     Write-Output "Principal ID of app service ${AppServiceName}: ${AppServicePrincipalId}"
 
     Write-Output "`nPausing the script to give time for the previous operation(s) to take an effect, please wait..."
