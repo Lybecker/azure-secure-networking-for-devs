@@ -61,7 +61,7 @@ It is recommended to use Azure Cloud Shell for the exercises, as it has all the 
     > | Region | Environment variable name | Default location |
     > | ------- | ------------------------ | ---------------- |
     > | EU | `EU_LOCATION` | West Europe (`westeurope`) |
-    > | US | `US_LOCATION` | East US (`eastus`) |
+    > | US | `US_LOCATION` | East US 2 (`eastus2`) |
     > | Hub | `HUB_LOCATION` | Sweden central (`swedencentral`) |
     >
     > The script will create a jumpbox virtual machine. You have an option to set the jumpbox virtual machine username and password with `-JumpboxAdminUsername` and `-JumpboxAdminPassword` parameters. Otherwise the default values - *check what they are in the script* - will be used.
