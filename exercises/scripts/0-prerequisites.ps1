@@ -66,7 +66,7 @@ for ($i = 0; $i -lt 3; $i++) {
         --sku Standard_LRS
 }
 
-$AppServicePlanSku = "S1"
+$AppServicePlanSku = "B1"
 Write-Output "`nCreating app service plans with SKU `"${AppServicePlanSku}`" and app services..."
 
 for ($i = 0; $i -lt 2; $i++) {
