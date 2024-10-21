@@ -3,7 +3,7 @@
 param(
     [string]$TeamName = "newteam",
     [string]$EuLocation = "westeurope",
-    [string]$UsLocation = "eastus",
+    [string]$UsLocation = "eastus2",
     [string]$HubLocation = "swedencentral"
 )
 

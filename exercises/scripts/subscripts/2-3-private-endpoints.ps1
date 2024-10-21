@@ -1,7 +1,7 @@
 param(
     [Parameter(Mandatory=$True)][string]$TeamName,
     [string]$EuLocation = "westeurope",
-    [string]$UsLocation = "eastus",
+    [string]$UsLocation = "eastus2",
     [string]$HubLocation = "swedencentral"
 )
 
