@@ -83,8 +83,15 @@ for ($i = 0; $i -lt 2; $i++) {
         --location $Location `
         --sku $AppServicePlanSku `
         --is-linux
+}
 
-    Write-Output "`nCreating web app service `"${AppServiceName}`" in resource group `"${ResourceGroupName}`"..."
+for ($i = 0; $i -lt 2; $i++) {
+    $AppServicePlanName = $AppServicePlanNames[$i]
+    $AppServiceName = $AppServiceNames[$i]
+    $ResourceGroupName = $ResourceGroupNames[$i]
+    $Location = $Locations[$i]
+
+    Write-Output "`nCreating web app service `"${AppServiceName}`" for plan `"${AppServicePlanName}`" in resource group `"${ResourceGroupName}`"..."
     # https://learn.microsoft.com/cli/azure/webapp?view=azure-cli-latest#az-webapp-create()
     az webapp create `
         --name $AppServiceNames[$i] `
