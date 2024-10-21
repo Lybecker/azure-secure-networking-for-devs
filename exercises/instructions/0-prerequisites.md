@@ -87,11 +87,11 @@ The main resources are listed in the table below.
 | ------------- | ------------- | -------------- | ---------------- |
 | Storage account | `sthub{team name}dev` | `rg-hub-{team name}-dev` | Sweden central |
 | Storage account | `st{team name}deveu` | `rg-{team name}-dev-eu` | West Europe |
-| Storage account | `st{team name}devus` | `rg-{team name}-dev-us` | East US |
+| Storage account | `st{team name}devus` | `rg-{team name}-dev-us` | East US 2 |
 | App service plan (Linux) | `asp-{team name}-dev-eu` | `rg-{team name}-dev-eu` | West Europe |
-| App service plan (Linux) | `asp-{team name}-dev-us` | `rg-{team name}-dev-us` | East US |
+| App service plan (Linux) | `asp-{team name}-dev-us` | `rg-{team name}-dev-us` | East US 2 |
 | Web app service | `app-{team name}-dev-eu` | `rg-{team name}-dev-eu` | West Europe |
-| Web app service | `app-{team name}-dev-us` | `rg-{team name}-dev-us` | East US |
+| Web app service | `app-{team name}-dev-us` | `rg-{team name}-dev-us` | East US 2 |
 | Virtual machine (jumpbox) | `vm{team name}` | `rg-hub-{team name}-dev` | Sweden central |
 
 ## Tips and tricks: Naming is hard
