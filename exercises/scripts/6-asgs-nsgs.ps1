@@ -100,6 +100,7 @@ for ($i = 0; $i -lt 2; $i++) {
 
     # https://learn.microsoft.com/cli/azure/network/vnet/subnet?view=azure-cli-latest#az-network-vnet-subnet-show
     $AppSubnetAddressPrefix = $(az network vnet subnet show --resource-group $ResourceGroupName --name $AppSubnetName --vnet-name $VnetName --query addressPrefix)
+    $AppSubnetAddressPrefix = $AppSubnetAddressPrefix.Trim('"')
 
     if ($AppSubnetAddressPrefix.Length -eq 0) {
         Write-Error "Failed to retrieve the address prefix of subnet `"${AppSubnetName}`""
