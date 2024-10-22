@@ -68,7 +68,7 @@ It is recommended to use Azure Cloud Shell for the exercises, as it has all the 
 
     If all goes well, you should now have the [resources](#status-check) deployed including the code for the web apps.
 
-    > There is a notable chance that the code deployment times out on the first try with status code 504 and error message "`GatewayTimeout`". Once the prerequisites script has finished, you can retry using the script that only deploys the code:
+    > There is a notable chance that the code deployment times out on the first try with status code 504 and error message "`GatewayTimeout`". To save time, retry using the script that only deploys the code:
     >
     > ```ps1
     > ./0-1-code-deployment.ps1
