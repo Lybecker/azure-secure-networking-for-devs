@@ -12,7 +12,7 @@
 
 Our virtual networks sure feel empty and sad. Let's cheer them up by giving them subnets! In both the EU and US virtual networks, create:
 
-1. `snet-default-{team name}-dev-{location}` with the range of 128 addresses
+1. `snet-default-{team name}-dev-{location}`, where location is "`eu`" or "`us`", with the range of 128 addresses
 1. `snet-apps-{team name}-dev-{location}` with the range of 128 addresses
     * Delegate this subnet for `Microsoft.Web/serverFarms`
 
