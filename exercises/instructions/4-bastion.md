@@ -31,7 +31,13 @@ The solution to make it make sense:
 
 ## Status check
 
-Login to the virtual machine using Azure Bastion using the credentials from the environment variables `$JumpboxAdminUsername` and `$JumpboxAdminPassword`. Verify that your Private DNS zones work by running the following command in the command prompt/PowerShell: `nslookup app-<your team name>-dev-eu.azurewebsites.net`. You should see an IP in the private IP address space. Try accessing the web app in the browser of your jumpbox - does that work? Should it?
+Login to the virtual machine using Azure Bastion using the credentials from the environment variables `$JumpboxAdminUsername` and `$JumpboxAdminPassword`.
+
+> If you didn't explicitly specify the username and password in the prerequisites phase, the default values were used: See the parameters in the beginning of the [`0-prerequisites.ps1`](../scripts/0-prerequisites.ps1) script file. This course is about network security - we never said anything about securing credentials!
+>
+> *But please, please always manage and handle credentials in a secure fashion.*
+
+Verify that your Private DNS zones work by running the following command in the command prompt/PowerShell: `nslookup app-<your team name>-dev-eu.azurewebsites.net`. You should see an IP in the private IP address space. Try accessing the web app in the browser of your jumpbox - does that work? Should it?
 
 This exercise can only be completed by installing Solitaire and winning the game. Extra points for pro mode i.e., allowing only one time to go through the deck.
 
