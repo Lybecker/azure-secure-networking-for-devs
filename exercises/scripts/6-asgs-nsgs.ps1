@@ -60,6 +60,7 @@ for ($i = 0; $i -lt 2; $i++) {
         --no-wait false
 
     $StorageAsgId = $(az network asg show --name $StorageAsgName --resource-group $ResourceGroupName --query id)
+    $StorageAsgId = $StorageAsgId.Trim('"')
     Write-Output "`nApplication security group `"${StorageAsgName}`" resource ID: ${StorageAsgId}"
 
     if ($StorageAsgId.Length -eq 0) {
