@@ -149,17 +149,6 @@ for ($i = 0; $i -lt 2; $i++) {
     }
 }
 
-if ($SkipCodeDeployment) {
-    Write-Output "`nSkipping code deployment"
-} else {
-    for ($i = 0; $i -lt 2; $i++) {
-        .\subscripts\0-1-deploy-code.ps1 `
-            -ResourceGroupName $ResourceGroupNames[$i] `
-            -AppServiceName $AppServiceNames[$i] `
-            -CodePackagePath "../../src/web-app.zip"
-    }
-}
-
 # Create VNET and subnet in hub resource group
 .\subscripts\1-1-vnet.ps1 $env:ASNFD_VNET_NAME_HUB $HubLocation $env:ASNFD_RESOURCE_GROUP_NAME_HUB "10.0.0"
 
@@ -183,6 +172,12 @@ if ($SkipJumpbox) {
         -JumpboxAdminPassword $JumpboxAdminPassword `
         -VnetName $env:ASNFD_VNET_NAME_HUB `
         -SubnetName $env:ASNFD_DEFAULT_SNET_NAME_HUB
+}
+
+if ($SkipCodeDeployment) {
+    Write-Output "`nSkipping code deployment"
+} else {
+    .\0-1-code-deployment.ps1 -TeamName $TeamName
 }
 
 Write-Output "`nDone"
