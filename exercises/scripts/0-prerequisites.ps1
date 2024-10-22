@@ -121,7 +121,7 @@ for ($i = 0; $i -lt 2; $i++) {
     # https://learn.microsoft.com/cli/azure/webapp/identity?view=azure-cli-latest#az-webapp-identity-assign()
 
     $AppServicePrincipalId = (az webapp identity assign --resource-group $ResourceGroupName --name $AppServiceName | ConvertFrom-Json).principalId
-    Write-Output "Principal ID of app service ${AppServiceName}: ${AppServicePrincipalId}"
+    Write-Output "Principal ID of app service `"${AppServiceName}`": ${AppServicePrincipalId}"
 
     Write-Output "`nPausing the script to give time for the previous operation(s) to take an effect, please wait..."
     Start-Sleep -Seconds 15
