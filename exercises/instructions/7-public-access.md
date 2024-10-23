@@ -3,7 +3,7 @@
 > You secured the hell out of the solution, so now it's time to open up a bit. Nobody likes these pesky VPNs when working remote:
 >
 > ```ps1
-> .\6-network-and-application-security.ps1
+> .\6-asgs-nsgs.ps1
 > ```
 
 ## Bonus exercise: Enabling Internet access to the web applications
