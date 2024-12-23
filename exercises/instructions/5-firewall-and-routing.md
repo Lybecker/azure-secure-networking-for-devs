@@ -20,15 +20,13 @@ Azure Firewall and Azure Bastion are resources that are prime for sharing betwee
 
 > Cost is another reason to not create many instances of Azure Firewall and Azure Bastion. They are both billed for allocation per hour and for data traffic processed. Unlike e.g. Azure Key Vault that only is billed per usage.
 
-By default the Firewall allows no traffic. You need to create rules to allow traffic. There are three types of rules:
+By default the Firewall allows no traffic. You need to create rules to allow traffic. There are tree types of rules:
 
 - NAT rules - allows you to share network services with external networks. E.g. you can use a single public IP address to allow external clients to access multiple internal servers.
 - Network rules - non-HTTP/S traffic that will be allowed to flow through the firewall must have a network rule.
 - Application rules - HTTP/HTTPS traffic at Layer-7 network traffic filtering.
 
 > [Azure Firewall SKU comparison](https://learn.microsoft.com/en-us/azure/firewall/choose-firewall-sku).
-
-[Steps to configure firewall from azure portal](https://learn.microsoft.com/en-us/azure/firewall/tutorial-firewall-deploy-portal)
 
 ## Routing
 
@@ -41,8 +39,6 @@ The firewall is not used yet, so route all Internet traffic through it from all 
 1. Via the jumpbox verify that all Internet requests are denied.
 
 > Note: a route table can only be associated with a subnet in the same virtual network. This means that you need to create a route table for each virtual network.
-
-[Steps to create route table from azure portal](https://learn.microsoft.com/en-us/azure/virtual-network/manage-route-table)
 
 ## Firewall rules
 
