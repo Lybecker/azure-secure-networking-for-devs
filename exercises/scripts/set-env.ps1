@@ -22,9 +22,18 @@ if ($TeamName -cnotmatch '^[a-z0-9]+$') {
     exit 1
 }
 
-$env:TEAM_NAME = $TeamName
-$env:HUB_LOCATION = $HubLocation
-$env:EU_LOCATION = $EuLocation
-$env:US_LOCATION = $UsLocation
+$envVarsToStore = @{
+    TEAM_NAME = $TeamName
+    HUB_LOCATION = $HubLocation
+    EU_LOCATION = $EuLocation
+    US_LOCATION = $UsLocation
+}
 
-Write-Output "Config set successfully:`n  - Team name: ${env:TEAM_NAME}`n  - Hub location: ${env:HUB_LOCATION}`n  - EU location: ${env:EU_LOCATION}`n  - US location: ${env:US_LOCATION}`n"
+# Set environment variables in the current session using a for loop
+foreach ($key in $envVarsToStore.Keys) {
+    Set-Item -Path "Env:$key" -Value $envVarsToStore[$key]
+}
+
+Write-Output "Config set successfully:`n  - Team name: $($envVarsToStore.TEAM_NAME)`n  - Hub location: $($envVarsToStore.HUB_LOCATION)`n  - EU location: $($envVarsToStore.EU_LOCATION)`n  - US location: $($envVarsToStore.US_LOCATION)`n"
+
+.\store-env-vars.ps1 -EnvVarsToStore $envVarsToStore
