@@ -13,6 +13,8 @@ Use the recommended names below as per [Abbreviation examples for Azure resource
 
 If you have time left over, debate the existentialism of virtual networks. Are they real? Am I?
 
+[Steps to create Vnet from Azure portal](https://learn.microsoft.com/en-us/azure/virtual-network/quick-create-portal)
+
 ## Status check
 
 The current state of affairs should look something like this:
