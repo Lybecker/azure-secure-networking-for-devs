@@ -25,3 +25,12 @@ for ($i = 0; $i -lt 2; $i++) {
         -ResourceGroupName2 $ResourceGroupNames[$i] `
         -VnetName2 $VnetNames[$i]
 }
+
+
+# To validate ASGs and NSGs this is needed.
+
+.\subscripts\3-1-vnet-peerings.ps1 `
+        -ResourceGroupName1 $env:ASNFD_RESOURCE_GROUP_NAME_EU `
+        -VnetName1 $env:ASNFD_VNET_NAME_EU `
+        -ResourceGroupName2 $env:ASNFD_RESOURCE_GROUP_NAME_US `
+        -VnetName2 $env:ASNFD_VNET_NAME_US
