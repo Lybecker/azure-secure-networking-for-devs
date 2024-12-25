@@ -18,6 +18,8 @@ Our virtual networks sure feel empty and sad. Let's cheer them up by giving them
 
 > The `default` subnet is for any kind of Azure resources. The `apps` subnet is delegated to Azure web apps, meaning you cannot use it for anything else.
 
+[Steps to create Subnet in azure portal](https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-subnet?tabs=azure-portal#add-a-subnet)
+
 ## Private DNS zones
 
 Now, on to some D-N-S-ing (if that's not a word, it darn well should be).
@@ -29,9 +31,11 @@ Now, on to some D-N-S-ing (if that's not a word, it darn well should be).
     > DNS zones are a global resource, so you only need to create them once, but they need to reside in a resource group.
     >
     > You created them in the hub - **H-U-B! That spells hub!** - resource group, right? Please say you did.
-
 1. Link the created DNS zones to **all three** virtual networks with [virtual network links](https://learn.microsoft.com/azure/dns/private-dns-virtual-network-links)
     * There's no official naming recommendation, but this one works: `<Virtual network name>-<DNS zone name>` with dots replaced with dashes e.g., `vnet-{team name}-dev-eu-privatelink-azurewebsites-net`
+
+[Steps to create Private DNS Zones in azure portal](https://learn.microsoft.com/en-us/azure/dns/private-dns-getstarted-portal)
+
 
 > ☆ **Fun fact!** ☆
 >
@@ -62,6 +66,7 @@ For storage accounts and web app services:
 >
 > When you have successfully configured private endpoints for a one storage account and app service, you may run the catch-up script (`2-private-network.ps1`) at the end of this exercise to configure the rest, because the work is rather repetitive and time consuming. **Note** that you must have followed the naming convention in order for the script to run successfully.
 -->
+[Steps to create Private Endpoint in azure portal](https://learn.microsoft.com/en-us/azure/private-link/create-private-endpoint-portal?tabs=dynamic-ip)
 
 ## Disable access and enable web app VNET integration
 
