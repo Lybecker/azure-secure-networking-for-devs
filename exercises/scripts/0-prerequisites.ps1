@@ -130,10 +130,12 @@ for ($i = 0; $i -lt 2; $i++) {
         $StorageAccountName = $StorageAccountNames[$j]
         $ResourceGroupName = $ResourceGroupNames[$j]
 
-        if (($AppServiceName.EndsWith("eu") -and $StorageAccountName.EndsWith("us")) -or ($AppServiceName.EndsWith("us") -and $StorageAccountName.EndsWith("eu"))) {
-            Write-Output "`nSkipping role assignment for app service ${AppServiceName} in storage account ${StorageAccountName}"
-            continue
-        }
+        # commenting the below code, to allow all storage accounts accessible from all app services. helps to validate ASG/NSG exercise.
+        
+        # if (($AppServiceName.EndsWith("eu") -and $StorageAccountName.EndsWith("us")) -or ($AppServiceName.EndsWith("us") -and $StorageAccountName.EndsWith("eu"))) {
+        #     Write-Output "`nSkipping role assignment for app service ${AppServiceName} in storage account ${StorageAccountName}"
+        #     continue
+        # }
 
         Write-Output "`nAdding Storage Blob Data Contributor role for app service `"${AppServiceName}`" in storage account `"${StorageAccountName}`"..."
         # https://learn.microsoft.com/cli/azure/role/assignment?view=azure-cli-latest#az-role-assignment-create()
