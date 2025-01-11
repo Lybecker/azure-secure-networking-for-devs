@@ -39,7 +39,7 @@ if ($Environment.Length -eq 0) {
     exit 1
 }
 
-$AppServiceNamePrefix = "asp-$TeamName-$Environment"
+$AppServiceNamePrefix = "app-$TeamName-$Environment"
 $AppServicePlanNamePrefix = "asp-${TeamName}-${Environment}"
 
 $envVarsToStore = @{
