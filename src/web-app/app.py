@@ -8,6 +8,7 @@ team_name = os.getenv('TEAM_NAME')
 location = os.getenv('LOCATION') # "eu" or "us"
 environment = "dev"
 storage_account_names = [f"st{team_name}{environment}{location}", f"st{team_name}{environment}hub"]
+all_storage_account_names = [f"st{team_name}{environment}us", f"st{team_name}{environment}hub", f"st{team_name}{environment}eu"]
 container_name = "test"
 blob_filename = "test.txt"
 
@@ -42,7 +43,7 @@ def list_blobs():
     blobs: str = ""
     output: str = f"The UTC time is {datetime.now(timezone.utc)}<br /><br />"
 
-    for storage_account_name in storage_account_names:
+    for storage_account_name in all_storage_account_names:
         print(f"Getting blobs list in storage account {storage_account_name}")
         blob_storage_client = BlobStorageClient(storage_account_name)
         blobs = ""
