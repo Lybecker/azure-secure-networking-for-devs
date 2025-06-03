@@ -20,12 +20,6 @@ It is recommended to use Azure Cloud Shell for the exercises, as it has all the 
     cd ./azure-secure-networking-for-devs/exercises/scripts/
     ```
 
-1. Change the branch to `mini-session`:
-
-    ```ps1
-    git checkout mini-session
-    ```
-
 1. Make sure the current Subscription is the expected one
 
     ```ps1
